@@ -1,0 +1,1377 @@
+{
+    "drake_hotline": {
+        "name": "Drake Hotline",
+        "file": "Memes/Drake.png",
+        "tags": [
+            "choice",
+            "reject",
+            "approve",
+            "comparison",
+            "preference"
+        ],
+        "captions": {
+           "caption1": {
+                "x": 284,
+                "y": 34,
+                "width": 172,
+                "height": 183
+            },
+            "caption2": {
+                "x": 274,
+                "y": 266,
+                "width": 196,
+                "height": 214
+            }
+        },
+        "explanation": "Caption1 should be something people reject, Caption2 should be something they approve instead.",
+        "examples": [
+            {
+                "caption1": "Studying for exams",
+                "caption2": "Procrastinating on TikTok"
+            },
+            {
+                "caption1": "Eating salad",
+                "caption2": "Eating pizza"
+            },
+            {
+                "caption1": "Going to bed early",
+                "caption2": "Binge-watching Netflix until 3AM"
+            },
+            {
+                "caption1": "Exercising regularly",
+                "caption2": "Sitting on the couch playing video games"
+            },
+            {
+                "caption1": "Cooking healthy meals",
+                "caption2": "Ordering fast food"
+            }
+        ]
+    },
+    "uno_card": {
+        "name": "Uno Card",
+        "file": "Memes/UnoCart.png",
+        "tags": [
+            "choice",
+            "decision",
+            "consequence",
+            "comparison",
+            "preference"
+        ],
+        "captions": {
+            "caption1": {
+                "x": 104,
+                "y": 164,
+                "width": 93,
+                "height": 68
+            },
+            "caption2": {
+                "x": 287,
+                "y": 20,
+                "width": 131,
+                "height": 45
+            }
+        },
+        "explanation": "Caption1 should be the thing to do, Caption2 should be the person,persons,organization etc. that refuses it.",
+        "examples": [
+            {
+                "caption1": "Admit you are wrong",
+                "caption2": "My friends"
+            },
+            {
+                "caption1": "Go to bed early",
+                "caption2": "Me scrolling TikTok until 3AM"
+            },
+            {
+                "caption1": "Stop procrastinating",
+                "caption2": "Students everywhere"
+            },
+            {
+                "caption1": "Eat vegetables",
+                "caption2": "Kids"
+            },
+            {
+                "caption1": "Pay taxes on time",
+                "caption2": "Most adults"
+            }
+        ]
+    },
+    "two_buttons": {
+        "name": "Two Buttons",
+        "file": "Memes/TwoButtons.png",
+        "tags": [
+            "choice",
+            "dilemma",
+            "confusion",
+            "struggle",
+            "indecision"
+        ],
+        "captions": {
+            "caption1": {
+                "x": 60,
+                "y": 94,
+                "width": 126,
+                "height": 44
+            },
+            "caption2": {
+                "x": 246,
+                "y": 71,
+                "width": 93,
+                "height": 29
+            },
+            "caption3": {
+                "x": 177,
+                "y": 404,
+                "width": 171,
+                "height": 69
+            }
+        },
+        "explanation": "Caption1 and Caption2 should be the two conflicting options on the buttons, Caption3 should be the person or group sweating and struggling to choose.",
+        "examples": [
+            {
+                "caption1": "Study for exam",
+                "caption2": "Watch Netflix",
+                "caption3": "Me"
+            },
+            {
+                "caption1": "Go to the gym",
+                "caption2": "Take a nap",
+                "caption3": "College students"
+            },
+            {
+                "caption1": "Save money",
+                "caption2": "Buy useless gadgets",
+                "caption3": "Adults with credit cards"
+            },
+            {
+                "caption1": "Reply instantly",
+                "caption2": "Leave them on read",
+                "caption3": "Me texting my crush"
+            },
+            {
+                "caption1": "Be productive",
+                "caption2": "Procrastinate online",
+                "caption3": "Everyone"
+            }
+        ]
+    },
+    "batman_slap": {
+        "name": "Batman Slap",
+        "file": "Memes/BatmanSlap.png",
+        "tags": [
+            "reaction",
+            "rejection",
+            "conflict",
+            "humor",
+            "dialogue"
+        ],
+        "captions": {
+           "caption1": {
+                "x": 33,
+                "y": 7,
+                "width": 167,
+                "height": 70
+            },
+            "caption2": {
+                "x": 306,
+                "y": 16,
+                "width": 156,
+                "height": 69
+            }
+        },
+        "explanation": "Caption1 should be what one person/group is saying or suggesting, Caption2 should be the harsh or dismissive response from the other person/group shutting them down.",
+        "examples": [
+            {
+                "caption1": "Let\u00e2\u20ac\u2122s skip gym today!",
+                "caption2": "No excuses!"
+            },
+            {
+                "caption1": "We should eat healthy later.",
+                "caption2": "We eat healthy NOW!"
+            },
+            {
+                "caption1": "Homework can wait!",
+                "caption2": "Do it now!"
+            },
+            {
+                "caption1": "Let\u00e2\u20ac\u2122s just give up!",
+                "caption2": "Never!"
+            },
+            {
+                "caption1": "I\u00e2\u20ac\u2122ll sleep early tonight.",
+                "caption2": "Stop lying!"
+            }
+        ]
+    },
+    "distracted_bf": {
+        "name": "Distracted Bf",
+        "file": "Memes/Boyfriend.png",
+        "tags": [
+            "choice",
+            "distraction",
+            "preference",
+            "comparison",
+            "relationship"
+        ],
+        "captions": {
+            "caption1": {
+                "x": 366,
+                "y": 63,
+                "width": 90,
+                "height": 29
+            },
+            "caption2": {
+                "x": 566,
+                "y": 88,
+                "width": 118,
+                "height": 55
+            },
+            "caption3": {
+                "x": 154,
+                "y": 47,
+                "width": 121,
+                "height": 63
+            }
+        },
+        "explanation": "Caption1 should be the person/group who is tempted, Caption2 should be what they are currently committed to or supposed to focus on, Caption3 should be the new tempting option they get distracted by instead.",
+        "examples": [
+            {
+                "caption1": "Me",
+                "caption2": "Responsibilities",
+                "caption3": "Memes"
+            },
+            {
+                "caption1": "Gamers",
+                "caption2": "Sleep",
+                "caption3": "One more match"
+            },
+            {
+                "caption1": "Students",
+                "caption2": "Studying",
+                "caption3": "TikTok"
+            },
+            {
+                "caption1": "Adults",
+                "caption2": "Bills",
+                "caption3": "Impulse shopping"
+            },
+            {
+                "caption1": "Me",
+                "caption2": "Healthy eating",
+                "caption3": "Pizza"
+            }
+        ]
+    },"boardroom_meeting_suggestion": {
+    "name": "Boardroom Meeting Suggestion",
+    "file": "Memes/Boardroom-Meeting-Suggestion.jpg",
+    "tags": [
+      "meeting",
+      "suggestion",
+      "decision",
+      "business",
+      "corporate",
+      "brainstorming"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 60,
+        "y": 40,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 60,
+        "y": 140,
+        "width": 400,
+        "height": 80
+      },
+      "caption3": {
+        "x": 60,
+        "y": 240,
+        "width": 400,
+        "height": 80
+      },
+      "caption4": {
+        "x": 540,
+        "y": 140,
+        "width": 300,
+        "height": 160
+      }
+    },
+    "explanation": "Caption1 (Boss): Sets a goal or problem (“We need X”).\nFunction: Frame the brainstorming topic and implied constraints.\n\nCaption2 (Team Member A): Safe, on-brand idea that seems aligned.\nFunction: Build a believable path.\n\nCaption3 (Team Member B): Another safe idea, often incremental.\nFunction: Reinforce the “status-quo think.”\n\nCaption4 (Team Member C): Contrarian or obvious-but-taboo idea (the twist).\nFunction: Deliver the joke; the visual shows them being thrown out the window.",
+    "examples": [
+      {
+        "caption1": "We should add multiplayer!",
+        "caption2": "We should improve graphics!",
+        "caption3": "We should fix the bugs first!",
+        "caption4": "Let's release another buggy sequel!"
+      },
+      {
+        "caption1": "How do we boost sales?",
+        "caption2": "Lower the prices!",
+        "caption3": "Improve customer support!",
+        "caption4": "Sell NFTs!"
+      },
+      {
+        "caption1": "What should we name our new product?",
+        "caption2": "Something catchy and short!",
+        "caption3": "Something that reflects our brand!",
+        "caption4": "Producty McProductFace!"
+      }
+    ]
+  },
+  "am_i_the_only_one": {
+    "name": "Am I The Only One Around Here",
+    "file": "Memes/Am-I-The-Only-One-Around-Here.jpg",
+    "tags": [
+      "opinion",
+      "rant",
+      "annoyance",
+      "unpopular opinion",
+      "question"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 242,
+        "y": 68,
+        "width": 381,
+        "height": 96
+      },
+      "caption2": {
+        "x": 234,
+        "y": 303,
+        "width": 394,
+        "height": 95
+      }
+    },
+    "explanation": "Caption1: Starts with “Am I the only one around here who/that…”\nFunction: Signal exasperation and set a broad category (habit, norm, pet peeve).\n\nCaption2: The specific gripe or standard you wish others followed.\nFunction: Deliver the exact opinion/observation that feels “obvious” to you.",
+    "examples": [
+      {
+        "caption1": "AM I THE ONLY ONE AROUND HERE",
+        "caption2": "THAT THINKS CHINA WANTS TO RULE THE WORLD BY KILLING US ALL, I'M SURPRISED WE'RE NOT ALL CHEMICALLY CASTRATED YET!!!"
+      },
+      {
+        "caption1": "AM I THE ONLY ONE AROUND HERE",
+        "caption2": "WHO FINDS RIPPING PAPERS THERAPEUTIC?"
+      },
+      {
+        "caption1": "AM I THE ONLY ONE AROUND HERE",
+        "caption2": "WHO CAN'T SPELL 'APOCALYPSE' WITHOUT ASKING GOOGLE?"
+      },
+      {
+        "caption1": "AM I THE ONLY ONE AROUND HERE",
+        "caption2": "WHO LIKES THE PHANTOM MENACE?"
+      },
+      {
+        "caption1": "AM I THE ONLY ONE AROUND HERE",
+        "caption2": "WHO DRINKS MEDICINE AND EXPECTS IMMEDIATE RESULTS?"
+      }
+    ]
+  },"ancient_aliens": {
+    "name": "Ancient Aliens",
+    "file": "Memes/Ancient-Aliens.jpg",
+    "tags": [
+      "aliens",
+      "theory",
+      "question",
+      "unexplained",
+      "conspiracy"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 224,
+        "y": 34,
+        "width": 386,
+        "height": 139
+      },
+      "caption2": {
+        "x": 204,
+        "y": 427,
+        "width": 431,
+        "height": 90
+      }
+    },
+    "explanation": "Caption1: Presents a mysterious/complicated phenomenon as if it’s a puzzle.\nFunction: Set up an overblown mystery (architecture, coincidence, pattern).\n\nCaption2: The laconic answer: “Aliens.” (or “I’m not saying it was aliens… but it was aliens.”)\nFunction: Punchline by offering a comically lazy, all-purpose explanation.",
+    "examples": [
+      {
+        "caption1": "WHEN THE BANK FORECLOSES ON YOUR PARENTS HOUSE",
+        "caption2": "WHOSE BASEMENT WILL YOU LIVE IN"
+      },
+      {
+        "caption1": "I'M NOT SAYING IT WAS QUARANTINE...",
+        "caption2": "BUT IT WAS QUARANTINE"
+      },
+      {
+        "caption1": "THE FIRST RULE OF PANDEMICS IS",
+        "caption2": "THAT PEOPLE DIE IN PANDEMICS"
+      },
+      {
+        "caption1": "THEY'RE OUT THERE",
+        "caption2": "THINK ABOUT IT"
+      },
+      {
+        "caption1": "I'M NOT SAYING THEY'RE ILLEGAL IMMIGRANTS...",
+        "caption2": "BUT THEY'RE ILLEGAL ALIENS"
+      }
+    ]
+  },"bernie_i_am_once_again_asking": {
+    "name": "Bernie I Am Once Again Asking For Your Support",
+    "file": "Memes/Bernie-I-Am-Once-Again-Asking-For-Your-Support.jpg",
+    "tags": [
+      "bernie sanders",
+      "request",
+      "begging",
+      "demand",
+      "politics"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 206,
+        "y": 12,
+        "width": 268,
+        "height": 266
+      },
+      "caption2": {
+        "x": 204,
+        "y": 298,
+        "width": 268,
+        "height": 105
+      }
+    },
+    "explanation": "Caption1 is the setup, often humorously portraying the person making a repeated or desperate plea. Caption2 contains the iconic phrase 'I am once again asking for...' followed by the object of the request.",
+    "examples": [
+      {
+        "caption1": "Me at the restaurant manager after eating a salad",
+        "caption2": "I am once again asking for some pasta"
+      },
+      {
+        "caption1": "Me to my dog",
+        "caption2": "I am once again asking for you to stop barking at the mailman"
+      },
+      {
+        "caption1": "Me, my entire life so far:",
+        "caption2": "Can I please get some coochie?"
+      },
+      {
+        "caption1": "Me to the TV remote",
+        "caption2": "I am once again asking for you to be found"
+      },
+      {
+        "caption1": "Talking to a Cop",
+        "caption2": "\"So if I'm not being detained, I'm free to go?\""
+      }
+    ]
+  }, "blank_nut_button": {
+    "name": "Blank Nut Button",
+    "file": "Memes/Blank-Nut-Button.jpg",
+    "tags": [
+      "button",
+      "reaction",
+      "urge",
+      "desire",
+      "impulse"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 235,
+        "y": 37,
+        "width": 237,
+        "height": 257
+      },
+      "caption2": {
+        "x": 252,
+        "y": 305,
+        "width": 222,
+        "height": 240
+      }
+    },
+    "explanation": "Caption1 represents the person or group experiencing the strong urge. Caption2 describes the action or object that they have a powerful, often uncontrollable, impulse to engage with or have.",
+    "examples": [
+      {
+        "caption1": "ME:",
+        "caption2": "BTS"
+      },
+      {
+        "caption1": "ROBLOX PLAYERS",
+        "caption2": "PIGGY ( NEW CHAPTER 10 )"
+      },
+      {
+        "caption1": "PROFESSOR",
+        "caption2": "DEADLINE"
+      },
+      {
+        "caption1": "ME",
+        "caption2": "ENGAGE DESTRUCTION OF HOMEWORK."
+      },
+      {
+        "caption1": "ME",
+        "caption2": "PRESS THE BUTTON"
+      }
+    ]
+  },"captain_picard_facepalm": {
+    "name": "Captain Picard Facepalm",
+    "file": "Memes/Captain-Picard-Facepalm.jpg",
+    "tags": [
+      "facepalm",
+      "disappointment",
+      "frustration",
+      "stupidity",
+      "exasperation"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 194,
+        "y": 42,
+        "width": 387,
+        "height": 139
+      },
+      "caption2": {
+        "x": 197,
+        "y": 288,
+        "width": 383,
+        "height": 128
+      }
+    },
+    "explanation": "Caption1: States a dumb, frustrating, or unbelievable situation.\n\nCaption2: Gives the reaction, continuation, or punchline that shows why Picard is facepalming.",
+    "examples": [
+      {
+        "caption1": "WE'RE OUT OF TOILET PAPER AGAIN",
+        "caption2": "CAPTAIN...."
+      },
+      {
+        "caption1": "MY WIFE’S ACCENT IS SO BAD",
+        "caption2": "WHENEVER SHE YELLS AT THE KIDS SIRI COMES UP WITH AN ANSWER"
+      },
+      {
+        "caption1": "DON'T DO THIS",
+        "caption2": "IF YOU HAVE NOT WASHED YOUR HANDS"
+      },
+      {
+        "caption1": "WHEN I NOTICE THAT THE MAJORITY OF RESPONSES TO VEGAS SHOOTING LAST NIGHT",
+        "caption2": "ARE TO EXPRESS RACIAL OR RELIGIOUS HATE."
+      },
+      {
+        "caption1": "WHEN YOU DON'T KNOW WHAT A MEME IS",
+        "caption2": "BUT YOU KEEP CALLING IT A FUNNY IMAGE"
+      }
+    ]
+  },"change_my_mind": {
+    "name": "Change My Mind",
+    "file": "Memes/Change-My-Mind.jpg",
+    "tags": [
+      "opinion",
+      "statement",
+      "controversy",
+      "debate",
+      "challenge"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 138,
+        "y": 146,
+        "width": 557,
+        "height": 91
+      }
+    },
+    "explanation": "This meme features a single caption, which states a controversial, unpopular, or opinionated statement that is intended to provoke a debate. The implied challenge is for others to 'change my mind' about the statement.",
+    "examples": [
+      {
+        "caption1": "Memes about how people make too many memes about coronavirus are technically memes about coronavirus"
+      },
+      {
+        "caption1": "Fortnite is dead"
+      },
+      {
+        "caption1": "Asohka is a better female Jedi than Rey"
+      },
+      {
+        "caption1": "We are all going to get old and die"
+      },
+      {
+        "caption1": "I am not a simp for my own wife. Change my mind."
+      }
+    ]
+  },"disaster_girl": {
+    "name": "Disaster Girl",
+    "file": "Memes/Disaster-Girl.jpg",
+    "tags": [
+      "evil",
+      "fire",
+      "destruction",
+      "mischief",
+      "satisfaction"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 204,
+        "y": 48,
+        "width": 393,
+        "height": 89
+      },
+      "caption2": {
+        "x": 200,
+        "y": 288,
+        "width": 403,
+        "height": 100
+      }
+    },
+    "explanation": "Caption1 describes a situation, event, or person that the 'disaster girl' is seemingly responsible for. Caption2 is often a a short statement or a punchline related to the disaster. The image implies that the girl is gleefully watching the chaos she has caused.",
+    "examples": [
+      {
+        "caption1": "MOM: HOW WAS THE PARTY?",
+        "caption2": "KID: IT WAS PRETTY LIT"
+      },
+      {
+        "caption1": "THIS IS THE HOUSE",
+        "caption2": "OF WHOEVER SAID BABIES ARE NOT DANGEROUS"
+      },
+      {
+        "caption1": "MY ANXIETY",
+        "caption2": "ME"
+      },
+      {
+        "caption1": "THERE WAS A WORLD, ITS GONE NOW",
+        "caption2": "COVID-19"
+      },
+      {
+        "caption1": "WHEN YOUR ROOM IS A MESS",
+        "caption2": "BUT YOU SAY YOU ARE JUST 'REARRANGING' IT"
+      }
+    ]
+  },"mocking_spongebob": {
+    "name": "Mocking Spongebob",
+    "file": "Memes/Mocking-Spongebob.jpg",
+    "tags": [
+      "mocking",
+      "sarcasm",
+      "annoyance",
+      "disrespect",
+      "imitation"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 205,
+        "y": 14,
+        "width": 393,
+        "height": 182
+      },
+      "caption2": {
+        "x": 210,
+        "y": 273,
+        "width": 384,
+        "height": 178
+      }
+    },
+    "explanation": "This meme features a two-part caption. Caption1 states a phrase or an idea. Caption2 is a mocking imitation of the first phrase, often with alternating capitalization, which conveys a sense of sarcasm or disrespect.",
+    "examples": [
+      {
+        "caption1": "When your mom tells you to clean your room",
+        "caption2": "wHeN YoUr mOm TeLlS yOu To cLeAn yOuR RoOm"
+      },
+      {
+        "caption1": "Don't think I don't see you there",
+        "caption2": "dOn't ThInk I DoN't sEe YoU ThErE"
+      }
+    ]
+  },"leonardo_dicaprio_cheers": {
+    "name": "Leonardo Dicaprio Cheers",
+    "file": "Memes/Leonardo-Dicaprio-Cheers.jpg",
+    "tags": [
+      "cheers",
+      "celebration",
+      "agreement",
+      "toast",
+      "respect"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 202,
+        "y": 55,
+        "width": 382,
+        "height": 139
+      },
+      "caption2": {
+        "x": 200,
+        "y": 301,
+        "width": 383,
+        "height": 127
+      }
+    },
+    "explanation": "This meme shows Leonardo DiCaprio raising a glass. The first caption is usually a phrase like 'A toast to...' or 'Cheers to...' and the second caption is the object of the toast, often a group of people, a person, or an idea.",
+    "examples": [
+      {
+        "caption1": "To all those who are still working from home",
+        "caption2": "Cheers!"
+      },
+      {
+        "caption1": "A toast to all the teachers",
+        "caption2": "Who have to deal with us on a daily basis"
+      }
+    ]
+  },"is_this_a_pigeon": {
+    "name": "Is This A Pigeon",
+    "file": "Memes/Is-This-A-Pigeon.jpg",
+    "tags": [
+      "confused",
+      "misidentification",
+      "mistake",
+      "misunderstanding",
+      "illogical"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 218,
+        "y": 64,
+        "width": 286,
+        "height": 91
+      },
+      "caption2": {
+        "x": 206,
+        "y": 194,
+        "width": 304,
+        "height": 89
+      },
+      "caption3": {
+        "x": 210,
+        "y": 313,
+        "width": 302,
+        "height": 95
+      }
+    },
+    "explanation": "This meme features a character pointing at a butterfly and asking 'Is this a pigeon?' Caption1 describes a person, group, or a self-referential label. Caption2 describes an object or concept, and Caption3 is the phrase 'Is this a [misidentified object]?'",
+    "examples": [
+      {
+        "caption1": "Me with a girl",
+        "caption2": "Me",
+        "caption3": "Is this a good idea?"
+      },
+      {
+        "caption1": "Me",
+        "caption2": "My brain",
+        "caption3": "Is this a communism?"
+      }
+    ]
+  },"inhaling_seagull": {
+    "name": "Inhaling Seagull",
+    "file": "Memes/Inhaling-Seagull.jpg",
+    "tags": [
+      "intense",
+      "shock",
+      "surprise",
+      "reaction",
+      "loud"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 218,
+        "y": 64,
+        "width": 286,
+        "height": 91
+      },
+      "caption2": {
+        "x": 206,
+        "y": 194,
+        "width": 304,
+        "height": 89
+      },
+      "caption3": {
+        "x": 210,
+        "y": 313,
+        "width": 302,
+        "height": 95
+      },
+      "caption4": {
+        "x": 211,
+        "y": 427,
+        "width": 298,
+        "height": 111
+      }
+    }, 
+    "explanation": "Caption1: Calm setup line introducing the situation.\n\nCaption2: Builds on it with a little more detail or tension.\n\nCaption3: Pushes the setup to peak anticipation (the “inhale” panel).\n\nCaption4: Explosive or over-the-top reaction — the “scream” punchline.",
+    "examples": [
+      {
+        "caption1": "I'm hungry",
+        "caption2": "Is that pizza rolls",
+        "caption3": "OMG",
+        "caption4": "I'm going in"
+      }
+    ]
+  },"ill_just_wait_here": {
+    "name": "I'll Just Wait Here",
+    "file": "Memes/Ill-Just-Wait-Here.jpg",
+    "tags": [
+      "waiting",
+      "patience",
+      "forever",
+      "stuck",
+      "loading"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 235,
+        "y": 37,
+        "width": 237,
+        "height": 257
+      },
+      "caption2": {
+        "x": 252,
+        "y": 305,
+        "width": 222,
+        "height": 240
+      }
+    },
+    "explanation": "This meme features a two-part caption. Caption1 describes an action or a desired outcome, while Caption2 indicates the indefinite waiting period for that outcome. The image shows a character waiting patiently, often for something that is delayed or may never happen.",
+    "examples": [
+      {
+        "caption1": "Scrolling through Amazon, I have finally found it—toilet paper",
+        "caption2": "I see that it's out of stock"
+      },
+      {
+        "caption1": "Waiting for Roblox to load",
+        "caption2": "It's still updating"
+      }
+    ]
+  },"hide_the_pain_harold": {
+    "name": "Hide the Pain Harold",
+    "file": "Memes/Hide-the-Pain-Harold.jpg",
+    "tags": [
+      "awkward",
+      "painful",
+      "discomfort",
+      "forced smile",
+      "awkward smile"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 204,
+        "y": 65,
+        "width": 393,
+        "height": 120
+      },
+      "caption2": {
+        "x": 202,
+        "y": 302,
+        "width": 398,
+        "height": 99
+      }
+    },
+    "explanation": "The meme shows Harold, an older man, with a forced smile that suggests he is hiding internal pain or discomfort. Caption1 describes an awkward or painful situation, and Caption2 is a statement that attempts to make the best of it, with the image conveying the opposite emotion.",
+    "examples": [
+      {
+        "caption1": "You find a fresh meme to send to your friends",
+        "caption2": "You don't have friends"
+      }
+    ]
+  },"hard_to_swallow_pills": {
+    "name": "Hard To Swallow Pills",
+    "file": "Memes/Hard-To-Swallow-Pills.jpg",
+    "tags": [
+      "truth",
+      "facts",
+      "unpopular opinion",
+      "realization",
+      "denial"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 224,
+        "y": 66,
+        "width": 298,
+        "height": 266
+      }
+    },
+    "explanation": "This meme features a single caption. The caption is a statement of an unpleasant, unpopular, or difficult-to-accept truth. The image of a person struggling to swallow a pill represents the difficulty of accepting this truth.",
+    "examples": [
+      {
+        "caption1": "No matter how many times you restart your computer, it will never love you."
+      },
+      {
+        "caption1": "No one will remember your username after you die."
+      },
+      {
+        "caption1": "Your phone will never get a new update."
+      },
+      {
+        "caption1": "There's no candy in the forest."
+      }
+    ]
+  },"futurama_fry": {
+    "name": "Futurama Fry",
+    "file": "Memes/Futurama-Fry.jpg",
+    "tags": [
+      "uncertainty",
+      "suspicious",
+      "doubt",
+      "confused",
+      "pondering"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 209,
+        "y": 27,
+        "width": 390,
+        "height": 128
+      },
+      "caption2": {
+        "x": 213,
+        "y": 272,
+        "width": 393,
+        "height": 128
+      }
+    },
+    "explanation": "Caption1 states a situation or action, typically followed by the phrase 'Not sure if...' Caption2 completes the thought, expressing a dilemma or a skeptical conclusion.",
+    "examples": [
+      {
+        "caption1": "Not sure if the Coronavirus is ending",
+        "caption2": "or the news just stopped reporting on it"
+      }
+    ]
+  },"finding_neverland": {
+    "name": "Finding Neverland",
+    "file": "Memes/Finding-Neverland.jpg",
+    "tags": [
+      "cry",
+      "sad",
+      "pain",
+      "depression",
+      "drama"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 219,
+        "y": 55,
+        "width": 261,
+        "height": 120
+      },
+      "caption2": {
+        "x": 217,
+        "y": 242,
+        "width": 258,
+        "height": 113
+      },
+      "caption3": {
+        "x": 217,
+        "y": 376,
+        "width": 262,
+        "height": 125
+      }
+    },
+    "explanation": "This meme features three panels of a character from the movie 'Finding Neverland' crying. Caption1 is a question, usually one that is seemingly simple, and Caption2 is an honest, often painful, answer. The third caption is the conclusion of the dialogue, which is usually a dramatic or even more depressing thought.",
+    "examples": [
+      {
+        "caption1": "I think I pooped in my pants",
+        "caption2": "Yes, Dad",
+        "caption3": "U have loose motion?? don't panic. Now it's lockdown. Go behind the bush and wipe it with leaves"
+      }
+    ]
+  },"expanding_brain": {
+    "name": "Expanding Brain",
+    "file": "Memes/Expanding-Brain.jpg",
+    "tags": [
+      "intelligence",
+      "mind blown",
+      "progression",
+      "knowledge",
+      "enlightenment"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 24,
+        "y": 12,
+        "width": 172,
+        "height": 183
+      },
+      "caption2": {
+        "x": 28,
+        "y": 266,
+        "width": 196,
+        "height": 214
+      },
+      "caption3": {
+        "x": 274,
+        "y": 266,
+        "width": 196,
+        "height": 214
+      },
+      "caption4": {
+        "x": 284,
+        "y": 34,
+        "width": 172,
+        "height": 183
+      }
+    },
+    "explanation": "This meme shows a series of four images, each with an expanding brain. Caption1 represents a simple or common idea. Each subsequent caption represents a more complex, enlightened, or absurd version of the same idea.",
+    "examples": [
+      {
+        "caption1": "Using a spoon to eat soup",
+        "caption2": "Using a ladle to eat soup",
+        "caption3": "Drinking soup directly from the bowl",
+        "caption4": "Making a straw out of a breadstick"
+      },
+      {
+        "caption1": "Using a keyboard",
+        "caption2": "Using a gaming keyboard",
+        "caption3": "Using a mechanical keyboard",
+        "caption4": "Using a Dvorak keyboard"
+      }
+    ]
+  },"monkey_puppet": {
+    "name": "Monkey Puppet",
+    "file": "Memes/Monkey-Puppet.jpg",
+    "tags": [
+      "awkward",
+      "silent reaction",
+      "inner monologue",
+      "realizing a mistake"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1 (Person 1): The setup or an action that is about to lead to a predictable but awkward outcome. Function: Sets the scene for the moment of realization. Caption2 (Monkey Puppet): The silent, knowing reaction of realizing the awkwardness or mistake. Function: The punchline, conveying a 'I know what I did' or 'this is awkward' sentiment without words.",
+    "examples": [
+      {
+        "caption1": "Me: *tells a lie*",
+        "caption2": "My brain immediately after:"
+      },
+      {
+        "caption1": "The teacher: 'You said the project was due today.'",
+        "caption2": "Me, who didn't do the project:"
+      },
+      {
+        "caption1": "My friend: 'Wait, did you really just say that?'",
+        "caption2": "Me:"
+      }
+    ]
+  },"one_does_not_simply": {
+    "name": "One Does Not Simply",
+    "file": "Memes/One-Does-Not-Simply.jpg",
+    "tags": [
+      "lord of the rings",
+      "difficulty",
+      "impossible",
+      "challenge",
+      "quest"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1 (Boromir): The iconic line establishing a task is not as easy as it seems. Function: Introduces the premise of a seemingly simple but unexpectedly difficult task. Caption2 (S.H.I.E.L.D. Agent): The difficult task itself. Function: The punchline, highlighting a mundane or modern-day 'quest' that is harder than it looks.",
+    "examples": [
+      {
+        "caption1": "One does not simply",
+        "caption2": "buy enough toilet paper."
+      },
+      {
+        "caption1": "One does not simply",
+        "caption2": "find a good parking spot at the mall on a Saturday."
+      },
+      {
+        "caption1": "One does not simply",
+        "caption2": "wake up early on a weekend."
+      }
+    ]
+  },"sad_pablo_escobar": {
+    "name": "Sad Pablo Escobar",
+    "file": "Memes/Sad-Pablo-Escobar.jpg",
+    "tags": [
+      "waiting",
+      "bored",
+      "impatient",
+      "isolation",
+      "pensive"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 50,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      },
+      "caption3": {
+        "x": 40,
+        "y": 790,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1: The reason for the wait or a moment of contemplation. Function: Sets up a situation where one is forced to wait or be alone. Caption2: A thought while waiting. Function: Adds to the sense of boredom or longing. Caption3: The final stage of sadness or extreme impatience. Function: The punchline, highlighting the prolonged or sad nature of the wait.",
+    "examples": [
+      {
+        "caption1": "Me waiting for my crush to text back.",
+        "caption2": "Waiting...",
+        "caption3": "Still waiting!"
+      },
+      {
+        "caption1": "Waiting for the pizza to arrive.",
+        "caption2": "Where is it?",
+        "caption3": "It's been 30 minutes!"
+      },
+      {
+        "caption1": "Sitting on the bench while my parents try on clothes.",
+        "caption2": "I've been here forever.",
+        "caption3": "Send help!"
+      }
+    ]
+  },"see_nobody_cares": {
+    "name": "See Nobody Cares",
+    "file": "Memes/See-Nobody-Cares.jpg",
+    "tags": [
+      "indifference",
+      "unimportant",
+      "nobody cares",
+      "dismissive",
+      "unimpressed"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1: A statement or news that someone thinks is important. Function: The setup for something that is ultimately insignificant to others. Caption2: The dismissal, 'See, nobody cares.' Function: The punchline, highlighting the indifference of the audience.",
+    "examples": [
+      {
+        "caption1": "Me: 'I just leveled up in my favorite video game!'",
+        "caption2": "Everyone else: 'See, nobody cares.'"
+      },
+      {
+        "caption1": "Coworker: 'I'm starting a new diet today!'",
+        "caption2": "The rest of the office: 'See, nobody cares.'"
+      },
+      {
+        "caption1": "My friend: 'I have a new tweet from J.K. Rowling.'",
+        "caption2": "Me: 'See, nobody cares.'"
+      }
+    ]
+  },"spongebob_ight_imma_head_out": {
+    "name": "Spongebob Ight Imma Head Out",
+    "file": "Memes/Spongebob-Ight-Imma-Head-Out.jpg",
+    "tags": [
+      "leaving",
+      "exit",
+      "awkward situation",
+      "bailing",
+      "spongebob"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1: The reason or event that prompts the departure. Function: Sets up an uncomfortable, boring, or unwanted situation. Caption2: The decision to leave. Function: The punchline, conveying a 'I'm out of here' attitude.",
+    "examples": [
+      {
+        "caption1": "When you hear your family start talking about politics at the dinner table.",
+        "caption2": "Ight, Imma head out."
+      },
+      {
+        "caption1": "When the teacher says attendance doesn't count for a grade.",
+        "caption2": "Ight, Imma head out."
+      },
+      {
+        "caption1": "When someone starts telling an awkward story.",
+        "caption2": "Ight, Imma head out."
+      }
+    ]
+  },"surprised_pikachu": {
+    "name": "Surprised Pikachu",
+    "file": "Memes/Surprised-Pikachu.jpg",
+    "tags": [
+      "shocked",
+      "surprised",
+      "obvious outcome",
+      "pikachu",
+      "reacting"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1: The action or setup that leads to a predictable result. Function: Establishes a cause-and-effect scenario. Caption2: The shocked reaction to the obvious outcome. Function: The punchline, highlighting the feigned or genuine surprise at a consequence that was easy to predict.",
+    "examples": [
+      {
+        "caption1": "Me: *eats an entire tub of ice cream*",
+        "caption2": "Me: *gets a stomach ache* Surprised Pikachu Face"
+      },
+      {
+        "caption1": "I didn't study for the test at all.",
+        "caption2": "*Fails the test* Surprised Pikachu Face"
+      },
+      {
+        "caption1": "I told my mom I was going out but stayed home to play video games.",
+        "caption2": "My mom: *gets home and finds me playing video games* Surprised Pikachu Face"
+      }
+    ]
+  },"the_rock_driving": {
+    "name": "The Rock Driving",
+    "file": "Memes/The-Rock-Driving.jpg",
+    "tags": [
+      "driving",
+      "conversation",
+      "dialogue",
+      "question and answer",
+      "witty"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1 (Person 1): A question or statement. Function: The setup for a conversational exchange. Caption2 (The Rock): A direct, often witty or surprising, response. Function: The punchline, subverting expectations with a clever or unexpected answer.",
+    "examples": [
+      {
+        "caption1": "Where is my mother?",
+        "caption2": "I don't know, son."
+      },
+      {
+        "caption1": "Why do you always procrastinate?",
+        "caption2": "I'm not procrastinating, I'm just taking my time."
+      },
+      {
+        "caption1": "Are you talking back to me?",
+        "caption2": "Yes, that's how a conversation works."
+      }
+    ]
+  },"the_scroll_of_truth": {
+    "name": "The Scroll Of Truth",
+    "file": "Memes/The-Scroll-Of-Truth.jpg",
+    "tags": [
+      "truth",
+      "fact",
+      "uncomfortable truth",
+      "denial",
+      "reality"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1: A statement of fact or an opinion being revealed on the scroll. Function: The uncomfortable truth that the character will deny. Caption2: The character's violent reaction to the truth. Function: The punchline, highlighting the refusal to accept the reality.",
+    "examples": [
+      {
+        "caption1": "The movie you liked was actually bad.",
+        "caption2": "*throws scroll* Nyeh!"
+      },
+      {
+        "caption1": "You have to go to work.",
+        "caption2": "*throws scroll* Nyeh!"
+      },
+      {
+        "caption1": "You will say 'Nyeh' when you see this.",
+        "caption2": "*throws scroll* Nyeh!"
+      }
+    ]
+  }, "tuxedo_winnie_the_pooh": {
+    "name": "Tuxedo Winnie The Pooh",
+    "file": "Memes/Tuxedo-Winnie-The-Pooh.jpg",
+    "tags": [
+      "formal",
+      "classy",
+      "sophisticated",
+      "casual",
+      "contrast"
+    ],
+    "captions": {
+      "caption1": {
+        "x": 40,
+        "y": 120,
+        "width": 400,
+        "height": 80
+      },
+      "caption2": {
+        "x": 40,
+        "y": 420,
+        "width": 400,
+        "height": 80
+      }
+    },
+    "explanation": "Caption1: A simple or casual version of a concept. Function: Establishes a baseline or common term. Caption2: A more formal, sophisticated, or overly-complex version of the same concept. Function: The punchline, highlighting the pretentious or unnecessarily elegant way of saying something simple.",
+    "examples": [
+      {
+        "caption1": "Telling a joke",
+        "caption2": "Delivering a comedic anecdote"
+      },
+      {
+        "caption1": "Me when I wake up",
+        "caption2": "Me when I have a meeting on a Monday morning."
+      },
+      {
+        "caption1": "A cow",
+        "caption2": "A black and white fat giant goat pig."
+      }
+    ]
+  }
+}

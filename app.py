@@ -1,0 +1,594 @@
+import random
+import traceback
+from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS
+import json
+import os
+from datetime import datetime
+from Generate.caption_ai import generate_caption,build_meme_recommender,generate_captions_no_template
+from Generate.meme_generator import create_meme,create_meme_from_file, describe_image
+from Generate.describe import describe,uploadfile
+from auth import token_required, update_user_meme_count
+from auth_routes import auth_bp
+from admin_routes import admin_bp
+from Generate.caption_point import generate_captions
+from config import config
+from pymongo import MongoClient
+from PIL import Image
+from bson import ObjectId
+import traceback
+
+app = Flask(__name__)
+app.debug = True 
+# Load configuration
+flask_env = os.environ.get('FLASK_ENV', 'default')
+app.config.from_object(config[flask_env])
+
+CORS(app)  # Enable CORS for React frontend
+
+# Register blueprints
+app.register_blueprint(auth_bp, url_prefix='/api/auth')
+app.register_blueprint(admin_bp, url_prefix='/api/admin')
+
+# MongoDB connection for templates
+try:
+    mongo_client = MongoClient(app.config['MONGODB_URI'])
+    mongo_db = mongo_client[app.config['MONGODB_DB']]
+    meme_templates_collection = mongo_db['meme_templates']
+    user_templates_collection = mongo_db['user_templates']
+    memes_collection = mongo_db['memes']
+except Exception as e:
+    print(f"Failed to connect to MongoDB for meme_templates: {e}")
+    meme_templates_collection = None
+    user_templates_collection=None
+    memes_collection=None
+
+# Load templates from MongoDB and normalize to the expected dict shape
+def load_templates():
+    
+    """Return templates as {template_key: template_dict} from MongoDB."""
+    if meme_templates_collection is None:
+        # Fallback to file for safety in dev
+        with open("Generate/templates.json", "r") as f:
+            return json.load(f)
+    merged = {}
+    try:
+        for doc in meme_templates_collection.find({}):
+            # Each document may contain multiple template keys besides _id
+            for key, value in doc.items():
+                if key == '_id':
+                    continue
+                merged[key] = value
+        return merged
+    except Exception as e:
+        print(f"Error loading templates from MongoDB: {e}")
+        # Fallback to file in case of query error
+        with open("Generate/templates.json", "r") as f:
+            return json.load(f)
+
+# Serve the React app
+@app.route('/')
+def serve_react_app():
+    return send_file('frontend/build/index.html')
+
+# Serve static files from React build
+@app.route('/<path:path>')
+def serve_static(path):
+    if os.path.exists(f'frontend/build/{path}'):
+        return send_file(f'frontend/build/{path}')
+    return send_file('frontend/build/index.html')
+
+# API endpoint to generate memes
+@app.route('/api/generate-meme', methods=['POST'])
+@token_required
+def generate_meme(current_user):
+    try:
+        data = request.get_json()
+        topic = data.get('topic')
+        template_key = data.get('template')
+        
+        if not topic:
+            return jsonify({'error': 'Missing topic'}), 400
+        
+        templates = load_templates()
+        
+        if template_key not in templates:
+            template=random.choice(list(templates.values()))
+        else:
+            template = templates[template_key]
+
+        # Generate captions using your existing AI
+        caption_count = len(template.get("captions", {}))
+        captions = generate_caption(topic,template, template["tags"], template["name"], num_captions=caption_count)
+        
+        # Create the meme using your existing generator
+        output_path = create_meme(template, captions)
+        
+        if output_path and os.path.exists(output_path):
+            # Update user's meme count
+            update_user_meme_count(current_user['_id'])
+            
+            # Store meme in database
+            from admin_routes import memes_collection
+            if memes_collection is not None:
+                meme_data = {
+                    'user_id': str(current_user['_id']),
+                    'username': current_user['username'],
+                    'topic': topic,
+                    'template': template['name'],
+                    'file_path': output_path,
+                    'created_at': datetime.utcnow()
+                }
+                memes_collection.insert_one(meme_data)
+            
+            # Return the path to the generated meme
+            return jsonify({
+                'success': True,
+                'meme_path': output_path,
+                'topic': topic,
+                'template': template['name']
+            })
+        else:
+            return jsonify({'error': 'Failed to generate meme'}), 500
+            
+    except Exception as e:
+        traceback.print_exc()
+        print(f"Error generating meme: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# Serve generated memes
+@app.route('/generated/<filename>')
+def serve_generated_meme(filename):
+    return send_file(f'GeneratedMemes/{filename}')
+
+# Serve meme template images
+@app.route('/Memes/<filename>')
+def serve_meme_template(filename):
+    return send_file(f'Memes/{filename}')
+
+# API endpoint to get available templates
+@app.route('/api/templates')
+def get_templates():
+    try:
+        templates = load_templates()
+        # Simplify template data for frontend
+        simplified_templates = {}
+        for key, template in templates.items():
+            simplified_templates[key] = {
+                'name': template['name'],
+                'file': f'/Memes/{os.path.basename(template["file"])}',
+                'description': template.get('explanation', ''),
+                'tags': template.get('tags', [])
+            }
+        return jsonify(simplified_templates)
+    except Exception as e:
+        return jsonify({'error': 'Failed to load templates'}), 500
+
+@app.route('/api/templatesfront')
+def get_templates_front():
+    try:
+        templates ={}
+        with open("Generate/templatesfront.json", "r") as f:
+            templates= json.load(f)
+        # Simplify template data for frontend
+        simplified_templates = {}
+        for key, template in templates.items():
+            simplified_templates[key] = {
+                'name': template['name'],
+                'file': f'/Memes/{os.path.basename(template["file"])}',
+                'description': template.get('description', ''),
+                'tags': template.get('tags', [])
+            }
+        return jsonify(simplified_templates)
+    except Exception as e:
+        return jsonify({'error': 'Failed to load templates'}), 500
+
+
+
+# API endpoint to search templates with AI-powered suitability ranking
+@app.route('/api/search-templates', methods=['POST'])
+@token_required
+def search_templates(current_user):
+    try:
+        data = request.get_json()
+        query = data.get('query', '').lower().strip()
+        
+        if not query:
+            return jsonify({'error': 'Missing search query'}), 400
+        
+        templates = load_templates()
+        find_memes = build_meme_recommender(templates)
+        scored_templates=find_memes(query)
+        return jsonify({
+            'success': True,
+            'templates': scored_templates,
+            'query': query
+        })
+        
+    except Exception as e:
+        print(f"Error searching templates: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# API endpoint to generate meme from uploaded image
+@app.route('/api/template-to-meme', methods=['POST'])
+@token_required
+def template_to_meme(current_user):
+    try:
+        if 'image' not in request.files:
+            return jsonify({'error': 'No image file provided'}), 400
+        
+        file = request.files['image']
+        topic = request.form.get('topic', '').strip()
+        
+        if not topic:
+            return jsonify({'error': 'Missing topic'}), 400
+        
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+        
+        # Save uploaded image temporarily
+        import tempfile
+        import uuid
+        uidd=uuid.uuid4()
+        # Create unique filename
+        filename = f"{uidd}.png"
+        temp_path = os.path.join('Memes', filename)
+        
+        # Save the uploaded image
+        file.save(temp_path)
+        image = Image.open(temp_path)
+        width, height = image.size
+
+        # Get additional template information
+        template_name = request.form.get('name', f"{uidd}")
+        template_description = request.form.get('description', '')
+        
+        # Check if caption points were provided in the request
+        caption_points = request.form.get('captionPoints')
+        if caption_points:
+            try:
+                caption_points = json.loads(caption_points)
+                # Use custom caption points if provided
+                captions = {
+                    "caption1": caption_points[0] if len(caption_points) > 0 else generate_captions(width, height, 150, 150)["captions"]["caption1"],
+                    "caption2": caption_points[1] if len(caption_points) > 1 else generate_captions(width, height, 150, 150)["captions"]["caption2"],
+                }
+                for i in range(2, len(caption_points)):
+                    key=f"caption{i+1}"
+                    captions[key] = caption_points[i]
+
+            except:
+                # Fallback to default caption points
+                captions = generate_captions(width, height, 150, 150)
+        else:
+            # Use default caption points
+            captions = generate_captions(width, height, 150, 150)
+            
+        user_id = current_user['_id'] # Replace with real user id from auth/session
+
+    # Create the document to insert
+        meme_doc = {
+            "userid": user_id,
+            "name": template_name,
+            "file": f"Memes/{filename}",
+            "tags": [
+                "choice",
+                "reject",
+                "approve",
+                "comparison",
+                "preference"
+            ],
+            **captions,
+            "explanation": template_description,
+            "examples": [],
+            "usageCount":0,
+            "createdAt":datetime.utcnow(),
+        }
+        result = user_templates_collection.insert_one(meme_doc)
+        return jsonify({
+            'success': True,
+            'image_path': f'/Memes/{filename}',
+            'mongo_id': str(result.inserted_id)
+        })
+        
+    except Exception as e:
+        print(f"Error in template-to-meme: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# API endpoint to get user's custom templates
+@app.route('/api/my-templates', methods=["GET","DELETE"])
+@token_required
+def get_my_templates(current_user):
+    try:
+        user_memes_cursor = user_templates_collection.find({'userid': current_user['_id']})
+        user_memes = []
+        for meme in user_memes_cursor:
+            captions_array = [
+                {"label": key, **value}
+                for key, value in meme["captions"].items()
+            ]
+            user_memes.append({
+            'id': str(meme.get('_id')),
+            'name': meme.get('name'),
+            'description': meme.get('explanation', ''),
+            'imageUrl': meme.get('file'),
+            'createdAt': str(meme.get('createdAt', '')),
+            'usageCount': meme.get('usageCount', 0),
+            'captionPoints':captions_array
+        })
+        
+        return jsonify({'success': True, 'memes': user_memes})
+        
+    except Exception as e:
+        print(f"Error getting user templates: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# API endpoint to update user template
+@app.route('/api/update-template', methods=['PUT'])
+@token_required
+def update_template(current_user):
+    try:
+        data = request.get_json()
+        name = data.get('name', '').strip()
+        description = data.get('description', '').strip()
+        caption_points = data.get('captionPoints', [])
+        template_id = data.get('template_id', '').strip()
+        
+        
+        # Update the template in the database
+        update_data = {}
+        if name:
+            update_data['name'] = name
+        if description:
+            update_data['explanation'] = description
+        if caption_points is not None:
+                # Use custom caption points if provided
+            captions = { }
+            for i in range(0, len(caption_points)):
+                key=f"caption{i+1}"
+                captions[key] = caption_points[i]
+            update_data['captions'] = captions
+        
+        if update_data:
+            result = user_templates_collection.update_one(
+                {'_id': ObjectId(template_id), 'userid': current_user['_id']},
+                {'$set': update_data}
+            )
+            
+            if result.modified_count > 0:
+                return jsonify({
+                    'success': True,
+                    'message': 'Template updated successfully'
+                })
+            else:
+                return jsonify({'error': 'Template not found or no changes made'}), 404
+        
+        return jsonify({
+            'success': True,
+            'message': 'No changes to update'
+        })
+        
+    except Exception as e:
+        print(f"Error updating template: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# API endpoint to delete user template
+@app.route('/api/my-templates/<string:template_id>',methods=["DELETE"])
+@token_required
+def delete_template(current_user, template_id):
+    try:
+        # Delete the template from the database
+        result = user_templates_collection.delete_one({
+            '_id': ObjectId(template_id), 
+            'userid': current_user['_id']
+        })
+        
+        if result.deleted_count > 0:
+            return jsonify({
+                'success': True,
+                'message': 'Template deleted successfully'
+            })
+        else:
+            return jsonify({'error': 'Template not found'}), 404
+        
+    except Exception as e:
+        print(f"Error deleting template: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# API endpo3 to get user profile
+@app.route('/api/profile', methods=['GET'])
+@token_required
+def get_profile(current_user):
+    try:
+        template_count = user_templates_collection.count_documents({"userid": current_user['_id']})
+        meme_count = memes_collection.count_documents({"user_id": current_user['_id']})
+
+
+        user_memes = list(
+            memes_collection.find({"user_id":current_user['_id']})
+            .sort("createdAt", -1)
+        )
+        profile = {
+            'id': str(current_user['_id']),
+            'username': current_user['username'],
+            'email': current_user['email'],
+            'bio': current_user.get('bio', 'I love creating hilarious memes!'),
+            'role': current_user.get('role', 'user'),
+            'createdAt': str(current_user.get('createdAt', datetime.utcnow())),
+            'memeCount': meme_count,
+            'templateCount': template_count
+        }
+        memes = [
+            {
+                "id": str(meme["_id"]),
+                "title": meme.get("title", "Untitled Meme"),
+                "imageUrl": meme.get("imageUrl"),
+                "createdAt": str(meme.get("createdAt", datetime.utcnow())),
+            }
+            for meme in user_memes
+        ]
+        
+        return jsonify({
+            'success': True,
+            'profile': profile,
+            'memes': memes
+        })
+        
+    except Exception as e:
+        print(f"Error getting profile: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# API endpoint to update user profile
+@app.route('/api/profile', methods=['PUT'])
+@token_required
+def update_profile(current_user):
+    try:
+        data = request.get_json()
+        username = data.get('username', '').strip()
+        email = data.get('email', '').strip()
+        bio = data.get('bio', '').strip()
+        
+        if not username:
+            return jsonify({'error': 'Username is required'}), 400
+        
+        # TODO: Implement database update
+        return jsonify({
+            'success': True,
+            'message': 'Profile updated successfully'
+        })
+        
+    except Exception as e:
+        print(f"Error updating profile: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+# Health check endpoint
+@app.route('/api/health')
+def health_check():
+    return jsonify({'status': 'healthy'})
+
+@app.route('/api/generate-template-to-meme', methods=['POST'])
+@token_required
+def generate_template_to_meme(current_user):
+    try:
+        topic = request.form.get('topic')
+        caption_points_str = request.form.get('captionPoints') 
+        caption_points = json.loads(caption_points_str)
+        if not topic:
+            return jsonify({'error': 'Missing topic'}), 400
+        link=uploadfile(request.files['image'])
+        caption=describe(link)
+        caption_count = len(caption_points)
+        captions = generate_captions_no_template(topic,caption, num_captions=caption_count)
+        output_path = create_meme_from_file(request.files['image'], captions, caption_points)
+        
+        if output_path and os.path.exists(output_path):
+            # Update user's meme count
+            update_user_meme_count(current_user['_id'])
+            
+            # Store meme in database
+            if memes_collection is not None:
+                meme_data = {
+                    'user_id': str(current_user['_id']),
+                    'username': current_user['username'],
+                    'topic': topic,
+                    'template': 'User Template',
+                    'file_path': output_path,
+                    'created_at': datetime.utcnow()
+                }
+                memes_collection.insert_one(meme_data)
+            
+            # Return the path to the generated meme
+            return jsonify({
+                'success': True,
+                'meme_path': output_path,
+                'topic': topic,
+                'template': 'User Template'
+            })
+        else:
+            return jsonify({'error': 'Failed to generate meme'}), 500
+            
+    except Exception as e:
+        print(f"Error generating meme: {str(e)}")
+        print(traceback.format_exc())
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/generate-from-user-template', methods=['POST'])
+@token_required
+def generate_from_user_template(current_user):
+    try:
+        data = request.get_json()
+        topic = data.get('topic', '').strip()
+        template_id = data.get('template_id', '').strip()
+
+        if not topic:
+            return jsonify({'error': 'Missing topic'}), 400
+        if not template_id:
+            return jsonify({'error': 'Missing template_id'}), 400
+
+        # Load the user's template
+        tmpl = user_templates_collection.find_one({
+            '_id': ObjectId(template_id),
+            'userid': current_user['_id']
+        })
+        if not tmpl:
+            return jsonify({'error': 'Template not found'}), 404
+
+        # Build a template-like structure for the generator
+        template_file = tmpl.get('file')  # e.g. "Memes/xxxx.png"
+        caption_boxes = tmpl.get('captions', {})
+        if not template_file or not caption_boxes:
+            return jsonify({'error': 'Template is missing image or captions'}), 400
+
+        # Describe the template image to guide caption generation
+        try:
+            blip_caption = describe_image(template_file)
+        except Exception:
+            blip_caption = ''
+
+        num_captions = len(caption_boxes)
+        if num_captions <= 0:
+            return jsonify({'error': 'Template has no caption points'}), 400
+
+        # Generate captions without predefined template metadata
+        captions = generate_captions_no_template(topic, blip_caption, num_captions=num_captions)
+
+        # Create a meme image using the stored template image and caption boxes
+        template_struct = {
+            'file': template_file,
+            'captions': caption_boxes
+        }
+        output_path = create_meme(template_struct, captions)
+
+        if output_path and os.path.exists(output_path):
+            # Update user's meme count
+            update_user_meme_count(current_user['_id'])
+
+            # Store meme in database
+            if memes_collection is not None:
+                meme_data = {
+                    'user_id': str(current_user['_id']),
+                    'username': current_user['username'],
+                    'topic': topic,
+                    'template': tmpl.get('name', 'User Template'),
+                    'file_path': output_path,
+                    'created_at': datetime.utcnow()
+                }
+                memes_collection.insert_one(meme_data)
+
+            return jsonify({
+                'success': True,
+                'meme_path': output_path,
+                'topic': topic,
+                'template': tmpl.get('name', 'User Template')
+            })
+        else:
+            return jsonify({'error': 'Failed to generate meme'}), 500
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+if __name__ == '__main__':
+    # This is now handled by run.py
+    # For direct execution, you can still run this file
+    app.run(debug=True, host='0.0.0.0', port=5000)

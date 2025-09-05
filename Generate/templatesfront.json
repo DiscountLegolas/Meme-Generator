@@ -1,0 +1,447 @@
+{
+    "drake_hotline": {
+      "name": "Drake Hotline",
+      "file": "/Memes/Drake.png",
+      "description": "Perfect for comparing two choices",
+      "tags": ["comparison", "choice", "preference", "better", "worse", "decision", "opinion", "taste", "style"]
+    },
+    "uno_card": {
+      "name": "Uno Card",
+      "file": "/Memes/UnoCart.png",
+      "description": "Great for refusal scenarios",
+      "tags": ["refusal", "rejection", "no", "denial", "refuse", "angry", "frustrated", "mad", "upset", "disappointed"]
+    },
+    "two_buttons": {
+      "name": "Two Buttons",
+      "file": "/Memes/TwoButtons.png",
+      "description": "Ideal for dilemmas and choices",
+      "tags": ["dilemma", "choice", "decision", "confused", "difficult", "hard", "problem", "trouble", "stress", "anxiety"]
+    },
+    "batman_slap": {
+      "name": "Batman Slap",
+      "file": "/Memes/BatmanSlap.png",
+      "description": "Perfect for rejection humor",
+      "tags": ["rejection", "slap", "angry", "mad", "furious", "disappointed", "hurt", "pain", "shock", "surprise"]
+    },
+    "distracted_bf": {
+      "name": "Distracted Bf",
+      "file": "/Memes/Boyfriend.png",
+      "description": "Great for distraction scenarios",
+      "tags": ["distraction", "attention", "focus", "love", "relationship", "jealous", "attractive", "beautiful", "pretty", "hot"]
+    },
+    "road_division": {
+      "name": "Road Division",
+      "file": "/Memes/Road.png",
+      "description": "Perfect for path choices",
+      "tags": ["path", "choice", "decision", "direction", "future", "life", "career", "success", "failure", "journey"]
+    },
+    "american_chopper_argument": {
+    "name": "American Chopper Argument",
+    "file": "Memes/American-Chopper-Argument.jpg",
+    "tags": [
+      "argument",
+      "fight",
+      "debate",
+      "yelling",
+      "father-son",
+      "conflict"
+    ],
+    "description": "Great for showcasing a debate with two opposing viewpoints, from the reasonable to the absurd."
+  },
+  "boardroom_meeting_suggestion": {
+    "name": "Boardroom Meeting Suggestion",
+    "file": "Memes/Boardroom-Meeting-Suggestion.jpg",
+    "tags": [
+      "meeting",
+      "suggestion",
+      "decision",
+      "business",
+      "corporate",
+      "brainstorming"
+    ],
+    "description": "Perfect for illustrating a bad or controversial idea being presented and rejected."
+  },
+  "am_i_the_only_one": {
+    "name": "Am I The Only One Around Here",
+    "file": "Memes/Am-I-The-Only-One-Around-Here.jpg",
+    "tags": [
+      "opinion",
+      "rant",
+      "annoyance",
+      "unpopular opinion",
+      "question"
+    ],
+    "description": "Excellent for expressing a personal, often unpopular, opinion or observation."
+  },
+  "ancient_aliens": {
+    "name": "Ancient Aliens",
+    "file": "Memes/Ancient-Aliens.jpg",
+    "tags": [
+      "aliens",
+      "theory",
+      "question",
+      "unexplained",
+      "conspiracy"
+    ],
+    "description": "Ideal for providing a simple, sarcastic, or conspiratorial description for a strange or mysterious event."
+  },
+  "bernie_i_am_once_again_asking": {
+    "name": "Bernie I Am Once Again Asking For Your Support",
+    "file": "Memes/Bernie-I-Am-Once-Again-Asking-For-Your-Support.jpg",
+    "tags": [
+      "bernie sanders",
+      "request",
+      "begging",
+      "demand",
+      "politics"
+    ],
+    "description": "Best for humorously depicting a repeated or desperate plea for something."
+  },
+  "blank_nut_button": {
+    "name": "Blank Nut Button",
+    "file": "Memes/Blank-Nut-Button.jpg",
+    "tags": [
+      "button",
+      "reaction",
+      "urge",
+      "desire",
+      "impulse"
+    ],
+    "description": "Great for representing a powerful, often uncontrollable, impulse or desire."
+  },
+  "captain_picard_facepalm": {
+    "name": "Captain Picard Facepalm",
+    "file": "Memes/Captain-Picard-Facepalm.jpg",
+    "tags": [
+      "facepalm",
+      "disappointment",
+      "frustration",
+      "stupidity",
+      "exasperation"
+    ],
+    "description": "Perfect for reacting to a moment of extreme stupidity, frustration, or exasperation."
+  },
+  "change_my_mind": {
+    "name": "Change My Mind",
+    "file": "Memes/Change-My-Mind.jpg",
+    "tags": [
+      "opinion",
+      "statement",
+      "controversy",
+      "debate",
+      "challenge"
+    ],
+    "description": "Suitable for stating a controversial opinion and challenging others to debate it."
+  },
+  "disaster_girl": {
+    "name": "Disaster Girl",
+    "file": "Memes/Disaster-Girl.jpg",
+    "tags": [
+      "evil",
+      "fire",
+      "destruction",
+      "mischief",
+      "satisfaction"
+    ],
+    "description": "Ideal for implying that a person is responsible for a disaster and is enjoying the chaos they've caused."
+  },
+  "epic_handshake": {
+    "name": "Epic Handshake",
+    "file": "Memes/Epic-Handshake.jpg",
+    "tags": [
+      "agreement",
+      "handshake",
+      "common ground",
+      "truce",
+      "unity"
+    ],
+    "description": "Great for showcasing common ground or agreement between two different groups or ideas."
+  },
+  "mocking_spongebob": {
+    "name": "Mocking Spongebob",
+    "file": "Memes/Mocking-Spongebob.jpg",
+    "tags": [
+      "mocking",
+      "sarcasm",
+      "annoyance",
+      "disrespect",
+      "imitation"
+    ],
+    "description": "Perfect for sarcastically mocking a statement or idea, often with alternating capitalization."
+  },
+  "leonardo_dicaprio_cheers": {
+    "name": "Leonardo Dicaprio Cheers",
+    "file": "Memes/Leonardo-Dicaprio-Cheers.jpg",
+    "tags": [
+      "cheers",
+      "celebration",
+      "agreement",
+      "toast",
+      "respect"
+    ],
+    "description": "Best for making a toast or showing respect to a person, group, or idea."
+  },
+  "is_this_a_pigeon": {
+    "name": "Is This A Pigeon",
+    "file": "Memes/Is-This-A-Pigeon.jpg",
+    "tags": [
+      "confused",
+      "misidentification",
+      "mistake",
+      "misunderstanding",
+      "illogical"
+    ],
+    "description": "Excellent for illustrating a lack of understanding or an illogical conclusion."
+  },
+  "inhaling_seagull": {
+    "name": "Inhaling Seagull",
+    "file": "Memes/Inhaling-Seagull.jpg",
+    "tags": [
+      "intense",
+      "shock",
+      "surprise",
+      "reaction",
+      "loud"
+    ],
+    "description": "Great for showing an intense, loud, and surprising reaction to a situation."
+  },
+  "ill_just_wait_here": {
+    "name": "I'll Just Wait Here",
+    "file": "Memes/Ill-Just-Wait-Here.jpg",
+    "tags": [
+      "waiting",
+      "patience",
+      "forever",
+      "stuck",
+      "loading"
+    ],
+    "description": "Perfect for conveying a sense of patient, often indefinite, waiting for something that is delayed or may never happen."
+  },
+  "hide_the_pain_harold": {
+    "name": "Hide the Pain Harold",
+    "file": "Memes/Hide-the-Pain-Harold.jpg",
+    "tags": [
+      "awkward",
+      "painful",
+      "discomfort",
+      "forced smile",
+      "awkward smile"
+    ],
+    "description": "Best for expressing a situation where someone is trying to hide their pain or discomfort with a forced smile."
+  },
+  "hard_to_swallow_pills": {
+    "name": "Hard To Swallow Pills",
+    "file": "Memes/Hard-To-Swallow-Pills.jpg",
+    "tags": [
+      "truth",
+      "facts",
+      "unpopular opinion",
+      "realization",
+      "denial"
+    ],
+    "description": "Suitable for stating an unpleasant, unpopular, or difficult-to-accept truth."
+  },
+  "futurama_fry": {
+    "name": "Futurama Fry",
+    "file": "Memes/Futurama-Fry.jpg",
+    "tags": [
+      "uncertainty",
+      "suspicious",
+      "doubt",
+      "confused",
+      "pondering"
+    ],
+    "description": "Ideal for expressing uncertainty or a skeptical dilemma about a situation."
+  },
+  "finding_neverland": {
+    "name": "Finding Neverland",
+    "file": "Memes/Finding-Neverland.jpg",
+    "tags": [
+      "cry",
+      "sad",
+      "pain",
+      "depression",
+      "drama"
+    ],
+    "description": "Great for showing a sad or dramatic realization in response to a simple question."
+  },
+  "expanding_brain": {
+    "name": "Expanding Brain",
+    "file": "Memes/Expanding-Brain.jpg",
+    "tags": [
+      "intelligence",
+      "mind blown",
+      "progression",
+      "knowledge",
+      "enlightenment"
+    ],
+    "description": "Excellent for illustrating a progression of ideas from simple to progressively more complex, enlightened, or absurd."
+  },
+  "monkey_puppet": {
+    "name": "Monkey Puppet",
+    "file": "Memes/Monkey-Puppet.jpg",
+    "tags": [
+      "awkward",
+      "silent reaction",
+      "inner monologue",
+      "realizing a mistake"
+    ],
+    "description": "This meme features a monkey puppet with a silent, awkward expression. It's used to represent the feeling of realizing you've made a mistake or are in an uncomfortable situation."
+  },
+  "one_does_not_simply": {
+    "name": "One Does Not Simply",
+    "file": "Memes/One-Does-Not-Simply.jpg",
+    "tags": [
+      "lord of the rings",
+      "difficulty",
+      "impossible",
+      "challenge",
+      "quest"
+    ],
+    "description": "This meme features Boromir from 'The Lord of the Rings' and is used to express that a seemingly simple task is, in fact, incredibly difficult."
+  },
+  "sad_pablo_escobar": {
+    "name": "Sad Pablo Escobar",
+    "file": "Memes/Sad-Pablo-Escobar.jpg",
+    "tags": [
+      "waiting",
+      "bored",
+      "impatient",
+      "isolation",
+      "pensive"
+    ],
+    "description": "This meme features a sad and lonely-looking Pablo Escobar. It's used to express the feeling of waiting for a long time, often with a sense of boredom, sadness, or impatience."
+  },
+  "see_nobody_cares": {
+    "name": "See Nobody Cares",
+    "file": "Memes/See-Nobody-Cares.jpg",
+    "tags": [
+      "indifference",
+      "unimportant",
+      "nobody cares",
+      "dismissive",
+      "unimpressed"
+    ],
+    "description": "This meme is used to dismiss something someone says as unimportant or to show that no one is interested in the topic."
+  },
+  "spongebob_ight_imma_head_out": {
+    "name": "Spongebob Ight Imma Head Out",
+    "file": "Memes/Spongebob-Ight-Imma-Head-Out.jpg",
+    "tags": [
+      "leaving",
+      "exit",
+      "awkward situation",
+      "bailing",
+      "spongebob"
+    ],
+    "description": "This meme features a Spongebob character saying 'Ight, Imma head out'. It's used to express the feeling of wanting to leave an awkward, uncomfortable, or boring situation."
+  },
+  "surprised_pikachu": {
+    "name": "Surprised Pikachu",
+    "file": "Memes/Surprised-Pikachu.jpg",
+    "tags": [
+      "shocked",
+      "surprised",
+      "obvious outcome",
+      "pikachu",
+      "reacting"
+    ],
+    "description": "This meme features a surprised-looking Pikachu. It's used to express fake or genuine surprise at an outcome that was easy to predict."
+  },
+  "the_rock_driving": {
+    "name": "The Rock Driving",
+    "file": "Memes/The-Rock-Driving.jpg",
+    "tags": [
+      "driving",
+      "conversation",
+      "dialogue",
+      "question and answer",
+      "witty"
+    ],
+    "description": "This meme features Dwayne 'The Rock' Johnson driving a car, and is used to depict a conversation with a witty, sarcastic, or surprising response."
+  },
+  "the_scroll_of_truth": {
+    "name": "The Scroll Of Truth",
+    "file": "Memes/The-Scroll-Of-Truth.jpg",
+    "tags": [
+      "truth",
+      "fact",
+      "uncomfortable truth",
+      "denial",
+      "reality"
+    ],
+    "description": "This meme features a character reading a scroll of truth. It's used to express an uncomfortable or undeniable truth that the character violently rejects."
+  },
+  "tuxedo_winnie_the_pooh": {
+    "name": "Tuxedo Winnie The Pooh",
+    "file": "Memes/Tuxedo-Winnie-The-Pooh.png",
+    "tags": [
+      "formal",
+      "classy",
+      "sophisticated",
+      "casual",
+      "contrast"
+    ],
+    "description": "This meme features Winnie the Pooh in both a casual and a sophisticated tuxedo. It's used to contrast a simple, casual idea with an overly formal or sophisticated one."
+  },
+  "waiting_skeleton": {
+    "name": "Waiting Skeleton",
+    "file": "Memes/Waiting-Skeleton.jpg",
+    "tags": [
+      "waiting",
+      "boredom",
+      "patience",
+      "long time",
+      "impatient"
+    ],
+    "description": "This meme features a skeleton sitting on a bench, implying a very long wait. It's used to express the feeling of waiting for an extremely long period of time."
+  },
+  "who_killed_hannibal": {
+    "name": "Who Killed Hannibal",
+    "file": "Memes/Who-Killed-Hannibal.jpg",
+    "tags": [
+      "questions",
+      "answers",
+      "confusion",
+      "dialogue",
+      "misunderstanding"
+    ],
+    "description": "This meme is used to depict a confusing or absurd conversation with a witty, and often confusing, response."
+  },
+  "who_would_win": {
+    "name": "Who Would Win",
+    "file": "Memes/Who-Would-Win.jpg",
+    "tags": [
+      "comparison",
+      "battle",
+      "trivial",
+      "powerful",
+      "humorous"
+    ],
+    "description": "This meme is used to compare a powerful or overwhelming force with a trivial or insignificant one, with the expectation that the trivial one will surprisingly win."
+  },
+  "woman_yelling_at_cat": {
+    "name": "Woman Yelling At Cat",
+    "file": "Memes/Woman-Yelling-At-Cat.jpg",
+    "tags": [
+      "yelling",
+      "arguments",
+      "conflict",
+      "misunderstanding",
+      "cat"
+    ],
+    "description": "This meme features a split-screen with a woman yelling and a confused-looking cat at a table. It's used to depict a situation where one person is angry or outraged and the other person is indifferent or confused."
+  },
+  "x_x_everywhere": {
+    "name": "X, X Everywhere",
+    "file": "Memes/X-X-Everywhere.jpg",
+    "tags": [
+      "everywhere",
+      "too many",
+      "overwhelmed",
+      "ubiquitous",
+      "everywhere you look"
+    ],
+    "description": "This meme features a character looking overwhelmed by something that is everywhere. It's used to express that something is ubiquitous or overwhelming."
+  }
+  }
