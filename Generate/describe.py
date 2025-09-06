@@ -6,8 +6,8 @@ import cloudinary.uploader
 from cloudinary.utils import cloudinary_url
 def describe(image_url:str):
 
-    TOKEN1="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"
-    TOKEN2="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"
+    TOKEN1=os.environ.get("TOKEN1")
+    TOKEN2=os.environ.get("TOKEN2")
     client = OpenAI(
         base_url="https://router.huggingface.co/v1",
         api_key=TOKEN2,
