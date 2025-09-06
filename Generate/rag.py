@@ -12,11 +12,14 @@ from pathlib import Path
 # --------------------------
 # CONFIG
 # --------------------------
-DATA_FILE = "MemesRagData/Batman-Slapping-Robin.json"   
-DATA_FILE2 = "MemesRagData/Drake-Hotline-Bling.json"   
-DATA_FILE3 = "MemesRagData/Two-Buttons.json"
-DATA_FILE4 = "MemesRagData/UNO-Draw-25-Cards.json"   
-DATA_FILE5 = "MemesRagData/Left-Exit-12-Off-Ramp.json"   
+# Get the directory where this script is located
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DATA_FILE = os.path.join(SCRIPT_DIR, "MemesRagData", "Batman-Slapping-Robin.json")   
+DATA_FILE2 = os.path.join(SCRIPT_DIR, "MemesRagData", "Drake-Hotline-Bling.json")   
+DATA_FILE3 = os.path.join(SCRIPT_DIR, "MemesRagData", "Two-Buttons.json")
+DATA_FILE4 = os.path.join(SCRIPT_DIR, "MemesRagData", "UNO-Draw-25-Cards.json")   
+DATA_FILE5 = os.path.join(SCRIPT_DIR, "MemesRagData", "Left-Exit-12-Off-Ramp.json")   
 EMB_MODEL = "all-MiniLM-L6-v2"  # CPU-friendly embedding model
 INDEX_FILE = "faiss.index"  # optional if you want persistence
 TOP_K = 10 # number of docs to retrieve
@@ -116,7 +119,7 @@ def searchreusable(query,templateobject,template:str,capcount:int,k=TOP_K):
         indexnew.add(doc_embeddingsnew)
     else:
         filename=Path(templateobject["file"]).stem
-        DATA_FILENEW = f"MemesRagData/{filename}.json"   
+        DATA_FILENEW = os.path.join(SCRIPT_DIR, "MemesRagData", f"{filename}.json")   
         with open(DATA_FILENEW, "r", encoding="utf-8") as f:
             datasetnew = json.load(f)
         documentsnew = [serialize_doc(d,capcount) for d in datasetnew]
@@ -132,9 +135,10 @@ def searchreusable(query,templateobject,template:str,capcount:int,k=TOP_K):
     return results
 
 def searchall(query,capcount:int,k=TOP_K):
-    for file in os.listdir("Generate/MemesRagData"):
+    memes_rag_data_path = os.path.join(SCRIPT_DIR, "MemesRagData")
+    for file in os.listdir(memes_rag_data_path):
         if file.endswith(".json"):
-            with open(os.path.join("Generate/MemesRagData", file), "r", encoding="utf-8") as f:
+            with open(os.path.join(memes_rag_data_path, file), "r", encoding="utf-8") as f:
                 datasetnew = json.load(f)
                 for item in datasetnew:
                     if "metadata" in item and "img-votes" in item["metadata"]:
