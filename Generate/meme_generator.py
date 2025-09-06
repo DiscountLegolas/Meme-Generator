@@ -24,7 +24,7 @@ def draw_text(draw, text, box, font, image_width):
 def create_meme(template, captions):
     img = Image.open(template["file"])
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("impact.ttf", 14)
+    font = ImageFont.load_default()
     print(captions)
     for i, (cap_name, box) in enumerate(template["captions"].items()):
         if i < len(captions):
@@ -46,7 +46,7 @@ def create_meme_from_file(uploaded_file, captions, caption_locations):
     # Open the uploaded image
     img = Image.open(uploaded_file)
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("impact.ttf", 14)
+    font = ImageFont.load_default()
 
     # Draw each caption
     for i, box in enumerate(caption_locations):
