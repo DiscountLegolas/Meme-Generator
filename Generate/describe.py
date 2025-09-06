@@ -7,7 +7,7 @@ from cloudinary.utils import cloudinary_url
 def describe(image_url:str):
 
     TOKEN1="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"
-    TOKEN2="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"
+    TOKEN2="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"
     client = OpenAI(
         base_url="https://router.huggingface.co/v1",
         api_key=TOKEN2,

@@ -12,11 +12,11 @@ from pathlib import Path
 # --------------------------
 # CONFIG
 # --------------------------
-DATA_FILE = r"C:\Users\prof1\Masaüstü\AI\Meme Generator\Generate\MemesRagData\Batman-Slapping-Robin.json"   
-DATA_FILE2 = r"C:\Users\prof1\Masaüstü\AI\Meme Generator\Generate\MemesRagData\Drake-Hotline-Bling.json"   
-DATA_FILE3 = r"C:\Users\prof1\Masaüstü\AI\Meme Generator\Generate\MemesRagData\Two-Buttons.json"
-DATA_FILE4 = r"C:\Users\prof1\Masaüstü\AI\Meme Generator\Generate\MemesRagData\UNO-Draw-25-Cards.json"   
-DATA_FILE5 = r"C:\Users\prof1\Masaüstü\AI\Meme Generator\Generate\MemesRagData\Left-Exit-12-Off-Ramp.json"   
+DATA_FILE = "MemesRagData/Batman-Slapping-Robin.json"   
+DATA_FILE2 = "MemesRagData/Drake-Hotline-Bling.json"   
+DATA_FILE3 = "MemesRagData/Two-Buttons.json"
+DATA_FILE4 = "MemesRagData/UNO-Draw-25-Cards.json"   
+DATA_FILE5 = "MemesRagData/Left-Exit-12-Off-Ramp.json"   
 EMB_MODEL = "all-MiniLM-L6-v2"  # CPU-friendly embedding model
 INDEX_FILE = "faiss.index"  # optional if you want persistence
 TOP_K = 10 # number of docs to retrieve
@@ -116,7 +116,7 @@ def searchreusable(query,templateobject,template:str,capcount:int,k=TOP_K):
         indexnew.add(doc_embeddingsnew)
     else:
         filename=Path(templateobject["file"]).stem
-        DATA_FILENEW = fr"C:\Users\prof1\Masaüstü\AI\Meme Generator\Generate\MemesRagData\{filename}.json"   
+        DATA_FILENEW = f"MemesRagData/{filename}.json"   
         with open(DATA_FILENEW, "r", encoding="utf-8") as f:
             datasetnew = json.load(f)
         documentsnew = [serialize_doc(d,capcount) for d in datasetnew]
