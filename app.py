@@ -418,15 +418,29 @@ def get_profile(current_user):
             'memeCount': meme_count,
             'templateCount': template_count
         }
-        memes = [
-            {
+        # Build titles with numbering when there are duplicates (including Untitled Meme)
+        base_title_counts = {}
+        for meme in user_memes:
+            base_title = meme.get("topic") or "Untitled Meme"
+            base_title_counts[base_title] = base_title_counts.get(base_title, 0) + 1
+
+        seen_title_occurrences = {}
+        memes = []
+        for meme in user_memes:
+            base_title = meme.get("topic") or "Untitled Meme"
+            total_for_title = base_title_counts.get(base_title, 1)
+            if total_for_title > 1:
+                seen = seen_title_occurrences.get(base_title, 0) + 1
+                seen_title_occurrences[base_title] = seen
+                display_title = f"{base_title} {seen}"
+            else:
+                display_title = base_title
+            memes.append({
                 "id": str(meme["_id"]),
-                "title": meme.get("title", "Untitled Meme"),
-                "imageUrl": meme.get("imageUrl"),
+                "title": display_title,
+                "imageUrl": meme.get("file_path"),
                 "createdAt": str(meme.get("createdAt", datetime.utcnow())),
-            }
-            for meme in user_memes
-        ]
+            })
         
         return jsonify({
             'success': True,
