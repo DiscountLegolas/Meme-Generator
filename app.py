@@ -401,11 +401,11 @@ def delete_template(current_user, template_id):
 def get_profile(current_user):
     try:
         template_count = user_templates_collection.count_documents({"userid": current_user['_id']})
-        meme_count = memes_collection.count_documents({"user_id": current_user['_id']})
+        meme_count = memes_collection.count_documents({"user_id": str(current_user['_id'])})
 
 
         user_memes = list(
-            memes_collection.find({"user_id":current_user['_id']})
+            memes_collection.find({"user_id":str(current_user['_id'])})
             .sort("createdAt", -1)
         )
         profile = {
