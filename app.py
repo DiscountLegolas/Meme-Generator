@@ -17,9 +17,10 @@ from pymongo import MongoClient
 from PIL import Image
 from bson import ObjectId
 import traceback
+from flask_cors import CORS
 
 app = Flask(__name__)
-app.debug = True 
+CORS(app, resources={r"/*": {"origins": "https://merry-cheesecake-96d2af.netlify.app"}})
 # Load configuration
 flask_env = os.environ.get('FLASK_ENV', 'default')
 app.config.from_object(config[flask_env])
