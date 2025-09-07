@@ -39,7 +39,7 @@ def draw_text(draw, text, box, font, image_width):
         lh=draw.textlength(line, font=font)
         x_offset = x + (w - lw) // 2
         draw.text((x_offset, y_offset), line, font=font,
-                  fill="black", stroke_width=2, stroke_fill="black")
+                  fill="white", stroke_width=2, stroke_fill="black")
         y_offset += line_height
 
 def create_meme(template, captions, font_size=14, font_path=None):
@@ -101,7 +101,7 @@ def draw_text_new(draw, text, box, font, image_width):
         lh=draw.textlength(line, font=font)
         x_offset = x - (w - lw) // 2
         draw.text((x_offset, y_offset), line, font=font,
-                  fill="black", stroke_width=2, stroke_fill="black")
+                  fill="white", stroke_width=2, stroke_fill="black")
         y_offset += line_height
 
 
