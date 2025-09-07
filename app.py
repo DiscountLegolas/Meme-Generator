@@ -66,10 +66,6 @@ def load_templates():
         with open("Generate/templates.json", "r") as f:
             return json.load(f)
 
-# Serve the React app
-@app.route('/')
-def serve_react_app():
-    return send_file('frontend/build/index.html')
 
 # Serve static files from React build
 @app.route('/<path:path>')

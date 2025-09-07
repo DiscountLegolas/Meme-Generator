@@ -2,6 +2,27 @@ from PIL import Image, ImageDraw, ImageFont
 import textwrap
 from uuid import uuid4
 from transformers import BlipProcessor, BlipForConditionalGeneration
+def load_font(font_size=32, font_path=None):
+    """
+    Load a TrueType font with the requested size if available.
+    Falls back to a default bitmap font if TTF is unavailable.
+    """
+    # Try an explicit path first
+    if font_path:
+        try:
+            return ImageFont.truetype(font_path, font_size)
+        except Exception:
+            pass
+
+    # Try common system fonts
+    for candidate in ["arial.ttf", "DejaVuSans.ttf", "Impact.ttf"]:
+        try:
+            return ImageFont.truetype(candidate, font_size)
+        except Exception:
+            continue
+
+    # Final fallback: default bitmap font (fixed size)
+    return ImageFont.load_default()
 def draw_text(draw, text, box, font, image_width):
     x, y, w, h = box["x"], box["y"], box["width"], box["height"]
 
@@ -21,10 +42,10 @@ def draw_text(draw, text, box, font, image_width):
                   fill="black", stroke_width=2, stroke_fill="black")
         y_offset += line_height
 
-def create_meme(template, captions):
+def create_meme(template, captions, font_size=32, font_path=None):
     img = Image.open(template["file"])
     draw = ImageDraw.Draw(img)
-    font = ImageFont.load_default()
+    font = load_font(font_size=font_size, font_path=font_path)
     for i, (cap_name, box) in enumerate(template["captions"].items()):
         if i < len(captions):
             draw_text(draw, captions[i], box, font, img.width)
@@ -34,7 +55,7 @@ def create_meme(template, captions):
     return output_path
 
 
-def create_meme_from_file(uploaded_file, captions, caption_locations):
+def create_meme_from_file(uploaded_file, captions, caption_locations, font_size=32, font_path=None):
     """
     Create a meme from an uploaded image file using given caption locations.
 
@@ -45,7 +66,7 @@ def create_meme_from_file(uploaded_file, captions, caption_locations):
     # Open the uploaded image
     img = Image.open(uploaded_file)
     draw = ImageDraw.Draw(img)
-    font = ImageFont.load_default()
+    font = load_font(font_size=font_size, font_path=font_path)
 
     # Draw each caption
     for i, box in enumerate(caption_locations):
