@@ -18,14 +18,13 @@ def draw_text(draw, text, box, font, image_width):
         lh=draw.textlength(line, font=font)
         x_offset = x + (w - lw) // 2
         draw.text((x_offset, y_offset), line, font=font,
-                  fill="white", stroke_width=2, stroke_fill="black")
+                  fill="black", stroke_width=2, stroke_fill="black")
         y_offset += line_height
 
 def create_meme(template, captions):
     img = Image.open(template["file"])
     draw = ImageDraw.Draw(img)
     font = ImageFont.load_default()
-    print(captions)
     for i, (cap_name, box) in enumerate(template["captions"].items()):
         if i < len(captions):
             draw_text(draw, captions[i], box, font, img.width)
@@ -81,7 +80,7 @@ def draw_text_new(draw, text, box, font, image_width):
         lh=draw.textlength(line, font=font)
         x_offset = x - (w - lw) // 2
         draw.text((x_offset, y_offset), line, font=font,
-                  fill="white", stroke_width=2, stroke_fill="black")
+                  fill="black", stroke_width=2, stroke_fill="black")
         y_offset += line_height
 
 
