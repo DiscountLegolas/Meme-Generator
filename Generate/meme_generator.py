@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 import textwrap
 from uuid import uuid4
 from transformers import BlipProcessor, BlipForConditionalGeneration
-def load_font(font_size=32, font_path=None):
+def load_font(font_size=14, font_path=None):
     """
     Load a TrueType font with the requested size if available.
     Falls back to a default bitmap font if TTF is unavailable.
@@ -42,7 +42,7 @@ def draw_text(draw, text, box, font, image_width):
                   fill="black", stroke_width=2, stroke_fill="black")
         y_offset += line_height
 
-def create_meme(template, captions, font_size=32, font_path=None):
+def create_meme(template, captions, font_size=14, font_path=None):
     img = Image.open(template["file"])
     draw = ImageDraw.Draw(img)
     font = load_font(font_size=font_size, font_path=font_path)
@@ -55,7 +55,7 @@ def create_meme(template, captions, font_size=32, font_path=None):
     return output_path
 
 
-def create_meme_from_file(uploaded_file, captions, caption_locations, font_size=32, font_path=None):
+def create_meme_from_file(uploaded_file, captions, caption_locations, font_size=14, font_path=None):
     """
     Create a meme from an uploaded image file using given caption locations.
 
