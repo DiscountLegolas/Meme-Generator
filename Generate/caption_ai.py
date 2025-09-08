@@ -87,7 +87,7 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
     examples_text = ""
     
     # First try to get RAG data examples (real meme examples)
-    rag_examples = get_rag_examples_for_prompt(meme_name)
+    rag_examples = get_rag_examples_for_prompt(meme_name,template)
     if rag_examples:
         examples_text = rag_examples
 
@@ -123,7 +123,7 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
     - For 5 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption","caption5": "fifth caption"}}
 
     Use the following template:{explanation}
-
+    Make the captions short and memorable.
     Return ONLY the JSON object, no additional text or formatting."""
 
     if examples_text:

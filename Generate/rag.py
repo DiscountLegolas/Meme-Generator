@@ -274,7 +274,50 @@ def get_expected_caption_count(meme_name):
     
     return caption_counts.get(meme_name, 2)
 
-def get_rag_examples_for_prompt(meme_name, max_examples=500):
+def get_filtered_rag_data_from_template(templateobject, max_entries=500):
+    """
+    Load RAG data dynamically using the template object's file reference.
+    Attempts to filter entries by the most common box count in the file.
+    """
+    try:
+        filename = Path(templateobject["file"]).stem
+        file_path = os.path.join(SCRIPT_DIR, "MemesRagData", f"{filename}.json")
+        if not os.path.exists(file_path):
+            print(f"Warning: RAG data file not found: {file_path}")
+            return []
+
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        if not isinstance(data, list):
+            print(f"Warning: Invalid JSON structure in {file_path}")
+            return []
+
+        # Prefer expected length from MongoDB template captions, fallback to dataset heuristic
+        captions_from_mongo = templateobject.get('captions', {}) if isinstance(templateobject, dict) else {}
+        if isinstance(captions_from_mongo, dict) and len(captions_from_mongo) > 0:
+            expected_len = len(captions_from_mongo)
+        else:
+            box_lengths = [len(e.get('boxes', [])) for e in data if isinstance(e, dict) and 'boxes' in e and isinstance(e.get('boxes', []), list)]
+            expected_len = max(set(box_lengths), key=box_lengths.count) if box_lengths else None
+
+        filtered_entries = []
+        for entry in data:
+            if isinstance(entry, dict):
+                boxes = entry.get('boxes', [])
+                if not isinstance(boxes, list):
+                    continue
+                if expected_len is None or len(boxes) == expected_len:
+                    filtered_entries.append(entry)
+                    if len(filtered_entries) >= max_entries:
+                        break
+
+        return filtered_entries
+    except Exception as e:
+        print(f"Error reading dynamic RAG data from template: {str(e)}")
+        return []
+
+def get_rag_examples_for_prompt(meme_name,templateobject, max_examples=500):
     """
     Get RAG examples for use in caption generation prompts.
     
@@ -285,14 +328,36 @@ def get_rag_examples_for_prompt(meme_name, max_examples=500):
     Returns:
         str: Formatted examples text for prompt
     """
-    rag_entries = get_filtered_rag_data(meme_name, max_entries=max_examples)
-    rag_entries=random.shuffle(rag_entries)
+    try:
+        repo_root = os.path.dirname(os.path.abspath(__file__))
+        meme_file_mapping = {
+            "Two Buttons": "Two-Buttons.json",
+            "Drake Hotline": "Drake-Hotline-Bling.json", 
+            "Batman Slap": "Batman-Slapping-Robin.json",
+            "Uno Card":"UNO-Draw-25-Cards.json",
+            "Road Division": "Left-Exit-12-Off-Ramp.json"
+        }
+        named_memes = set(meme_file_mapping.keys())
+    except Exception:
+        named_memes = set()
+
+    if meme_name in named_memes:
+        rag_entries = get_filtered_rag_data(meme_name, max_entries=max_examples)
+    else:
+        rag_entries = get_filtered_rag_data_from_template(templateobject, max_entries=max_examples)
+    # Shuffle in-place without overwriting the list
+    random.shuffle(rag_entries)
     if not rag_entries:
         return ""
     
     formatted_examples = []
     for entry in rag_entries:
         boxes = entry.get('boxes', [])
-        if len(boxes) >= 2:
-            formatted_examples.append(f'- caption1: "{boxes[0]}" | caption2: "{boxes[1]}"')
+        # Generate formatted examples for caption counts 1 through 5, when available
+        for n in range(1, 6):
+            if len(boxes) >= n:
+                captions_joined = " | ".join(
+                    [f'caption{i}: "{boxes[i-1]}"' for i in range(1, n+1)]
+                )
+                formatted_examples.append(f'- {captions_joined}')
     return "\n".join(formatted_examples)
