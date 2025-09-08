@@ -8,7 +8,7 @@ from datetime import datetime
 from Generate.caption_ai import generate_caption,build_meme_recommender,generate_captions_no_template
 from Generate.meme_generator import create_meme,create_meme_from_file, describe_image
 from Generate.describe import describe,uploadfile
-from auth import token_required, update_user_meme_count
+from auth import token_required, update_user_meme_count, users_collection
 from auth_routes import auth_bp
 from admin_routes import admin_bp
 from Generate.caption_point import generate_captions
@@ -456,13 +456,37 @@ def update_profile(current_user):
     try:
         data = request.get_json()
         username = data.get('username', '').strip()
-        email = data.get('email', '').strip()
         bio = data.get('bio', '').strip()
         
         if not username:
             return jsonify({'error': 'Username is required'}), 400
-        
-        # TODO: Implement database update
+
+        # Ensure database is available
+        if users_collection is None:
+            return jsonify({'error': 'Database connection failed'}), 500
+
+        # Prevent changing email: ignore any provided email field
+
+        # Check if username is taken by another user
+        if username != current_user.get('username'):
+            existing = users_collection.find_one({
+                'username': username,
+                '_id': { '$ne': current_user['_id'] }
+            })
+            if existing:
+                return jsonify({'error': 'Username already taken'}), 400
+
+        # Build update payload
+        update_fields = {
+            'username': username,
+            'bio': bio
+        }
+
+        users_collection.update_one(
+            { '_id': current_user['_id'] },
+            { '$set': update_fields }
+        )
+
         return jsonify({
             'success': True,
             'message': 'Profile updated successfully'
