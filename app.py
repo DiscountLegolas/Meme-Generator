@@ -622,3 +622,65 @@ def generate_from_user_template(current_user):
         traceback.print_exc()
         return jsonify({'error': 'Internal server error'}), 500
 
+# Helper to safely delete a file only inside the GeneratedMemes directory
+def _delete_generated_file_safely(file_path: str) -> bool:
+    try:
+        if not file_path:
+            return False
+        # Normalize path
+        abs_path = os.path.abspath(file_path)
+        generated_dir = os.path.abspath('GeneratedMemes')
+        # If stored path is like "GeneratedMemes/filename.png", ensure absolute
+        if not abs_path.startswith(generated_dir):
+            # Try to join if a relative like "GeneratedMemes/xxx.png"
+            candidate = os.path.abspath(os.path.join('.', file_path))
+            if candidate.startswith(generated_dir):
+                abs_path = candidate
+        # Final guard
+        if abs_path.startswith(generated_dir) and os.path.exists(abs_path):
+            os.remove(abs_path)
+            return True
+        return False
+    except Exception as e:
+        print(f"Failed to delete file '{file_path}': {e}")
+        return False
+
+# Bulk delete memes
+@app.route('/api/memes/bulk-delete', methods=['POST'])
+@token_required
+def bulk_delete_memes(current_user):
+    try:
+        data = request.get_json(force=True, silent=True) or {}
+        meme_ids = data.get('meme_ids') or data.get('ids') or []
+        if not isinstance(meme_ids, list) or not meme_ids:
+            return jsonify({'error': 'meme_ids must be a non-empty list'}), 400
+
+        deleted = 0
+        not_found = []
+        for mid in meme_ids:
+            try:
+                obj_id = ObjectId(mid)
+            except Exception:
+                not_found.append(mid)
+                continue
+            meme = memes_collection.find_one({
+                '_id': obj_id,
+                'user_id': str(current_user['_id'])
+            })
+            if not meme:
+                not_found.append(mid)
+                continue
+            _delete_generated_file_safely(meme.get('file_path'))
+            res = memes_collection.delete_one({'_id': obj_id})
+            if getattr(res, 'deleted_count', 0) > 0:
+                deleted += 1
+
+        return jsonify({
+            'success': True,
+            'deleted': deleted,
+            'notFound': not_found
+        })
+    except Exception as e:
+        print(f"Error bulk deleting memes: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
