@@ -113,9 +113,9 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
     except Exception:
         # If anything goes wrong loading examples, proceed without them
         examples_text = ""
-    print(explanation)
-    # Build the main prompt
-    prompt = f"""Create {num_captions} funny captions about '{topicen}'.
+    explanationtr=GoogleTranslator(source='auto', target='tr').translate(text=explanation)
+    # Build the main prompt (EN default)
+    prompt_en = f"""Create {num_captions} funny captions about '{topicen}'.
 
     IMPORTANT: You must return a valid JSON object with the following structure:
     - For 1 caption: {{ "caption1": "your caption here"}}
@@ -124,16 +124,37 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
     - For 4 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption"}}
     - For 5 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption","caption5": "fifth caption"}}
 
-    Use the following template:{explanation}
+    Use the following template: {explanation}
     Make the captions short and memorable.
     Return ONLY the JSON object, no additional text or formatting."""
 
+    # Full Turkish prompt when input language is Turkish
+    prompt_tr = f"""'{topic}' hakkında {num_captions} komik altyazı oluştur.
+
+    ÖNEMLİ: Aşağıdaki yapıda GEÇERLİ bir JSON nesnesi döndürmelisin:
+    - 1 altyazı için: {{ "caption1": "altyazın burada" }}
+    - 2 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı" }}
+    - 3 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı" }}
+    - 4 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı" }}
+    - 5 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı", "caption5": "beşinci altyazı" }}
+
+    Aşağıdaki şablonu kullan: {explanationtr}
+    Altyazılar kısa, doğal ve akılda kalıcı olsun.
+    SADECE JSON nesnesini döndür; ek açıklama veya biçimlendirme ekleme."""
+
+    # Choose prompt based on detected language
+    prompt = prompt_tr if lang == "tr" else prompt_en
+
+    # Add examples section in the appropriate language
     if examples_text:
-        prompt += f"\n\nIMPORTANT:Example caption pairs for this template:\n{examples_text}"
+        if lang == "tr":
+            prompt += f"\n\nÖNEMLİ: Bu şablon için örnek altyazı çiftleri:\n{examples_text}"
+        else:
+            prompt += f"\n\nIMPORTANT: Example caption pairs for this template:\n{examples_text}"
     if lang=="tr":
-        prompt +=f"\n\nVERY IMPORTANT:Generate Turkish captions with a natural tone."
-    # Final instruction
-    prompt += f"\n\nGenerate exactly {num_captions} captions in the JSON format specified above."
+        prompt += f"\n\nYukarıda belirtilen JSON formatına uygun şekilde tam olarak {num_captions} altyazı üret."
+    else:
+        prompt += f"\n\nGenerate exactly {num_captions} captions in the JSON format specified above."
     if meme_name=="Batman Slap":
         retrieved = search(topicen, TOP_K)
         context = format_context(retrieved)
@@ -150,14 +171,24 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
             retrieved = searchreusable(topicen,template,meme_name,num_captions, TOP_K)
             context = format_context(retrieved)
     if meme_name!="Distracted Bf":
-        messages=[
-            {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
-            {"role": "assistant", "content": f"Context:\n{context}"},
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
+        if lang == "tr":
+            messages=[
+                {"role": "system", "content": "Bir RAG asistanısın. Sağlanan bağlamı kullan."},
+                {"role": "assistant", "content": f"Bağlam:\n{context}"},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        else:
+            messages=[
+                {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
+                {"role": "assistant", "content": f"Context:\n{context}"},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
                 
     else:
         messages=[
