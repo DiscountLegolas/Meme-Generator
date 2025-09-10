@@ -150,16 +150,17 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
             retrieved = searchreusable(topicen,template,meme_name,num_captions, TOP_K)
             context = format_context(retrieved)
     if meme_name!="Distracted Bf":
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
+        messages=[
+            {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
+            {"role": "assistant", "content": f"Context:\n{context}"},
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+                
     else:
-                messages=[
-                    {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
-                    {"role": "assistant", "content": f"Context:\n{context}"},
+        messages=[
                     {
                         "role": "user",
                         "content": prompt
@@ -186,7 +187,7 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
         try:
             if lang=="tr":
                 completion = client.beta.chat.completions.parse(
-                    model="CohereLabs/command-a-reasoning-08-2025:cohere",
+                    model="WiroAI/wiroai-turkish-llm-9b:featherless-ai",
                     messages=messages,
                     response_format=response_model,
                     temperature=0.6,
