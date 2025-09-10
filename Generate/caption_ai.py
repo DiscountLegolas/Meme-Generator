@@ -8,6 +8,7 @@ from pydantic import ValidationError
 import os
 from Generate.Models import MemeCaption1,MemeCaption2,MemeCaption3,MemeCaption4,MemeCaption5
 from Generate.rag import *
+import langid
 TOKEN1=os.environ.get("TOKEN1")
 TOKEN2=os.environ.get("TOKEN2")
 client = OpenAI(
@@ -81,6 +82,7 @@ def clean_caption_text(caption_text):
 
 # Hugging Face text generator (change model if needed)
 def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
+    lang, confidence = langid.classify(topic)
     topicen=GoogleTranslator(source='auto', target='en').translate(text=topic)
     # Load examples for the given meme template (if available)
     explanation=""
@@ -128,7 +130,8 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
 
     if examples_text:
         prompt += f"\n\nIMPORTANT:Example caption pairs for this template:\n{examples_text}"
-
+    if lang=="tr":
+        prompt +=f"\n\nVERY IMPORTANT:Generate Turkish captions with a natural tone."
     # Final instruction
     prompt += f"\n\nGenerate exactly {num_captions} captions in the JSON format specified above."
     if meme_name=="Batman Slap":
@@ -181,15 +184,26 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
     retry_count = 0
     while retry_count < max_retries:
         try:
-            completion = client.beta.chat.completions.parse(
-                model="deepseek-ai/DeepSeek-V3.1:novita",
-                messages=messages,
-                response_format=response_model,
-                temperature=0.6,
-                
-            )
-            caption = completion.choices[0].message.parsed
-            break;
+            if lang=="tr":
+                completion = client.beta.chat.completions.parse(
+                    model="CohereLabs/command-a-reasoning-08-2025:cohere",
+                    messages=messages,
+                    response_format=response_model,
+                    temperature=0.6,
+                    
+                )
+                caption = completion.choices[0].message.parsed
+                break;
+            else:
+                completion = client.beta.chat.completions.parse(
+                    model="deepseek-ai/DeepSeek-V3.1:novita",
+                    messages=messages,
+                    response_format=response_model,
+                    temperature=0.6,
+                    
+                )
+                caption = completion.choices[0].message.parsed
+                break;
         except ValidationError as e:
             try:
                 error=e.errors(include_url=False,include_context=False)[0]
