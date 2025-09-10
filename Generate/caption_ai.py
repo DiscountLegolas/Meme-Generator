@@ -187,7 +187,7 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
         try:
             if lang=="tr":
                 completion = client.beta.chat.completions.parse(
-                    model="WiroAI/wiroai-turkish-llm-9b:featherless-ai",
+                    model="deepseek-ai/DeepSeek-V3.1:novita",
                     messages=messages,
                     response_format=response_model,
                     temperature=0.6,
