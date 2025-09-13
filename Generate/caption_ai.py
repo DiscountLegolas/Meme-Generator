@@ -81,8 +81,7 @@ def clean_caption_text(caption_text):
 
 
 # Hugging Face text generator (change model if needed)
-def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
-    lang, confidence = langid.classify(topic)
+def generate_caption(topic,template, template_tags,meme_name, num_captions=2,lang="en"):
     topicen=GoogleTranslator(source='auto', target='en').translate(text=topic)
     # Load examples for the given meme template (if available)
     explanation=""
@@ -279,12 +278,11 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2):
 
 
 
-def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int = 1):
+def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int = 1,lang="en"):
     """
     Generate funny captions based only on a topic, without using templates.
     """
     # Translate topic to English for better caption generation
-    lang, confidence = langid.classify(topic)
     if lang=="tr":
         prompt = f"""
         İşte görselin gerçekçi bir açıklaması: "{blip_caption}".

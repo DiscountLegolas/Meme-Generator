@@ -99,7 +99,7 @@ def generate_meme(current_user):
         topiclang=GoogleTranslator(source='auto', target=language).translate(text=topic)
         # Generate captions using your existing AI
         caption_count = len(template.get("captions", {}))
-        captions = generate_caption(topiclang,template, template["tags"], template["name"], num_captions=caption_count)
+        captions = generate_caption(topiclang,template, template["tags"], template["name"], num_captions=caption_count,lang=language)
         
         # Create the meme using your existing generator
         output_path = create_meme(template, captions)
@@ -520,7 +520,7 @@ def generate_template_to_meme(current_user):
         caption_count = len(caption_points)
         topiclang=GoogleTranslator(source='auto', target=language).translate(text=topic)
         captionlang=GoogleTranslator(source='auto', target=language).translate(text=caption)
-        captions = generate_captions_no_template(topiclang,captionlang, num_captions=caption_count)
+        captions = generate_captions_no_template(topiclang,captionlang, num_captions=caption_count,lang=language)
         output_path = create_meme_from_file(request.files['image'], captions, caption_points)
         
         if output_path and os.path.exists(output_path):
@@ -595,7 +595,7 @@ def generate_from_user_template(current_user):
         captionlang=GoogleTranslator(source='auto', target=language).translate(text=blip_caption)
 
         # Generate captions without predefined template metadata
-        captions = generate_captions_no_template(topiclang, captionlang, num_captions=num_captions)
+        captions = generate_captions_no_template(topiclang, captionlang, num_captions=num_captions,lang=language)
 
         # Create a meme image using the stored template image and caption boxes
         template_struct = {
