@@ -151,6 +151,7 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2,lan
         else:
             prompt += f"\n\nIMPORTANT: Example caption pairs for this template:\n{examples_text}"
     if lang=="tr":
+        prompt += f"\n\nÇOK ÖNEMLİ: Altyazıları Türkçe Oluştur."
         prompt += f"\n\nYukarıda belirtilen JSON formatına uygun şekilde tam olarak {num_captions} altyazı üret."
     else:
         prompt += f"\n\nGenerate exactly {num_captions} captions in the JSON format specified above."
@@ -301,7 +302,9 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
             - 3 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı" }}
             - 4 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı" }}
             - 5 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı", "caption5": "beşinci altyazı" }}
-
+        
+        ÇOK ÖNEMLİ: Altyazıları Türkçe Oluştur.
+        
         KRİTİK KURALLAR:
         - Her alan **yalnızca bir başlık** içermeli.
         - SADECE JSON nesnesi döndür, fazladan metin olmasın.
@@ -331,7 +334,6 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
         - Return ONLY the JSON object, no extra text.
         - Generate exactly {num_captions} captions, following the JSON format above.
         """
-
     # Choose the appropriate response model
     if num_captions == 1:
         response_model = MemeCaption1
