@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import json
 import os
+from deep_translator import (GoogleTranslator)
 from datetime import datetime
 from Generate.caption_ai import generate_caption,build_meme_recommender,generate_captions_no_template
 from Generate.meme_generator import create_meme,create_meme_from_file, describe_image
@@ -82,8 +83,9 @@ def generate_meme(current_user):
     try:
         data = request.get_json()
         topic = data.get('topic')
+        language = data.get('lang','en')
         template_key = data.get('template')
-        
+        language="tr" if language=="tr-TR" else "en"
         if not topic:
             return jsonify({'error': 'Missing topic'}), 400
         
@@ -93,10 +95,10 @@ def generate_meme(current_user):
             template=random.choice(list(templates.values()))
         else:
             template = templates[template_key]
-
+        topiclang=GoogleTranslator(source='auto', target=language).translate(text=topic)
         # Generate captions using your existing AI
         caption_count = len(template.get("captions", {}))
-        captions = generate_caption(topic,template, template["tags"], template["name"], num_captions=caption_count)
+        captions = generate_caption(topiclang,template, template["tags"], template["name"], num_captions=caption_count)
         
         # Create the meme using your existing generator
         output_path = create_meme(template, captions)
@@ -505,6 +507,8 @@ def health_check():
 @token_required
 def generate_template_to_meme(current_user):
     try:
+        language = request.form.get('lang','en')
+        language="tr" if language=="tr-TR" else "en"
         topic = request.form.get('topic')
         caption_points_str = request.form.get('captionPoints') 
         caption_points = json.loads(caption_points_str)
@@ -513,7 +517,9 @@ def generate_template_to_meme(current_user):
         link=uploadfile(request.files['image'])
         caption=describe(link)
         caption_count = len(caption_points)
-        captions = generate_captions_no_template(topic,caption, num_captions=caption_count)
+        topiclang=GoogleTranslator(source='auto', target=language).translate(text=topic)
+        captionlang=GoogleTranslator(source='auto', target=language).translate(text=caption)
+        captions = generate_captions_no_template(topiclang,captionlang, num_captions=caption_count)
         output_path = create_meme_from_file(request.files['image'], captions, caption_points)
         
         if output_path and os.path.exists(output_path):
@@ -554,7 +560,8 @@ def generate_from_user_template(current_user):
         data = request.get_json()
         topic = data.get('topic', '').strip()
         template_id = data.get('template_id', '').strip()
-
+        language = data.get('lang','en')
+        language="tr" if language=="tr-TR" else "en"
         if not topic:
             return jsonify({'error': 'Missing topic'}), 400
         if not template_id:
@@ -583,9 +590,11 @@ def generate_from_user_template(current_user):
         num_captions = len(caption_boxes)
         if num_captions <= 0:
             return jsonify({'error': 'Template has no caption points'}), 400
+        topiclang=GoogleTranslator(source='auto', target=language).translate(text=topic)
+        captionlang=GoogleTranslator(source='auto', target=language).translate(text=blip_caption)
 
         # Generate captions without predefined template metadata
-        captions = generate_captions_no_template(topic, blip_caption, num_captions=num_captions)
+        captions = generate_captions_no_template(topiclang, captionlang, num_captions=num_captions)
 
         # Create a meme image using the stored template image and caption boxes
         template_struct = {

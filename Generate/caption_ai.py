@@ -284,8 +284,33 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
     Generate funny captions based only on a topic, without using templates.
     """
     # Translate topic to English for better caption generation
-    topic_en = GoogleTranslator(source='auto', target='en').translate(text=topic)
-    prompt = f"""
+    lang, confidence = langid.classify(topic)
+    if lang=="tr":
+        prompt = f"""
+        İşte görselin gerçekçi bir açıklaması: "{blip_caption}".
+
+        Görevin bu açıklamayı {num_captions} komik, meme tarzı başlığa dönüştürmek.
+        ÖNEMLİ:
+            - Başlıklar birbirine bağlı bir sıra oluşturmalı:
+            - 2 başlık için: ikincisi, birincisine doğrudan bir cevap gibi hissettirmeli.
+            - 3 başlık için: her başlık bir öncekini devam ettirmeli
+                (karşılıklı konuşma, tepki veya olay zinciri gibi).
+            - Hepsi tutarlı mini bir hikâye ya da diyalog oluşturmalı.
+
+        ÖNEMLİ: Geçerli bir JSON nesnesi döndürmelisin, şu yapıda:
+            - 1 altyazı için: {{ "caption1": "altyazın burada" }}
+            - 2 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı" }}
+            - 3 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı" }}
+            - 4 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı" }}
+            - 5 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı", "caption5": "beşinci altyazı" }}
+
+        KRİTİK KURALLAR:
+        - Her alan **yalnızca bir başlık** içermeli.
+        - SADECE JSON nesnesi döndür, fazladan metin olmasın.
+        - Tam olarak {num_captions} başlık üret, yukarıdaki JSON formatına uygun.
+        """
+    else:
+        prompt = f"""
         Here is a factual description of the image: "{blip_caption}".
 
         Your task is to turn this description into {num_captions} funny meme-style captions.
@@ -296,10 +321,12 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
                 (like a back-and-forth conversation, reaction, or chain of events).
             - They must form a coherent mini-story or dialogue.
 
-        IMPORTANT: You must return a valid JSON object with the following structure:
-        - For 1 caption: {{ "caption1": "your caption here" }}
-        - For 2 captions: {{ "caption1": "first caption", "caption2": "second caption" }}
-        - For 3 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption" }}
+        IMPORTAsNT: You must return a valid JSON object with the following structure:
+            - For 1 caption: {{ "caption1": "your caption here"}}
+            - For 2 captions: {{ "caption1": "first caption", "caption2": "second caption"}}
+            - For 3 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption"}}
+            - For 4 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption"}}
+            - For 5 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption","caption5": "fifth caption"}}
 
         CRITICAL RULES:
         - Each field must contain **exactly one caption**.
@@ -314,18 +341,32 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
         response_model = MemeCaption2
     elif num_captions == 3:
         response_model = MemeCaption3
+    elif num_captions == 4:
+        response_model = MemeCaption4
+    elif num_captions == 5:
+        response_model = MemeCaption5
     else:
-        raise ValueError("num_captions must be 1, 2, or 3")
+        raise ValueError("num_captions must be 1, 2,3,4 or 5")
     retrieved = searchall(topic, TOP_K)
     context = format_context(retrieved)
-    messages=[
-                    {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
-                    {"role": "assistant", "content": f"Context:\n{context}"},
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
+    if lang=="tr":
+         messages=[
+                {"role": "system", "content": "Bir RAG asistanısın. Sağlanan bağlamı kullan."},
+                {"role": "assistant", "content": f"Bağlam:\n{context}"},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+    else:
+        messages=[
+                {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
+                {"role": "assistant", "content": f"Context:\n{context}"},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
     max_retries = 5
     retry_count = 0
     while retry_count < max_retries:
