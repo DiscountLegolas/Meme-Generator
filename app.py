@@ -84,11 +84,12 @@ def generate_meme(current_user):
         data = request.get_json()
         topic = data.get('topic')
         language = data.get('lang','en')
+        print(language)
         template_key = data.get('template')
         language="tr" if language=="tr-TR" else "en"
         if not topic:
             return jsonify({'error': 'Missing topic'}), 400
-        
+        print(language)
         templates = load_templates()
         
         if template_key not in templates:
