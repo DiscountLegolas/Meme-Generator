@@ -282,8 +282,7 @@ def template_to_meme(current_user):
             captions = generate_captions(width, height, 150, 150)
             
         user_id = current_user['_id'] # Replace with real user id from auth/session
-
-    # Create the document to insert
+        describeforgenerating=describe(f"https://www.meme-generator-backend.com/Memes/{filename}")
         meme_doc = {
             "userid": user_id,
             "name": template_name,
@@ -297,6 +296,7 @@ def template_to_meme(current_user):
             ],
             **captions,
             "explanation": template_description,
+            "explanationfg":describeforgenerating,
             "examples": [],
             "usageCount":0,
             "createdAt":datetime.utcnow(),
@@ -593,15 +593,16 @@ def generate_from_user_template(current_user):
         if not tmpl:
             return jsonify({'error': 'Template not found'}), 404
 
-        # Build a template-like structure for the generator
-        template_file = tmpl.get('file')  # e.g. "Memes/xxxx.png"
+        template_file = tmpl.get('file')
+        blip_caption=tmpl.get('explanationfg','')
         caption_boxes = tmpl.get('captions', {})
         if not template_file or not caption_boxes:
             return jsonify({'error': 'Template is missing image or captions'}), 400
 
         # Describe the template image to guide caption generation
         try:
-            blip_caption = describe_image(template_file)
+            if blip_caption=='':
+                blip_caption = describe_image(template_file)
         except Exception:
             blip_caption = ''
 
