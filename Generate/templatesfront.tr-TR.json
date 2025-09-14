@@ -1,0 +1,512 @@
+{
+  "drake_hotline": {
+    "name": "Drake Hotline",
+    "file": "/Memes/Drake.png",
+    "description": "İki seçeneği karşılaştırmak için mükemmel",
+    "tags": [
+      "karşılaştırmak",
+      "seçenek",
+      "tercih",
+      "daha iyi",
+      "daha kötüsü",
+      "karar",
+      "fikir",
+      "tatmak",
+      "stil"
+    ]
+  },
+  "uno_card": {
+    "name": "Uno Card",
+    "file": "/Memes/UnoCart.png",
+    "description": "Reddetme senaryoları için harika",
+    "tags": [
+      "reddetme",
+      "reddetme",
+      "HAYIR",
+      "inkar",
+      "reddetmek",
+      "sinirli",
+      "hüsrana uğramış",
+      "kızgın",
+      "üzgün",
+      "hayal kırıklığına uğramış"
+    ]
+  },
+  "two_buttons": {
+    "name": "Two Buttons",
+    "file": "/Memes/TwoButtons.png",
+    "description": "İkilemler ve seçimler için ideal",
+    "tags": [
+      "ikilem",
+      "seçenek",
+      "karar",
+      "kafası karışmış",
+      "zor",
+      "zor",
+      "sorun",
+      "bela",
+      "stres",
+      "endişe"
+    ]
+  },
+  "batman_slap": {
+    "name": "Batman Slap",
+    "file": "/Memes/BatmanSlap.png",
+    "description": "Reddetme mizahı için mükemmel",
+    "tags": [
+      "reddetme",
+      "tokat",
+      "sinirli",
+      "kızgın",
+      "çok öfkeli",
+      "hayal kırıklığına uğramış",
+      "acıtmak",
+      "ağrı",
+      "şok",
+      "sürpriz"
+    ]
+  },
+  "distracted_bf": {
+    "name": "Distracted Bf",
+    "file": "/Memes/Boyfriend.png",
+    "description": "Dikkat dağıtıcı senaryolar için harika",
+    "tags": [
+      "dikkat dağıtıcı",
+      "dikkat",
+      "odak",
+      "Aşk",
+      "ilişki",
+      "kıskanç",
+      "çekici",
+      "Güzel",
+      "tatlı",
+      "sıcak"
+    ]
+  },
+  "road_division": {
+    "name": "Road Division",
+    "file": "/Memes/Road.png",
+    "description": "Yol seçenekleri için mükemmel",
+    "tags": [
+      "yol",
+      "seçenek",
+      "karar",
+      "yön",
+      "gelecek",
+      "hayat",
+      "kariyer",
+      "başarı",
+      "arıza",
+      "seyahat"
+    ]
+  },
+  "american_chopper_argument": {
+    "name": "American Chopper Argument",
+    "file": "Memes/American-Chopper-Argument.jpg",
+    "tags": [
+      "argüman",
+      "kavga",
+      "çekişme",
+      "bağırmak",
+      "baba oğul",
+      "anlaşmazlık"
+    ],
+    "description": "Makulden saçma olana kadar iki karşıt bakış açısıyla bir tartışma sergilemek için harika."
+  },
+  "boardroom_meeting_suggestion": {
+    "name": "Boardroom Meeting Suggestion",
+    "file": "Memes/Boardroom-Meeting-Suggestion.jpg",
+    "tags": [
+      "toplantı",
+      "telkin",
+      "karar",
+      "işletme",
+      "kurumsal",
+      "beyin fırtınası"
+    ],
+    "description": "Sunulan ve reddedilen kötü veya tartışmalı bir fikri göstermek için mükemmeldir."
+  },
+  "am_i_the_only_one": {
+    "name": "Am I The Only One Around Here",
+    "file": "Memes/Am-I-The-Only-One-Around-Here.jpg",
+    "tags": [
+      "fikir",
+      "rant",
+      "sıkıntı",
+      "popüler olmayan görüş",
+      "soru"
+    ],
+    "description": "Kişisel, genellikle popüler olmayan bir fikir veya gözlemi ifade etmek için mükemmeldir."
+  },
+  "ancient_aliens": {
+    "name": "Ancient Aliens",
+    "file": "Memes/Ancient-Aliens.jpg",
+    "tags": [
+      "uzaylılar",
+      "teori",
+      "soru",
+      "açıklanamayan",
+      "komplo"
+    ],
+    "description": "Garip veya gizemli bir olay için basit, alaycı veya komplocu bir açıklama sağlamak için idealdir."
+  },
+  "bernie_i_am_once_again_asking": {
+    "name": "Bernie I Am Once Again Asking For Your Support",
+    "file": "Memes/Bernie-I-Am-Once-Again-Asking-For-Your-Support.jpg",
+    "tags": [
+      "Bernie Sanders",
+      "rica etmek",
+      "yalvarma",
+      "talep etmek",
+      "siyaset"
+    ],
+    "description": "Bir şey için tekrarlanan veya umutsuz bir itirazda mizahi bir şekilde tasvir etmek için en iyisi."
+  },
+  "blank_nut_button": {
+    "name": "Blank Nut Button",
+    "file": "Memes/Blank-Nut-Button.jpg",
+    "tags": [
+      "düğme",
+      "tepki",
+      "dürtü",
+      "arzu",
+      "dürtü"
+    ],
+    "description": "Güçlü, genellikle kontrol edilemeyen bir dürtü veya arzuyu temsil etmek için harika."
+  },
+  "captain_picard_facepalm": {
+    "name": "Captain Picard Facepalm",
+    "file": "Memes/Captain-Picard-Facepalm.jpg",
+    "tags": [
+      "yüzyıl",
+      "hayal kırıklığı",
+      "hayal kırıklığı",
+      "aptallık",
+      "öfke"
+    ],
+    "description": "Aşırı aptallık, hayal kırıklığı veya öfkeli bir an için tepki vermek için mükemmeldir."
+  },
+  "change_my_mind": {
+    "name": "Change My Mind",
+    "file": "Memes/Change-My-Mind.jpg",
+    "tags": [
+      "fikir",
+      "ifade",
+      "tartışma",
+      "çekişme",
+      "meydan okumak"
+    ],
+    "description": "Tartışmalı bir görüş belirtmek ve başkalarının tartışmaya zorlanması için uygundur."
+  },
+  "disaster_girl": {
+    "name": "Disaster Girl",
+    "file": "Memes/Disaster-Girl.jpg",
+    "tags": [
+      "fenalık",
+      "ateş",
+      "yıkım",
+      "yaramazlık",
+      "memnuniyet"
+    ],
+    "description": "Bir kişinin bir felaketten sorumlu olduğunu ve neden oldukları kaosun tadını çıkardığını ima etmek için idealdir."
+  },
+  "epic_handshake": {
+    "name": "Epic Handshake",
+    "file": "Memes/Epic-Handshake.jpg",
+    "tags": [
+      "anlaşma",
+      "el sıkışma",
+      "ortak",
+      "ateşkes",
+      "birlik"
+    ],
+    "description": "İki farklı grup veya fikir arasında ortak zemin veya anlaşma sergilemek için harika."
+  },
+  "mocking_spongebob": {
+    "name": "Mocking Spongebob",
+    "file": "Memes/Mocking-Spongebob.jpg",
+    "tags": [
+      "alaycı",
+      "alay",
+      "sıkıntı",
+      "saygısızlık",
+      "taklit"
+    ],
+    "description": "Bir ifadeyi veya fikri alaycı bir şekilde alay etmek için mükemmel, genellikle alternatif aktifleştirme ile."
+  },
+  "leonardo_dicaprio_cheers": {
+    "name": "Leonardo Dicaprio Cheers",
+    "file": "Memes/Leonardo-Dicaprio-Cheers.jpg",
+    "tags": [
+      "şerefe",
+      "kutlama",
+      "anlaşma",
+      "tost",
+      "Saygı"
+    ],
+    "description": "Bir tost yapmak veya bir kişiye, gruba veya fikre saygı göstermek için en iyisi."
+  },
+  "is_this_a_pigeon": {
+    "name": "Is This A Pigeon",
+    "file": "Memes/Is-This-A-Pigeon.jpg",
+    "tags": [
+      "kafası karışmış",
+      "yanlış tanımlama",
+      "hata",
+      "yanlış anlama",
+      "mantıksız"
+    ],
+    "description": "Bir anlayış eksikliğini veya mantıksız bir sonuca varmak için mükemmel."
+  },
+  "inhaling_seagull": {
+    "name": "Inhaling Seagull",
+    "file": "Memes/Inhaling-Seagull.jpg",
+    "tags": [
+      "yoğun",
+      "şok",
+      "sürpriz",
+      "tepki",
+      "yüksek sesle"
+    ],
+    "description": "Bir duruma yoğun, yüksek ve şaşırtıcı bir tepki göstermek için harika."
+  },
+  "ill_just_wait_here": {
+    "name": "I'll Just Wait Here",
+    "file": "Memes/Ill-Just-Wait-Here.jpg",
+    "tags": [
+      "beklemek",
+      "sabır",
+      "sonsuza kadar",
+      "sıkışmak",
+      "yükleme"
+    ],
+    "description": "Geciken veya asla gerçekleşmeyecek bir şey bekleyen, genellikle belirsiz bir hasta duygusu taşımak için mükemmeldir."
+  },
+  "hide_the_pain_harold": {
+    "name": "Hide the Pain Harold",
+    "file": "Memes/Hide-the-Pain-Harold.jpg",
+    "tags": [
+      "garip",
+      "acı verici",
+      "rahatsızlık",
+      "Zorunlu Gülümseme",
+      "Garip gülümseme"
+    ],
+    "description": "Birinin acılarını veya rahatsızlığını zorla bir gülümsemeyle gizlemeye çalıştığı bir durumu ifade etmek için en iyisi."
+  },
+  "hard_to_swallow_pills": {
+    "name": "Hard To Swallow Pills",
+    "file": "Memes/Hard-To-Swallow-Pills.jpg",
+    "tags": [
+      "gerçek",
+      "gerçekler",
+      "popüler olmayan görüş",
+      "gerçekleştirme",
+      "inkar"
+    ],
+    "description": "Hoş olmayan, popüler olmayan veya kabul edilmesi zor bir gerçeği belirtmek için uygundur."
+  },
+  "futurama_fry": {
+    "name": "Futurama Fry",
+    "file": "Memes/Futurama-Fry.jpg",
+    "tags": [
+      "belirsizlik",
+      "şüpheli",
+      "şüphe",
+      "kafası karışmış",
+      "düşünme"
+    ],
+    "description": "Bir durum hakkında belirsizlik veya şüpheci bir ikilemi ifade etmek için idealdir."
+  },
+  "finding_neverland": {
+    "name": "Finding Neverland",
+    "file": "Memes/Finding-Neverland.jpg",
+    "tags": [
+      "ağlamak",
+      "üzücü",
+      "ağrı",
+      "depresyon",
+      "drama"
+    ],
+    "description": "Basit bir soruya yanıt olarak üzücü veya dramatik bir gerçekleşme göstermek için harika."
+  },
+  "expanding_brain": {
+    "name": "Expanding Brain",
+    "file": "Memes/Expanding-Brain.jpg",
+    "tags": [
+      "istihbarat",
+      "Zihin Üflemeli",
+      "ilerleme",
+      "bilgi",
+      "aydınlanma"
+    ],
+    "description": "Fikirlerin basitten giderek daha karmaşık, aydınlanmış veya saçma bir ilerlemesini göstermek için mükemmel."
+  },
+  "monkey_puppet": {
+    "name": "Monkey Puppet",
+    "file": "Memes/Monkey-Puppet.jpg",
+    "tags": [
+      "garip",
+      "sessiz tepki",
+      "iç monolog",
+      "Bir Hata Farkında Olmak"
+    ],
+    "description": "Bu mem, sessiz, garip bir ifadeye sahip bir maymun kuklasına sahiptir. Bir hata yaptığınızı veya rahatsız edici bir durumda olduğunuzu fark etme hissini temsil etmek için kullanılır."
+  },
+  "one_does_not_simply": {
+    "name": "One Does Not Simply",
+    "file": "Memes/One-Does-Not-Simply.jpg",
+    "tags": [
+      "Yüzüklerin Efendisi",
+      "zorluk",
+      "imkansız",
+      "meydan okumak",
+      "arayış"
+    ],
+    "description": "Bu mem, 'Yüzüklerin Efendisi'nden Boromir'e sahiptir ve görünüşte basit bir görevin aslında inanılmaz derecede zor olduğunu ifade etmek için kullanılır."
+  },
+  "sad_pablo_escobar": {
+    "name": "Sad Pablo Escobar",
+    "file": "Memes/Sad-Pablo-Escobar.jpg",
+    "tags": [
+      "beklemek",
+      "sıkılmış",
+      "sabırsız",
+      "izolasyon",
+      "dalgın"
+    ],
+    "description": "Bu mem, üzücü ve yalnız görünen bir Pablo Escobar'a sahiptir. Genellikle can sıkıntısı, üzüntü veya sabırsızlık duygusu ile uzun bir süre bekleme hissini ifade etmek için kullanılır."
+  },
+  "see_nobody_cares": {
+    "name": "See Nobody Cares",
+    "file": "Memes/See-Nobody-Cares.jpg",
+    "tags": [
+      "kayıtsızlık",
+      "önemsiz",
+      "Kimse umursamıyor",
+      "işten çıkarıcı",
+      "etkilenmemiş"
+    ],
+    "description": "Bu mem, birisinin önemsiz olarak söylediği bir şeyi reddetmek veya kimsenin konuyla ilgilenmediğini göstermek için kullanılır."
+  },
+  "spongebob_ight_imma_head_out": {
+    "name": "Spongebob Ight Imma Head Out",
+    "file": "Memes/Spongebob-Ight-Imma-Head-Out.jpg",
+    "tags": [
+      "ayrılma",
+      "çıkış",
+      "Garip Durum",
+      "kefalet",
+      "spongebob"
+    ],
+    "description": "Bu mem, 'Iight, Imma Out' diyen bir SpongeBob karakterine sahiptir. Garip, rahatsız edici veya sıkıcı bir durum bırakmak isteme hissini ifade etmek için kullanılır."
+  },
+  "surprised_pikachu": {
+    "name": "Surprised Pikachu",
+    "file": "Memes/Surprised-Pikachu.jpg",
+    "tags": [
+      "şok",
+      "şaşırmış",
+      "Açık Sonuç",
+      "pikachu",
+      "tepki"
+    ],
+    "description": "Bu mem, sürpriz görünümlü bir Pikachu'ya sahiptir. Tahmin edilmesi kolay bir sonuçta sahte veya gerçek bir sürpriz ifade etmek için kullanılır."
+  },
+  "the_rock_driving": {
+    "name": "The Rock Driving",
+    "file": "Memes/The-Rock-Driving.jpg",
+    "tags": [
+      "sürüş",
+      "konuşma",
+      "diyalog",
+      "Soru ve Cevap",
+      "esprili"
+    ],
+    "description": "Bu mem, bir araba süren dwayne 'The Rock' Johnson'a sahiptir ve esprili, alaycı veya şaşırtıcı bir tepki ile bir sohbeti tasvir etmek için kullanılır."
+  },
+  "the_scroll_of_truth": {
+    "name": "The Scroll Of Truth",
+    "file": "Memes/The-Scroll-Of-Truth.jpg",
+    "tags": [
+      "gerçek",
+      "hakikat",
+      "Rahatsız Hakikat",
+      "inkar",
+      "gerçeklik"
+    ],
+    "description": "Bu mem, gerçeğin kaydırmasını okuyan bir karaktere sahiptir. Karakterin şiddetli bir şekilde reddettiği rahatsız edici veya yadsınamaz bir gerçeği ifade etmek için kullanılır."
+  },
+  "tuxedo_winnie_the_pooh": {
+    "name": "Tuxedo Winnie The Pooh",
+    "file": "Memes/Tuxedo-Winnie-The-Pooh.png",
+    "tags": [
+      "resmi",
+      "klas",
+      "komplike",
+      "gündelik",
+      "zıtlık"
+    ],
+    "description": "Bu mem, hem rahat hem de sofistike bir smokin içinde Pooh Winnie'ye sahiptir. Basit, sıradan bir fikri aşırı resmi veya sofistike bir fikirle karşılaştırmak için kullanılır."
+  },
+  "waiting_skeleton": {
+    "name": "Waiting Skeleton",
+    "file": "Memes/Waiting-Skeleton.jpg",
+    "tags": [
+      "beklemek",
+      "can sıkıntısı",
+      "sabır",
+      "uzun zaman",
+      "sabırsız"
+    ],
+    "description": "Bu mem, bir bankta oturan ve çok uzun bir bekleme ima eden bir iskelete sahiptir. Son derece uzun bir süre bekleme hissini ifade etmek için kullanılır."
+  },
+  "who_killed_hannibal": {
+    "name": "Who Killed Hannibal",
+    "file": "Memes/Who-Killed-Hannibal.jpg",
+    "tags": [
+      "soru",
+      "cevaplar",
+      "bilinç bulanıklığı, konfüzyon",
+      "diyalog",
+      "yanlış anlama"
+    ],
+    "description": "Bu mem, esprili ve genellikle kafa karıştırıcı bir yanıtla kafa karıştırıcı veya saçma bir sohbeti tasvir etmek için kullanılır."
+  },
+  "who_would_win": {
+    "name": "Who Would Win",
+    "file": "Memes/Who-Would-Win.jpg",
+    "tags": [
+      "karşılaştırmak",
+      "savaş",
+      "önemsiz",
+      "güçlü",
+      "esprili"
+    ],
+    "description": "Bu mem, güçlü veya ezici bir kuvveti önemsiz veya önemsiz bir kuvvetle karşılaştırmak için kullanılır, önemsiz olanın şaşırtıcı bir şekilde kazanacağı beklentisiyle."
+  },
+  "woman_yelling_at_cat": {
+    "name": "Woman Yelling At Cat",
+    "file": "Memes/Woman-Yelling-At-Cat.jpg",
+    "tags": [
+      "bağırmak",
+      "argümanlar",
+      "anlaşmazlık",
+      "yanlış anlama",
+      "kedi"
+    ],
+    "description": "Bu mem, bir masada bağıran bir kadın ve karışık görünümlü bir kedi ile bölünmüş bir ekran içerir. Bir kişinin öfkeli veya öfkeli olduğu ve diğer kişinin kayıtsız veya karışık olduğu bir durumu tasvir etmek için kullanılır."
+  },
+  "x_x_everywhere": {
+    "name": "X, X Everywhere",
+    "file": "Memes/X-X-Everywhere.jpg",
+    "tags": [
+      "her yer",
+      "çok fazla",
+      "ezilmiş",
+      "her yerde bulunan",
+      "Baktığın her yerde"
+    ],
+    "description": "Bu mem, her yerde olan bir şey tarafından bunalmış görünen bir karaktere sahiptir. Bir şeyin her yerde bulunan veya ezici olduğunu ifade etmek için kullanılır."
+  }
+}

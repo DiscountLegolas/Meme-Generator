@@ -183,7 +183,24 @@ def get_templates_front():
     except Exception as e:
         return jsonify({'error': 'Failed to load templates'}), 500
 
-
+@app.route('/api/templatestr')
+def get_templates_front_tr():
+    try:
+        templates ={}
+        with open("Generate/templatesfront.tr-TR.json", "r") as f:
+            templates= json.load(f)
+        # Simplify template data for frontend
+        simplified_templates = {}
+        for key, template in templates.items():
+            simplified_templates[key] = {
+                'name': template['name'],
+                'file': f'/Memes/{os.path.basename(template["file"])}',
+                'description': template.get('description', ''),
+                'tags': template.get('tags', [])
+            }
+        return jsonify(simplified_templates)
+    except Exception as e:
+        return jsonify({'error': 'Failed to load templates'}), 500
 
 # API endpoint to search templates with AI-powered suitability ranking
 @app.route('/api/search-templates', methods=['POST'])
