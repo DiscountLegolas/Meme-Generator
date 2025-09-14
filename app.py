@@ -212,10 +212,10 @@ def search_templates(current_user):
         
         if not query:
             return jsonify({'error': 'Missing search query'}), 400
-        
+        querylang=GoogleTranslator(source='auto', target="en").translate(text=query)
         templates = load_templates()
         find_memes = build_meme_recommender(templates)
-        scored_templates=find_memes(query)
+        scored_templates=find_memes(querylang)
         return jsonify({
             'success': True,
             'templates': scored_templates,
