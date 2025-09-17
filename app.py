@@ -16,6 +16,16 @@ from Generate.caption_point import generate_captions
 from config import config
 from pymongo import MongoClient
 from PIL import Image
+import base64
+import tempfile
+import uuid
+import cv2
+import numpy as np
+try:
+    # DeepFace is optional; endpoints will error clearly if missing
+    from deepface import DeepFace
+except Exception:
+    DeepFace = None
 from bson import ObjectId
 import traceback
 from flask_cors import CORS
@@ -67,6 +77,117 @@ def load_templates():
         # Fallback to file in case of query error
         with open("Generate/templates.json", "r") as f:
             return json.load(f)
+
+
+# --------------- Face utilities ---------------
+def _resolve_template_image_path(template_identifier: str) -> str:
+    """Resolve a template name or id to a local image path.
+
+    - First checks built-in templates via load_templates() by key or by name
+    - Then checks user templates collection by Mongo ObjectId
+    Returns absolute path to the image if found, else empty string.
+    """
+    if not template_identifier:
+        return ""
+
+    # Built-in templates (Generate/templates.json or Mongo collection)
+    try:
+        templates = load_templates()
+        if template_identifier in templates:
+            path_candidate = templates[template_identifier].get("file", "")
+            if path_candidate and os.path.exists(path_candidate):
+                return os.path.abspath(path_candidate)
+        # Try resolve by name match (case-insensitive)
+        lower = template_identifier.lower()
+        for tpl in templates.values():
+            if str(tpl.get("name", "")).lower() == lower:
+                path_candidate = tpl.get("file", "")
+                if path_candidate and os.path.exists(path_candidate):
+                    return os.path.abspath(path_candidate)
+    except Exception:
+        pass
+
+    # User templates via Mongo id
+    try:
+        obj_id = ObjectId(template_identifier)
+        if user_templates_collection is not None:
+            doc = user_templates_collection.find_one({"_id": obj_id})
+            if doc:
+                file_path = doc.get("file", "")
+                if file_path and os.path.exists(file_path):
+                    return os.path.abspath(file_path)
+                # Also try relative to project root
+                candidate = os.path.abspath(os.path.join('.', file_path))
+                if os.path.exists(candidate):
+                    return candidate
+    except Exception:
+        # Not a valid ObjectId
+        pass
+
+    return ""
+
+
+def _extract_faces_with_deepface(image_path: str):
+    if DeepFace is None:
+        raise RuntimeError("DeepFace is not installed. Please install 'deepface'.")
+    results = DeepFace.extract_faces(img_path=image_path, enforce_detection=False)
+    return results
+
+
+def _crop_and_encode_faces(image_path: str, detections: list):
+    """Given detections from DeepFace, crop faces and return temp paths and base64 strings."""
+    img = cv2.imread(image_path)
+    if img is None:
+        raise FileNotFoundError("Failed to read image with OpenCV")
+    faces = []
+    for idx, det in enumerate(detections):
+        area = det.get('facial_area') or det.get('region') or {}
+        x, y = int(area.get('x', 0)), int(area.get('y', 0))
+        w, h = int(area.get('w', area.get('width', 0))), int(area.get('h', area.get('height', 0)))
+        if w <= 0 or h <= 0:
+            continue
+        x2, y2 = x + w, y + h
+        h_img, w_img = img.shape[:2]
+        x, y = max(0, x), max(0, y)
+        x2, y2 = min(w_img, x2), min(h_img, y2)
+        crop = img[y:y2, x:x2]
+        if crop.size == 0:
+            continue
+        # Save to a temp file
+        temp_dir = tempfile.gettempdir()
+        temp_path = os.path.join(temp_dir, f"cropped_face_{uuid.uuid4().hex}.png")
+        cv2.imwrite(temp_path, crop)
+        # Encode base64
+        _, buf = cv2.imencode('.png', crop)
+        b64 = base64.b64encode(buf.tobytes()).decode('utf-8')
+        faces.append({
+            'index': idx,
+            'bbox': {'x': x, 'y': y, 'w': x2 - x, 'h': y2 - y},
+            'temp_path': temp_path,
+            'base64': f"data:image/png;base64,{b64}",
+        })
+    return faces
+
+
+def _overlay_face(target_img: np.ndarray, source_img: np.ndarray, x: int, y: int, w: int, h: int, alpha: float = 0.8):
+    """Resize source to (w,h) and alpha-blend onto target at (x,y)."""
+    if w <= 0 or h <= 0:
+        return target_img
+    h_t, w_t = target_img.shape[:2]
+    x, y = max(0, x), max(0, y)
+    x2, y2 = min(w_t, x + w), min(h_t, y + h)
+    if x2 <= x or y2 <= y:
+        return target_img
+    region_w, region_h = x2 - x, y2 - y
+    resized = cv2.resize(source_img, (region_w, region_h), interpolation=cv2.INTER_LINEAR)
+    # Ensure 3 channels
+    if resized.ndim == 2:
+        resized = cv2.cvtColor(resized, cv2.COLOR_GRAY2BGR)
+    roi = target_img[y:y2, x:x2].astype(np.float32)
+    src = resized.astype(np.float32)
+    blended = cv2.addWeighted(src, alpha, roi, 1.0 - alpha, 0)
+    target_img[y:y2, x:x2] = blended.astype(np.uint8)
+    return target_img
 
 
 # Serve static files from React build
@@ -202,6 +323,127 @@ def get_templates_front_tr():
     except Exception as e:
         return jsonify({'error': 'Failed to load templates'}), 500
 
+# --------- Face Detection & Swap Endpoints ---------
+@app.route('/api/detect_faces', methods=['POST'])
+@token_required
+def detect_faces(current_user):
+    try:
+        template_identifier = request.form.get('template') or request.json.get('template') if request.is_json else None
+        if not template_identifier:
+            return jsonify({'error': 'Missing template identifier'}), 400
+
+        image_path = _resolve_template_image_path(template_identifier)
+        if not image_path or not os.path.exists(image_path):
+            return jsonify({'error': 'Template image not found'}), 404
+
+        detections = _extract_faces_with_deepface(image_path)
+        if not detections:
+            return jsonify({'error': 'No faces detected'}), 404
+
+        faces = _crop_and_encode_faces(image_path, detections)
+        if not faces:
+            return jsonify({'error': 'No valid face crops produced'}), 404
+
+        return jsonify({'success': True, 'faces': faces})
+    except RuntimeError as re:
+        return jsonify({'error': str(re)}), 500
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+@app.route('/api/swap_faces', methods=['POST'])
+@token_required
+def swap_faces(current_user):
+    try:
+        # Accept template id/name
+        template_identifier = request.form.get('template')
+        if not template_identifier:
+            return jsonify({'error': 'Missing template identifier'}), 400
+
+        image_path = _resolve_template_image_path(template_identifier)
+        if not image_path or not os.path.exists(image_path):
+            return jsonify({'error': 'Template image not found'}), 404
+
+        # Parse indices JSON optional
+        indices_raw = request.form.get('indices')
+        indices = None
+        if indices_raw:
+            try:
+                indices = json.loads(indices_raw)
+                if not isinstance(indices, list):
+                    indices = None
+            except Exception:
+                indices = None
+
+        # Collect uploaded source faces (one or more files under key 'sources')
+        # Support 'source1','source2',... or 'sources' as multiple
+        source_files = []
+        if 'sources' in request.files:
+            for f in request.files.getlist('sources'):
+                if f and f.filename:
+                    source_files.append(f)
+        else:
+            # Fallback to numbered keys
+            i = 1
+            while True:
+                key = f'source{i}'
+                if key not in request.files:
+                    break
+                f = request.files[key]
+                if f and f.filename:
+                    source_files.append(f)
+                i += 1
+
+        if not source_files:
+            return jsonify({'error': 'No source face images uploaded'}), 400
+
+        # Load target image and face detections
+        target_img = cv2.imread(image_path)
+        if target_img is None:
+            return jsonify({'error': 'Failed to read template image'}), 500
+        detections = _extract_faces_with_deepface(image_path)
+        if not detections:
+            return jsonify({'error': 'No faces detected in target image'}), 404
+
+        # Prepare source images as numpy arrays
+        source_np_images = []
+        for f in source_files:
+            # Read file bytes into numpy via cv2.imdecode
+            bytes_data = f.read()
+            arr = np.frombuffer(bytes_data, dtype=np.uint8)
+            img = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+            if img is not None:
+                source_np_images.append(img)
+        if not source_np_images:
+            return jsonify({'error': 'Failed to decode any source images'}), 400
+
+        # Iterate over target faces and overlay
+        src_idx = 0
+        for det_idx, det in enumerate(detections):
+            if indices is not None and det_idx not in indices:
+                continue
+            area = det.get('facial_area') or det.get('region') or {}
+            x, y = int(area.get('x', 0)), int(area.get('y', 0))
+            w = int(area.get('w', area.get('width', 0)))
+            h = int(area.get('h', area.get('height', 0)))
+            if w <= 0 or h <= 0:
+                continue
+            source_img = source_np_images[src_idx % len(source_np_images)]
+            target_img = _overlay_face(target_img, source_img, x, y, w, h, alpha=0.85)
+            src_idx += 1
+
+        # Write final image to a temp file in GeneratedMemes
+        os.makedirs('GeneratedMemes', exist_ok=True)
+        out_path = os.path.join('GeneratedMemes', f"swapped_{uuid.uuid4().hex}.png")
+        cv2.imwrite(out_path, target_img)
+        return send_file(out_path, mimetype='image/png')
+    except RuntimeError as re:
+        return jsonify({'error': str(re)}), 500
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'error': 'Internal server error'}), 500
+
 # API endpoint to search templates with AI-powered suitability ranking
 @app.route('/api/search-templates', methods=['POST'])
 @token_required
@@ -259,7 +501,32 @@ def template_to_meme(current_user):
         # Get additional template information
         template_name = request.form.get('name', f"{uidd}")
         template_description = request.form.get('description', '')
-        
+        original_template = request.form.get('original_template', '')
+        if original_template != '':
+            meme_doc = {
+                "userid": user_id,
+                "name": template_name,
+                "file": f"Memes/{filename}",
+                "tags": [
+                    "choice",
+                    "reject",
+                    "approve",
+                    "comparison",
+                    "preference"
+                ],
+                **captions,
+                "explanation": template_description,
+                "explanationfg":describeforgenerating,
+                "examples": [],
+                "usageCount":0,
+                "createdAt":datetime.utcnow(),
+            }
+            result = user_templates_collection.insert_one(meme_doc)
+            return jsonify({
+                'success': True,
+                'image_path': f'/Memes/{filename}',
+                'mongo_id': str(result.inserted_id)
+            })
         # Check if caption points were provided in the request
         caption_points = request.form.get('captionPoints')
         if caption_points:
