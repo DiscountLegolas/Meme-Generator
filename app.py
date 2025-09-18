@@ -26,6 +26,7 @@ try:
     from deepface import DeepFace
 except Exception:
     DeepFace = None
+from transformers import WhisperProcessor, WhisperForConditionalGeneration
 from bson import ObjectId
 import traceback
 from flask_cors import CORS
@@ -434,8 +435,8 @@ def swap_faces(current_user):
             src_idx += 1
 
         # Write final image to a temp file in GeneratedMemes
-        os.makedirs('GeneratedMemes', exist_ok=True)
-        out_path = os.path.join('GeneratedMemes', f"swapped_{uuid.uuid4().hex}.png")
+        os.makedirs('Memes', exist_ok=True)
+        out_path = os.path.join('Memes', f"swapped_{uuid.uuid4().hex}.png")
         cv2.imwrite(out_path, target_img)
         return send_file(out_path, mimetype='image/png')
     except RuntimeError as re:
@@ -478,7 +479,7 @@ def template_to_meme(current_user):
         
         file = request.files['image']
         topic = request.form.get('topic', '').strip()
-        
+        user_id = current_user['_id']
         if not topic:
             return jsonify({'error': 'Missing topic'}), 400
         
@@ -503,21 +504,17 @@ def template_to_meme(current_user):
         template_description = request.form.get('description', '')
         original_template = request.form.get('original_template', '')
         if original_template != '':
+            templates = load_templates()
+            template = templates[original_template]
             meme_doc = {
                 "userid": user_id,
                 "name": template_name,
                 "file": f"Memes/{filename}",
-                "tags": [
-                    "choice",
-                    "reject",
-                    "approve",
-                    "comparison",
-                    "preference"
-                ],
-                **captions,
+                "tags": template.get('tags', []),
+                "captions": template.get('captions', {}),
                 "explanation": template_description,
-                "explanationfg":describeforgenerating,
-                "examples": [],
+                "explanationfg":template.get('description', ''),
+                "examples": template.get('examples', []),
                 "usageCount":0,
                 "createdAt":datetime.utcnow(),
             }
