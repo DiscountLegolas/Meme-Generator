@@ -513,7 +513,7 @@ def template_to_meme(current_user):
                 "tags": template.get('tags', []),
                 "captions": template.get('captions', {}),
                 "explanation": template_description,
-                "explanationfg":template.get('description', ''),
+                "explanationfg":template.get('explanation', ''),
                 "examples": template.get('examples', []),
                 "usageCount":0,
                 "createdAt":datetime.utcnow(),
