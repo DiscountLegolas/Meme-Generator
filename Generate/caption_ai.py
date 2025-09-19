@@ -8,7 +8,7 @@ from pydantic import ValidationError
 import os
 from Generate.Models import MemeCaption1,MemeCaption2,MemeCaption3,MemeCaption4,MemeCaption5
 from Generate.rag import *
-from app import load_templates
+from Generate.Helpers import load_templates
 TOKEN1=os.environ.get("TOKEN1")
 TOKEN2=os.environ.get("TOKEN2")
 client = OpenAI(
@@ -285,7 +285,8 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
     """
     
     if original_template!='':
-        templates=load_templates()
+        # Load templates (file fallback sufficient in this context)
+        templates = load_templates()
         template=templates[original_template]
         meme_name=template['name']
         rag_examples = get_rag_examples_for_prompt(meme_name,template)

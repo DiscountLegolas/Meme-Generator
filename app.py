@@ -30,7 +30,7 @@ from transformers import WhisperProcessor, WhisperForConditionalGeneration
 from bson import ObjectId
 import traceback
 from flask_cors import CORS
-
+from Generate.Helpers import load_templates
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://merry-cheesecake-96d2af.netlify.app"}})
 # Load configuration
@@ -56,28 +56,7 @@ except Exception as e:
     user_templates_collection=None
     memes_collection=None
 
-# Load templates from MongoDB and normalize to the expected dict shape
-def load_templates():
-    
-    """Return templates as {template_key: template_dict} from MongoDB."""
-    if meme_templates_collection is None:
-        # Fallback to file for safety in dev
-        with open("Generate/templates.json", "r") as f:
-            return json.load(f)
-    merged = {}
-    try:
-        for doc in meme_templates_collection.find({}):
-            # Each document may contain multiple template keys besides _id
-            for key, value in doc.items():
-                if key == '_id':
-                    continue
-                merged[key] = value
-        return merged
-    except Exception as e:
-        print(f"Error loading templates from MongoDB: {e}")
-        # Fallback to file in case of query error
-        with open("Generate/templates.json", "r") as f:
-            return json.load(f)
+
 
 
 # --------------- Face utilities ---------------

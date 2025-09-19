@@ -7,7 +7,7 @@ from datetime import datetime
 from config import config
 import json
 from werkzeug.utils import secure_filename
-
+from Generate.Helpers import load_templates
 # Create Blueprint for admin routes
 admin_bp = Blueprint('admin', __name__)
 
@@ -49,23 +49,6 @@ except Exception as e:
     print(f"Failed to connect to MongoDB for meme_templates: {e}")
     meme_templates_collection = None
 
-def load_templates():
-    """Return templates as {template_key: template_dict} from MongoDB."""
-    if meme_templates_collection is None:
-        with open("Generate/templates.json", "r") as f:
-            return json.load(f)
-    merged = {}
-    try:
-        for doc in meme_templates_collection.find({}):
-            for key, value in doc.items():
-                if key == '_id':
-                    continue
-                merged[key] = value
-        return merged
-    except Exception as e:
-        print(f"Error loading templates from MongoDB: {e}")
-        with open("Generate/templates.json", "r") as f:
-            return json.load(f)
 
 # --- File upload helpers ---
 ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
