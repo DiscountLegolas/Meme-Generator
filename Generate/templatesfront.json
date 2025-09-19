@@ -443,5 +443,91 @@
       "everywhere you look"
     ],
     "description": "This meme features a character looking overwhelmed by something that is everywhere. It's used to express that something is ubiquitous or overwhelming."
+  },
+  "trump_bill_signing": {
+    "name": "Trump Bill Signing",
+    "file": "Memes/Trump-Bill-Signing.jpg",
+    "tags": [
+      "donald trump",
+      "politics",
+      "executive order",
+      "signing",
+      "drawing",
+      "silly",
+      "childish"
+    ],
+    "description": "Unleash your inner artist or make a bold (and hilarious) declaration! Place any drawing, text, or childish scribble onto President Trump's executive order and watch your decree become law... in meme form, at least."
+  },
+  "jack_sparrow_chased": {
+    "name": "Jack Sparrow Being Chased",
+    "file": "Memes/Jack-Sparrow-Chased.jpg",
+    "tags": [
+      "pirates of the caribbean",
+      "running",
+      "chasing",
+      "escaping",
+      "anxiety",
+      "procrastination",
+      "relatable"
+    ],
+    "description": "It's the perfect visual for running away from your problems! Label Captain Jack with 'Me' and his pursuers with your responsibilities, deadlines, or that awkward text you haven't replied to. We've all been there."
+  },
+  "be_like_bill": {
+    "name": "Be Like Bill",
+    "file": "Memes/Be-Like-Bill.png",
+    "tags": [
+      "stick figure",
+      "passive aggressive",
+      "social media",
+      "etiquette",
+      "advice",
+      "sarcasm",
+      "common sense"
+    ],
+    "description": "Got a pet peeve about social media etiquette? Let Bill say it for you. This stick figure is the master of passive-aggressive advice, calling out annoying behavior one hilarious observation at a time. Be smart. Be like Bill."
+  },
+  "brace_yourselves": {
+    "name": "Brace Yourselves X is Coming",
+    "file": "Memes/Brace-Yourselves.jpg",
+    "tags": [
+      "game of thrones",
+      "ned stark",
+      "warning",
+      "impending",
+      "annoying posts",
+      "seasonal",
+      "get ready"
+    ],
+    "description": "Winter isn't the only thing coming. Use Ned Stark's iconic warning to herald the arrival of anything and everything—from spoilers and final exams to pumpkin spice lattes. It’s the ultimate meme prophecy."
+  },
+  "robert_downey_jr_face": {
+    "name": "Robert Downey Jr Smirk",
+    "file": "Memes/Robert-Downey-Jr-Face.jpg",
+    "tags": [
+      "robert downey jr",
+      "smirk",
+      "reaction",
+      "tony stark",
+      "smug",
+      "cringe",
+      "awkward",
+      "relatable"
+    ],
+    "description": "That feeling when... This classic Robert Downey Jr. expression perfectly captures that internal cringe, smug satisfaction, or awkward silence. Just add the situation and let his face do all the talking."
+  },
+  "laughing_men_in_suits": {
+    "name": "And Then I Said",
+    "file": "Memes/Laughing-Men-In-Suits.jpg",
+    "tags": [
+      "laughing",
+      "suits",
+      "business",
+      "corporate",
+      "joke",
+      "ridiculous",
+      "and then i said",
+      "management"
+    ],
+    "description": "Ever wonder what corporate executives joke about? This meme gives you a peek. Set up a ridiculous statement with 'And then I said...' to create a hilarious punchline about out-of-touch bosses and workplace absurdities."
   }
   }

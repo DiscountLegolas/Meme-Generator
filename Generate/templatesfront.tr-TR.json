@@ -508,5 +508,90 @@
       "Baktığın her yerde"
     ],
     "description": "Bu mem, her yerde olan bir şey tarafından bunalmış görünen bir karaktere sahiptir. Bir şeyin her yerde bulunan veya ezici olduğunu ifade etmek için kullanılır."
+  },"trump_bill_signing": {
+    "name": "Trump Bill Signing",
+    "file": "Memes/Trump-Bill-Signing.jpg",
+    "tags": [
+      "donald trump",
+      "politika",
+      "kararname",
+      "imza",
+      "çizim",
+      "saçma",
+      "çocukça"
+    ],
+    "description": "İçinizdeki sanatçıyı serbest bırakın veya cesur (ve komik) bir bildiri yayınlayın! Başkan Trump'ın kararnamesinin üzerine istediğiniz çizimi, metni veya çocukça karalamayı yerleştirin ve kararınızın kanunlaşmasını izleyin... en azından meme formunda."
+  },
+  "jack_sparrow_chased": {
+    "name": "Jack Sparrow Being Chased",
+    "file": "Memes/Jack-Sparrow-Chased.jpg",
+    "tags": [
+      "karayip korsanları",
+      "koşmak",
+      "kovalamak",
+      "kaçmak",
+      "endişe",
+      "erteleme",
+      "tanıdık"
+    ],
+    "description": "Sorunlarınızdan kaçmak için mükemmel bir görsel! Kaptan Jack'i 'Ben' olarak, peşindekileri ise sorumluluklarınız, son teslim tarihleri veya henüz cevaplamadığınız o garip mesaj olarak etiketleyin. Hepimiz bu durumu yaşadık."
+  },
+  "be_like_bill": {
+    "name": "Be Like Bill",
+    "file": "Memes/Be-Like-Bill.png",
+    "tags": [
+      "çöp adam",
+      "pasif agresif",
+      "sosyal medya",
+      "görgü kuralları",
+      "tavsiye",
+      "alaycılık",
+      "sağduyu"
+    ],
+    "description": "Sosyal medya görgü kuralları hakkında sinir olduğunuz bir şey mi var? Bırakın Bill sizin yerinize söylesin. Bu çöp adam, sinir bozucu davranışları komik gözlemleriyle bir bir ortaya döken pasif-agresif tavsiyelerin ustasıdır. Akıllı ol. Bill gibi ol."
+  },
+  "brace_yourselves": {
+    "name": "Brace Yourselves X is Coming",
+    "file": "Memes/Brace-Yourselves.jpg",
+    "tags": [
+      "game of thrones",
+      "ned stark",
+      "uyarı",
+      "yaklaşan",
+      "sinir bozucu gönderiler",
+      "mevsimsel",
+      "hazır ol"
+    ],
+    "description": "Gelen tek şey kış değil. Ned Stark'ın ikonik uyarısını spoiler'lardan final sınavlarına, balkabağı baharatlı lattelere kadar her şeyin gelişini haber vermek için kullanın. Bu, nihai meme kehanetidir."
+  },
+  "robert_downey_jr_face": {
+    "name": "Robert Downey Jr Smirk",
+    "file": "Memes/Robert-Downey-Jr-Face.jpg",
+    "tags": [
+      "robert downey jr",
+      "sırıtış",
+      "tepki",
+      "tony stark",
+      "kendini beğenmiş",
+      "utanç verici",
+      "garip",
+      "tanıdık"
+    ],
+    "description": "O anki his... Bu klasik Robert Downey Jr. ifadesi, o içsel utancı, kendini beğenmiş tatmini veya garip sessizliği mükemmel bir şekilde yakalar. Sadece durumu ekleyin ve bırakın tüm konuşmayı onun yüzü yapsın."
+  },
+  "laughing_men_in_suits": {
+    "name": "And Then I Said",
+    "file": "Memes/Laughing-Men-In-Suits.jpg",
+    "tags": [
+      "gülen",
+      "takım elbiseliler",
+      "iş dünyası",
+      "kurumsal",
+      "şaka",
+      "saçma",
+      "ve sonra dedim ki",
+      "yönetim"
+    ],
+    "description": "Kurumsal yöneticilerin ne hakkında şaka yaptığını hiç merak ettiniz mi? Bu meme size bir ipucu veriyor. 'Ve sonra dedim ki...' ile başlayan saçma bir ifade kurarak, dünyadan bihaber patronlar ve iş yeri saçmalıkları hakkında komik bir espri yaratın."
   }
 }
