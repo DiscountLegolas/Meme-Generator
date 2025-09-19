@@ -590,54 +590,8 @@
         "caption1": "I am not a simp for my own wife. Change my mind."
       }
     ]
-  },"disaster_girl": {
-    "name": "Disaster Girl",
-    "file": "Memes/Disaster-Girl.jpg",
-    "tags": [
-      "evil",
-      "fire",
-      "destruction",
-      "mischief",
-      "satisfaction"
-    ],
-    "captions": {
-      "caption1": {
-        "x": 204,
-        "y": 48,
-        "width": 393,
-        "height": 89
-      },
-      "caption2": {
-        "x": 200,
-        "y": 288,
-        "width": 403,
-        "height": 100
-      }
-    },
-    "explanation": "Caption1 describes a situation, event, or person that the 'disaster girl' is seemingly responsible for. Caption2 is often a a short statement or a punchline related to the disaster. The image implies that the girl is gleefully watching the chaos she has caused.",
-    "examples": [
-      {
-        "caption1": "MOM: HOW WAS THE PARTY?",
-        "caption2": "KID: IT WAS PRETTY LIT"
-      },
-      {
-        "caption1": "THIS IS THE HOUSE",
-        "caption2": "OF WHOEVER SAID BABIES ARE NOT DANGEROUS"
-      },
-      {
-        "caption1": "MY ANXIETY",
-        "caption2": "ME"
-      },
-      {
-        "caption1": "THERE WAS A WORLD, ITS GONE NOW",
-        "caption2": "COVID-19"
-      },
-      {
-        "caption1": "WHEN YOUR ROOM IS A MESS",
-        "caption2": "BUT YOU SAY YOU ARE JUST 'REARRANGING' IT"
-      }
-    ]
-  },"mocking_spongebob": {
+  },
+  "mocking_spongebob": {
     "name": "Mocking Spongebob",
     "file": "Memes/Mocking-Spongebob.jpg",
     "tags": [
