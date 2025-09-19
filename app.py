@@ -517,6 +517,7 @@ def template_to_meme(current_user):
                 "examples": template.get('examples', []),
                 "usageCount":0,
                 "createdAt":datetime.utcnow(),
+                "original_template": original_template,
             }
             result = user_templates_collection.insert_one(meme_doc)
             return jsonify({
@@ -875,9 +876,9 @@ def generate_from_user_template(current_user):
             return jsonify({'error': 'Template has no caption points'}), 400
         topiclang=GoogleTranslator(source='auto', target=language).translate(text=topic)
         captionlang=GoogleTranslator(source='auto', target=language).translate(text=blip_caption)
-
+        original_template=tmpl.get('original_template','')
         # Generate captions without predefined template metadata
-        captions = generate_captions_no_template(topiclang, captionlang, num_captions=num_captions,lang=language)
+        captions = generate_captions_no_template(topiclang, captionlang, num_captions=num_captions,lang=language,original_template=original_template)
 
         # Create a meme image using the stored template image and caption boxes
         template_struct = {

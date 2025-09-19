@@ -8,7 +8,7 @@ from pydantic import ValidationError
 import os
 from Generate.Models import MemeCaption1,MemeCaption2,MemeCaption3,MemeCaption4,MemeCaption5
 from Generate.rag import *
-import langid
+from app import load_templates
 TOKEN1=os.environ.get("TOKEN1")
 TOKEN2=os.environ.get("TOKEN2")
 client = OpenAI(
@@ -279,61 +279,105 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2,lan
 
 
 
-def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int = 1,lang="en"):
+def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int = 1,lang="en",original_template=''):
     """
     Generate funny captions based only on a topic, without using templates.
     """
-    # Translate topic to English for better caption generation
+    
+    if original_template!='':
+        templates=load_templates()
+        template=templates[original_template]
+        meme_name=template['name']
+        rag_examples = get_rag_examples_for_prompt(meme_name,template)
+        if rag_examples:
+            examples_text = rag_examples
+        else:
+            examples_text = ''
     if lang=="tr":
-        prompt = f"""
-        İşte görselin gerçekçi bir açıklaması: "{blip_caption}".
+        if original_template!='':
+                prompt = f"""'{topic}' hakkında {num_captions} komik altyazı oluştur.
 
-        Görevin bu açıklamayı {num_captions} komik, meme tarzı başlığa dönüştürmek.
-        ÖNEMLİ:
-            - Başlıklar birbirine bağlı bir sıra oluşturmalı:
-            - 2 başlık için: ikincisi, birincisine doğrudan bir cevap gibi hissettirmeli.
-            - 3 başlık için: her başlık bir öncekini devam ettirmeli
-                (karşılıklı konuşma, tepki veya olay zinciri gibi).
-            - Hepsi tutarlı mini bir hikâye ya da diyalog oluşturmalı.
+                    ÖNEMLİ: Aşağıdaki yapıda GEÇERLİ bir JSON nesnesi döndürmelisin:
+                    - 1 altyazı için: {{ "caption1": "altyazın burada" }}
+                    - 2 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı" }}
+                    - 3 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı" }}
+                    - 4 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı" }}
+                    - 5 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı", "caption5": "beşinci altyazı" }}
 
-        ÖNEMLİ: Geçerli bir JSON nesnesi döndürmelisin, şu yapıda:
-            - 1 altyazı için: {{ "caption1": "altyazın burada" }}
-            - 2 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı" }}
-            - 3 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı" }}
-            - 4 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı" }}
-            - 5 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı", "caption5": "beşinci altyazı" }}
-        
-        ÇOK ÖNEMLİ: Altyazıları Türkçe Oluştur.
-        
-        KRİTİK KURALLAR:
-        - Her alan **yalnızca bir başlık** içermeli.
-        - SADECE JSON nesnesi döndür, fazladan metin olmasın.
-        - Tam olarak {num_captions} başlık üret, yukarıdaki JSON formatına uygun.
-        """
+                    Aşağıdaki şablonu kullan: {blip_caption}
+                    Altyazılar kısa, doğal ve akılda kalıcı olsun.
+                    SADECE JSON nesnesini döndür; ek açıklama veya biçimlendirme ekleme."""
+                if examples_text!='':
+                    prompt += f"\n\nÖNEMLİ: Bu şablon için örnek altyazı çiftleri:\n{examples_text}"
+                prompt += f"\n\nÇOK ÖNEMLİ: Altyazıları Türkçe Oluştur."
+                prompt += f"\n\nYukarıda belirtilen JSON formatına uygun şekilde tam olarak {num_captions} altyazı üret."
+        else:
+            prompt = f"""
+                İşte görselin gerçekçi bir açıklaması: "{blip_caption}".
+
+                Görevin bu açıklamayı {num_captions} komik, meme tarzı başlığa dönüştürmek.
+                ÖNEMLİ:
+                    - Başlıklar birbirine bağlı bir sıra oluşturmalı:
+                    - 2 başlık için: ikincisi, birincisine doğrudan bir cevap gibi hissettirmeli.
+                    - 3 başlık için: her başlık bir öncekini devam ettirmeli
+                        (karşılıklı konuşma, tepki veya olay zinciri gibi).
+                    - Hepsi tutarlı mini bir hikâye ya da diyalog oluşturmalı.
+
+                ÖNEMLİ: Geçerli bir JSON nesnesi döndürmelisin, şu yapıda:
+                    - 1 altyazı için: {{ "caption1": "altyazın burada" }}
+                    - 2 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı" }}
+                    - 3 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı" }}
+                    - 4 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı" }}
+                    - 5 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı", "caption5": "beşinci altyazı" }}
+                
+                ÇOK ÖNEMLİ: Altyazıları Türkçe Oluştur.
+                
+                KRİTİK KURALLAR:
+                - Her alan **yalnızca bir başlık** içermeli.
+                - SADECE JSON nesnesi döndür, fazladan metin olmasın.
+                - Tam olarak {num_captions} başlık üret, yukarıdaki JSON formatına uygun.
+                """
     else:
-        prompt = f"""
-        Here is a factual description of the image: "{blip_caption}".
+        if original_template!='':
+            prompt = f"""Create {num_captions} funny captions about '{topic}'.
 
-        Your task is to turn this description into {num_captions} funny meme-style captions.
-        IMPORTANT:
-            - The captions must be connected to each other like a sequence:
-            - For 2 captions: the second one should feel like a direct response to the first.
-            - For 3 captions: each caption should feel like a continuation of the previous one
-                (like a back-and-forth conversation, reaction, or chain of events).
-            - They must form a coherent mini-story or dialogue.
-
-        IMPORTAsNT: You must return a valid JSON object with the following structure:
+            IMPORTANT: You must return a valid JSON object with the following structure:
             - For 1 caption: {{ "caption1": "your caption here"}}
             - For 2 captions: {{ "caption1": "first caption", "caption2": "second caption"}}
             - For 3 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption"}}
             - For 4 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption"}}
             - For 5 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption","caption5": "fifth caption"}}
 
-        CRITICAL RULES:
-        - Each field must contain **exactly one caption**.
-        - Return ONLY the JSON object, no extra text.
-        - Generate exactly {num_captions} captions, following the JSON format above.
-        """
+            Use the following template: {blip_caption}
+            Make the captions short and memorable.
+            Return ONLY the JSON object, no additional text or formatting."""
+            if examples_text!='':
+                prompt += f"\n\nIMPORTANT: Example caption pairs for this template:\n{examples_text}"
+            prompt += f"\n\nGenerate exactly {num_captions} captions in the JSON format specified above."
+        else:
+            prompt = f"""
+            Here is a factual description of the image: "{blip_caption}".
+
+            Your task is to turn this description into {num_captions} funny meme-style captions.
+            IMPORTANT:
+                - The captions must be connected to each other like a sequence:
+                - For 2 captions: the second one should feel like a direct response to the first.
+                - For 3 captions: each caption should feel like a continuation of the previous one
+                    (like a back-and-forth conversation, reaction, or chain of events).
+                - They must form a coherent mini-story or dialogue.
+
+            IMPORTAsNT: You must return a valid JSON object with the following structure:
+                - For 1 caption: {{ "caption1": "your caption here"}}
+                - For 2 captions: {{ "caption1": "first caption", "caption2": "second caption"}}
+                - For 3 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption"}}
+                - For 4 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption"}}
+                - For 5 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption","caption5": "fifth caption"}}
+
+            CRITICAL RULES:
+            - Each field must contain **exactly one caption**.
+            - Return ONLY the JSON object, no extra text.
+            - Generate exactly {num_captions} captions, following the JSON format above.
+            """
     # Choose the appropriate response model
     if num_captions == 1:
         response_model = MemeCaption1
@@ -347,7 +391,13 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
         response_model = MemeCaption5
     else:
         raise ValueError("num_captions must be 1, 2,3,4 or 5")
-    retrieved = searchall(topic, TOP_K)
+    if original_template!='' and meme_name!='Distracted Bf':
+        topicen=GoogleTranslator(source='auto', target='en').translate(text=topic)
+        retrieved = searchreusable(topicen,template,meme_name,num_captions, TOP_K)
+        context = format_context(retrieved)
+    else:
+        retrieved = searchall(topic, TOP_K)
+        context = format_context(retrieved)
     context = format_context(retrieved)
     if lang=="tr":
          messages=[
