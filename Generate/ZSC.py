@@ -10,20 +10,10 @@ select templates that work well for different styles of shitposts.
 """
 
 from transformers import pipeline
-import os
 
-# Load the DeBERTa small long NLI model for zero-shot classification
-classifier = pipeline(
-    "zero-shot-classification",
-    model="tasksource/deberta-small-long-nli",
-    # If you have GPU, set device=0, otherwise leave default (CPU)
-    # device=0  
-)
-
-# Candidate labels for shitpost classification
 labels = ["shitpost", "not_shitpost"]
 
-def is_shitpost(template):
+def is_shitpost(template,classifier):
     """
     Returns True if the template is classified as 'shitpost' with enough confidence.
     `template` is assumed to be a dict with keys like 'tags' (list), 'explanation' (str), and 'name' (str).
@@ -94,11 +84,11 @@ def filter_shitpost_templates(templates_dict):
     """
     shitpost_templates = {}
     
-    print(f"Classifying {len(templates_dict)} templates for shitpost suitability...")
+    classifier = pipeline("zero-shot-classification",model="tasksource/deberta-small-long-nli",)
     
     for key, template in templates_dict.items():
         try:
-            if is_shitpost(template):
+            if is_shitpost(template,classifier):
                 shitpost_templates[key] = template
                 print(f"✓ {template.get('name', key)} - classified as shitpost-friendly")
         except Exception as e:
@@ -122,6 +112,7 @@ def filter_shitpost_templates_batch(templates_dict, batch_size=16):
     Returns:
         Dictionary containing only shitpost-friendly templates
     """
+    classifier = pipeline("zero-shot-classification",model="tasksource/deberta-small-long-nli",)
     keys = list(templates_dict.keys())
     results = {}
     
@@ -141,7 +132,6 @@ def filter_shitpost_templates_batch(templates_dict, batch_size=16):
             texts.append(text_input if text_input else "empty template")
         
         try:
-            # Run classifier on batch
             classifier_results = classifier(texts, candidate_labels=labels)
             
             # Process results
@@ -177,7 +167,8 @@ def get_shitpost_templates_with_scores(templates_dict):
         Dictionary with template keys and their classification results
     """
     results = {}
-    
+    classifier = pipeline("zero-shot-classification",model="tasksource/deberta-small-long-nli",)
+
     for key, template in templates_dict.items():
         tags_text = " ".join(template.get("tags", []))
         explanation_text = template.get("explanation", "")
