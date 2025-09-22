@@ -218,7 +218,7 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2,lan
         try:
             if lang=="tr":
                 completion = client.beta.chat.completions.parse(
-                    model="deepseek-ai/DeepSeek-V3.1:novita",
+                    model="deepseek-ai/DeepSeek-V3.1:fireworks-ai",
                     messages=messages,
                     response_format=response_model,
                     temperature=0.6,
@@ -228,7 +228,7 @@ def generate_caption(topic,template, template_tags,meme_name, num_captions=2,lan
                 break;
             else:
                 completion = client.beta.chat.completions.parse(
-                    model="deepseek-ai/DeepSeek-V3.1:novita",
+                    model="deepseek-ai/DeepSeek-V3.1:fireworks-ai",
                     messages=messages,
                     response_format=response_model,
                     temperature=0.6,
@@ -423,7 +423,7 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
     while retry_count < max_retries:
         try:
             completion = client.beta.chat.completions.parse(
-                model="deepseek-ai/DeepSeek-V3.1:novita",
+                model="deepseek-ai/DeepSeek-V3.1:fireworks-ai",
                 messages=messages,
                 response_format=response_model,
                 temperature=0.7,
@@ -591,7 +591,7 @@ def generate_shitpost_captions(topic, template, template_tags, meme_name, num_ca
     while retry_count < max_retries:
         try:
             completion = client.beta.chat.completions.parse(
-                model="deepseek-ai/DeepSeek-V3.1:novita",
+                model="deepseek-ai/DeepSeek-V3.1:fireworks-ai",
                 messages=messages,
                 response_format=response_model,
                 temperature=0.9,  # Higher temperature for more chaos
