@@ -459,3 +459,178 @@ def generate_captions_no_template(topic: str,blip_caption:str, num_captions: int
     cleaned_captions = [clean_caption_text(c) for c in captions]
 
     return cleaned_captions
+
+
+def generate_shitpost_captions(topic, template, template_tags, meme_name, num_captions=2, lang="en", style="random"):
+    """
+    Generate chaotic, absurd, or sarcastic captions for shitposts.
+    """
+    topicen = GoogleTranslator(source='auto', target='en').translate(text=topic)
+    
+    # Get explanation from templates file
+    try:
+        explanation = template['explanation']
+    except Exception:
+        explanation = "Create absurd and chaotic captions"
+    
+    # Style-specific prompts for different shitpost styles
+    style_prompts = {
+        'absurd': {
+            'en': f"Create {num_captions} completely absurd and nonsensical captions about '{topicen}'. Make them hilariously random and unexpected. Think surreal humor, unexpected connections, and total chaos.",
+            'tr': f"'{topic}' hakkında {num_captions} tamamen saçma ve anlamsız altyazı oluştur. Bunları komik şekilde rastgele ve beklenmedik yap. Sürreal mizah, beklenmedik bağlantılar ve total kaos düşün."
+        },
+        'sarcastic': {
+            'en': f"Create {num_captions} sarcastic and mocking captions about '{topicen}'. Use biting wit, irony, and savage humor. Think of the most savage roasts possible.",
+            'tr': f"'{topic}' hakkında {num_captions} alaycı ve alaycı altyazı oluştur. Keskin zeka, ironi ve acımasız mizah kullan. Mümkün olan en acımasız roast'ları düşün."
+        },
+        'chaotic': {
+            'en': f"Create {num_captions} chaotic and unhinged captions about '{topicen}'. Think maximum energy, random outbursts, and pure internet chaos. Make them feel like they're from the depths of 4chan.",
+            'tr': f"'{topic}' hakkında {num_captions} kaotik ve çılgın altyazı oluştur. Maksimum enerji, rastgele patlamalar ve saf internet kaosu düşün. Bunları 4chan'in derinliklerinden geliyormuş gibi hissettir."
+        },
+        'random': {
+            'en': f"Create {num_captions} random and unpredictable captions about '{topicen}'. Mix absurd humor, internet culture references, and complete randomness. Make them feel like authentic shitpost material.",
+            'tr': f"'{topic}' hakkında {num_captions} rastgele ve öngörülemez altyazı oluştur. Absürd mizah, internet kültürü referansları ve tam rastgelelik karıştır. Bunları otantik shitpost materyali gibi hissettir."
+        }
+    }
+    
+    # Get style-specific prompt
+    style_prompt = style_prompts.get(style, style_prompts[style])
+    if lang=="tr":
+        base_prompt = style_prompt.get(lang, style_prompt['tr'])
+    else:
+        base_prompt = style_prompt.get(lang, style_prompt['en'])
+    
+    # Build the full prompt
+    if lang == "tr":
+        prompt = f"""{base_prompt}
+
+        ÖNEMLİ: Aşağıdaki yapıda GEÇERLİ bir JSON nesnesi döndürmelisin:
+        - 1 altyazı için: {{ "caption1": "altyazın burada" }}
+        - 2 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı" }}
+        - 3 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı" }}
+        - 4 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı" }}
+        - 5 altyazı için: {{ "caption1": "ilk altyazı", "caption2": "ikinci altyazı", "caption3": "üçüncü altyazı", "caption4": "dördüncü altyazı", "caption5": "beşinci altyazı" }}
+
+        Şablon açıklaması: {explanation}
+        
+        EKSTRA KURALLAR:
+        - Altyazılar kısa, güçlü ve unutulmaz olsun
+        - Internet kültürü, meme referansları kullan
+        - Tamamen özgün ve yaratıcı ol
+        - SADECE JSON nesnesini döndür, ek açıklama yok
+        
+        ÇOK ÖNEMLİ: Altyazıları Türkçe Oluştur.
+        Yukarıda belirtilen JSON formatına uygun şekilde tam olarak {num_captions} altyazı üret."""
+    else:
+        prompt = f"""{base_prompt}
+
+        IMPORTANT: You must return a valid JSON object with the following structure:
+        - For 1 caption: {{ "caption1": "your caption here"}}
+        - For 2 captions: {{ "caption1": "first caption", "caption2": "second caption"}}
+        - For 3 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption"}}
+        - For 4 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption"}}
+        - For 5 captions: {{ "caption1": "first caption", "caption2": "second caption", "caption3": "third caption","caption4": "fourth caption","caption5": "fifth caption"}}
+
+        Template description: {explanation}
+        
+        EXTRA RULES:
+        - Make captions short, punchy, and memorable
+        - Use internet culture and meme references
+        - Be completely original and creative
+        - Return ONLY the JSON object, no additional text
+        
+        Generate exactly {num_captions} captions in the JSON format specified above."""
+
+    # Choose the appropriate response model
+    if num_captions == 1:
+        response_model = MemeCaption1
+    elif num_captions == 2:
+        response_model = MemeCaption2
+    elif num_captions == 3:
+        response_model = MemeCaption3
+    elif num_captions == 4:
+        response_model = MemeCaption4
+    elif num_captions == 5:
+        response_model = MemeCaption5
+    else:
+        raise ValueError("num_captions must be 1, 2, 3, 4, or 5")
+
+    # Get RAG context for enhanced creativity
+    try:
+        if template!='' and meme_name!='Distracted Bf':
+            topicen=GoogleTranslator(source='auto', target='en').translate(text=topic)
+            retrieved = searchreusable(topicen,template,meme_name,num_captions, TOP_K)
+            context = format_context(retrieved)
+        else:
+            topicen=GoogleTranslator(source='auto', target='en').translate(text=topic)
+            retrieved = searchall(topicen, TOP_K)
+            context = format_context(retrieved)
+    except Exception:
+        context = ""
+
+    # Build messages
+    if context:
+        if lang == "tr":
+            messages = [
+                {"role": "system", "content": "Sen bir yaratıcı shitpost asistanısın. Sağlanan bağlamı kullan ve tamamen absürd içerik üret."},
+                {"role": "assistant", "content": f"Bağlam:\n{context}"},
+                {"role": "user", "content": prompt}
+            ]
+        else:
+            messages = [
+                {"role": "system", "content": "You are a creative shitpost assistant. Use the provided context and generate completely absurd content."},
+                {"role": "assistant", "content": f"Context:\n{context}"},
+                {"role": "user", "content": prompt}
+            ]
+    else:
+        messages = [{"role": "user", "content": prompt}]
+
+    # Generate with higher temperature for more creativity
+    max_retries = 5
+    retry_count = 0
+    while retry_count < max_retries:
+        try:
+            completion = client.beta.chat.completions.parse(
+                model="deepseek-ai/DeepSeek-V3.1:novita",
+                messages=messages,
+                response_format=response_model,
+                temperature=0.9,  # Higher temperature for more chaos
+            )
+            caption = completion.choices[0].message.parsed
+            break
+        except ValidationError as e:
+            try:
+                error = e.errors(include_url=False, include_context=False)[0]
+                clean = error.get("input").strip().strip("```json").strip("```")
+                data = json.loads(clean)
+                caption = response_model(**data)
+                break
+            except Exception as e:
+                print(f"{str(e)}")
+                raise Exception(f"Failed to generate shitpost caption after {max_retries} attempts. Last error: {str(e)}")
+        except Exception as e:
+            retry_count += 1
+            if retry_count >= max_retries:
+                raise Exception(f"Failed to generate shitpost caption after {max_retries} attempts. Last error: {str(e)}")
+            
+            # Wait before retrying
+            wait_time = min(2 ** retry_count, 10)
+            time.sleep(wait_time)
+            print(f"Shitpost generation attempt {retry_count} failed: {str(e)}. Retrying in {wait_time} seconds...")
+
+    # Extract captions based on the model used
+    if num_captions == 1:
+        captions = [caption.caption1]
+    elif num_captions == 2:
+        captions = [caption.caption1, caption.caption2]
+    elif num_captions == 3:
+        captions = [caption.caption1, caption.caption2, caption.caption3]
+    elif num_captions == 4:
+        captions = [caption.caption1, caption.caption2, caption.caption3, caption.caption4]
+    elif num_captions == 5:
+        captions = [caption.caption1, caption.caption2, caption.caption3, caption.caption4, caption.caption5]
+
+    # Clean up each caption
+    cleaned_captions = [clean_caption_text(cap) for cap in captions]
+    
+    return cleaned_captions

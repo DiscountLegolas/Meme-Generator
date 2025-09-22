@@ -6,7 +6,8 @@ import json
 import os
 from deep_translator import (GoogleTranslator)
 from datetime import datetime
-from Generate.caption_ai import generate_caption,build_meme_recommender,generate_captions_no_template
+from Generate.caption_ai import generate_caption,build_meme_recommender,generate_captions_no_template,generate_shitpost_captions
+from Generate.ZSC import filter_shitpost_templates_batch
 from Generate.meme_generator import create_meme,create_meme_from_file, describe_image
 from Generate.describe import describe,uploadfile
 from auth import token_required, update_user_meme_count, users_collection
@@ -764,6 +765,119 @@ def update_profile(current_user):
 @app.route('/api/health')
 def health_check():
     return jsonify({'status': 'healthy'})
+
+# API endpoint to generate shitposts
+@app.route('/api/generate-shitpost', methods=['POST'])
+@token_required
+def generate_shitpost(current_user):
+    try:
+        data = request.get_json()
+        topic = data.get('topic')
+        style = data.get('style', 'random')  # 'random', 'absurd', 'sarcastic', 'chaotic'
+        language = data.get('lang', 'en')
+        language = "tr" if language == "tr-TR" else "en"
+        
+        if not topic:
+            return jsonify({'error': 'Missing topic'}), 400
+        
+        
+        # Load templates and select appropriate ones for shitposting
+        templates = load_templates()
+        
+        # Use AI-powered classification to filter shitpost-friendly templates
+        try:
+            shitpost_friendly_templates = filter_shitpost_templates_batch(templates, batch_size=8)
+            
+            # If AI classification finds too few templates, fallback to keyword-based filtering
+            if len(shitpost_friendly_templates) < 3:
+                shitpost_friendly_templates = {}
+                for key, template in templates.items():
+                    tags = template.get('tags', [])
+                    # Look for templates with chaotic, absurd, or funny tags
+                    if any(tag in ['chaos', 'absurd', 'funny', 'reaction', 'meme', 'dramatic', 'surprised', 'angry', 'crazy', 'weird', 'strange', 'random', 'mocking', 'sarcastic'] for tag in tags):
+                        shitpost_friendly_templates[key] = template
+        except Exception as e:
+            # Fallback to simple keyword-based filtering
+            shitpost_friendly_templates = {}
+            for key, template in templates.items():
+                tags = template.get('tags', [])
+                if any(tag in ['chaos', 'absurd', 'funny', 'reaction', 'meme', 'dramatic', 'surprised', 'angry', 'crazy', 'weird', 'strange', 'random', 'mocking', 'sarcastic'] for tag in tags):
+                    shitpost_friendly_templates[key] = template
+        
+        # If still no specific shitpost templates found, use all templates
+        if not shitpost_friendly_templates:
+            shitpost_friendly_templates = templates
+        
+        print(f"Selected {len(shitpost_friendly_templates)} shitpost-friendly templates out of {len(templates)} total templates")
+        
+        # Select template based on style
+        if style == 'random':
+            template = random.choice(list(shitpost_friendly_templates.values()))
+        else:
+            # Try to find a template that matches the style
+            style_keywords = {
+                'absurd': ['chaos', 'absurd', 'weird', 'strange'],
+                'sarcastic': ['reaction', 'sarcastic', 'mocking'],
+                'chaotic': ['chaos', 'dramatic', 'angry', 'surprised']
+            }
+            
+            matching_templates = []
+            keywords = style_keywords.get(style, [])
+            for key, template in shitpost_friendly_templates.items():
+                tags = template.get('tags', [])
+                if any(keyword in tag for keyword in keywords for tag in tags):
+                    matching_templates.append(template)
+            
+            if matching_templates:
+                template = random.choice(matching_templates)
+            else:
+                template = random.choice(list(shitpost_friendly_templates.values()))
+        
+        # Translate topic to target language
+        topiclang = GoogleTranslator(source='auto', target=language).translate(text=topic)
+        
+        # Generate more chaotic/absurd captions for shitposts
+        caption_count = len(template.get("captions", {}))
+        
+        # Use enhanced caption generation for shitposts
+        captions = generate_shitpost_captions(topiclang, template, template["tags"], template["name"], 
+                                            num_captions=caption_count, lang=language, style=style)
+        
+        # Create the meme
+        output_path = create_meme(template, captions)
+        
+        if output_path and os.path.exists(output_path):
+            # Update user's meme count
+            update_user_meme_count(current_user['_id'])
+            
+            # Store shitpost in database with special type
+            if memes_collection is not None:
+                meme_data = {
+                    'user_id': str(current_user['_id']),
+                    'username': current_user['username'],
+                    'topic': topic,
+                    'template': template['name'],
+                    'file_path': output_path,
+                    'created_at': datetime.utcnow(),
+                    'type': 'shitpost',
+                    'style': style
+                }
+                memes_collection.insert_one(meme_data)
+            
+            return jsonify({
+                'success': True,
+                'meme_path': output_path,
+                'topic': topic,
+                'template': template['name'],
+                'style': style
+            })
+        else:
+            return jsonify({'error': 'Failed to generate shitpost'}), 500
+            
+    except Exception as e:
+        traceback.print_exc()
+        print(f"Error generating shitpost: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/api/generate-template-to-meme', methods=['POST'])
 @token_required
