@@ -64,7 +64,7 @@ def extract_text(image_path: str) -> str:
         print(f"OCR failed for {image_path}: {e}")
         return ""
 
-@reddit_bp.route('/process', methods=['POST'])
+@reddit_bp.route('/process', methods=['GET'])
 def reddit_get():
     results = []
     posts = download_memes(limit=100)
