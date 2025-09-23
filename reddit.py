@@ -117,7 +117,7 @@ def reddit_get():
         # 🔹 Call your generate_caption function
         generated = generate_caption(
             topic=topic_desc,
-            template=best_label,
+            template=template_info,
             template_tags=template_tags,
             meme_name=meme_name,
             num_captions=caption_count,
