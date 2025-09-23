@@ -10,6 +10,8 @@ from PIL import Image
 import pytesseract
 from transformers import pipeline
 import praw
+import glob
+import json
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
 from Generate.Helpers import load_templates
@@ -150,3 +152,22 @@ def reddit_get():
         "status": "ok",
         "results": results
     })
+
+
+
+STORAGE_PATH = "/memes_storage"  # ✅ root-level storage
+
+def get_latest_json():
+    files = sorted(glob.glob(f"{STORAGE_PATH}/memes_*.json"))
+    if not files:
+        return None
+    latest = files[-1]
+    with open(latest, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+@reddit_bp.route("/reddit/latest", methods=["GET"])
+def get_latest_memes():
+    data = get_latest_json()
+    if data is None:
+        return jsonify({"status": "error", "message": "No meme JSON found"}), 404
+    return jsonify(data)
