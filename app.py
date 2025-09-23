@@ -43,7 +43,7 @@ CORS(app)  # Enable CORS for React frontend
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
-
+app.register_blueprint(admin_bp, url_prefix='/api/reddit')
 # MongoDB connection for templates
 try:
     mongo_client = MongoClient(app.config['MONGODB_URI'])
@@ -52,7 +52,6 @@ try:
     user_templates_collection = mongo_db['user_templates']
     memes_collection = mongo_db['memes']
 except Exception as e:
-    print(f"Failed to connect to MongoDB for meme_templates: {e}")
     meme_templates_collection = None
     user_templates_collection=None
     memes_collection=None
@@ -186,12 +185,10 @@ def generate_meme(current_user):
         data = request.get_json()
         topic = data.get('topic')
         language = data.get('lang','en')
-        print(language)
         template_key = data.get('template')
         language="tr" if language=="tr-TR" else "en"
         if not topic:
             return jsonify({'error': 'Missing topic'}), 400
-        print(language)
         templates = load_templates()
         
         if template_key not in templates:
@@ -235,7 +232,6 @@ def generate_meme(current_user):
             
     except Exception as e:
         traceback.print_exc()
-        print(f"Error generating meme: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # Serve generated memes
@@ -446,7 +442,6 @@ def search_templates(current_user):
         })
         
     except Exception as e:
-        print(f"Error searching templates: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # API endpoint to generate meme from uploaded image
@@ -554,7 +549,6 @@ def template_to_meme(current_user):
         })
         
     except Exception as e:
-        print(f"Error in template-to-meme: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # API endpoint to get user's custom templates
@@ -582,7 +576,6 @@ def get_my_templates(current_user):
         return jsonify({'success': True, 'memes': user_memes})
         
     except Exception as e:
-        print(f"Error getting user templates: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # API endpoint to update user template
@@ -631,7 +624,6 @@ def update_template(current_user):
         })
         
     except Exception as e:
-        print(f"Error updating template: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # API endpoint to delete user template
@@ -654,7 +646,6 @@ def delete_template(current_user, template_id):
             return jsonify({'error': 'Template not found'}), 404
         
     except Exception as e:
-        print(f"Error deleting template: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # API endpo3 to get user profile
@@ -711,7 +702,6 @@ def get_profile(current_user):
         })
         
     except Exception as e:
-        print(f"Error getting profile: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # API endpoint to update user profile
@@ -758,7 +748,6 @@ def update_profile(current_user):
         })
         
     except Exception as e:
-        print(f"Error updating profile: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 # Health check endpoint
@@ -808,7 +797,6 @@ def generate_shitpost(current_user):
         if not shitpost_friendly_templates:
             shitpost_friendly_templates = templates
         
-        print(f"Selected {len(shitpost_friendly_templates)} shitpost-friendly templates out of {len(templates)} total templates")
         
         # Select template based on style
         if style == 'random':

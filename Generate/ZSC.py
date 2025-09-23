@@ -40,7 +40,6 @@ def is_shitpost(template,classifier):
         
         return (top_label == "shitpost") and (top_score >= shitpost_threshold)
     except Exception as e:
-        print(f"Error in shitpost classification: {e}")
         # Fallback: use simple keyword matching
         return is_shitpost_fallback(template)
 
@@ -90,15 +89,11 @@ def filter_shitpost_templates(templates_dict):
         try:
             if is_shitpost(template,classifier):
                 shitpost_templates[key] = template
-                print(f"✓ {template.get('name', key)} - classified as shitpost-friendly")
         except Exception as e:
-            print(f"✗ Error classifying {template.get('name', key)}: {e}")
             # Use fallback method
             if is_shitpost_fallback(template):
                 shitpost_templates[key] = template
-                print(f"✓ {template.get('name', key)} - fallback classification: shitpost-friendly")
     
-    print(f"Found {len(shitpost_templates)} shitpost-friendly templates out of {len(templates_dict)} total templates")
     return shitpost_templates
 
 def filter_shitpost_templates_batch(templates_dict, batch_size=16):
@@ -112,11 +107,10 @@ def filter_shitpost_templates_batch(templates_dict, batch_size=16):
     Returns:
         Dictionary containing only shitpost-friendly templates
     """
-    classifier = pipeline("zero-shot-classification",model="tasksource/deberta-small-long-nli",)
+    classifier = pipeline("zero-shot-classification",model="tasksource/deberta-small-long-nli")
     keys = list(templates_dict.keys())
     results = {}
     
-    print(f"Batch classifying {len(templates_dict)} templates for shitpost suitability...")
     
     for i in range(0, len(keys), batch_size):
         batch_keys = keys[i:i + batch_size]
@@ -138,22 +132,17 @@ def filter_shitpost_templates_batch(templates_dict, batch_size=16):
             for k, res in zip(batch_keys, classifier_results):
                 if (res["labels"][0] == "shitpost") and (res["scores"][0] >= 0.6):
                     results[k] = templates_dict[k]
-                    print(f"✓ {templates_dict[k].get('name', k)} - batch classified as shitpost-friendly")
                 else:
                     # Try fallback for templates that didn't make the cut
                     if is_shitpost_fallback(templates_dict[k]):
                         results[k] = templates_dict[k]
-                        print(f"✓ {templates_dict[k].get('name', k)} - fallback classification: shitpost-friendly")
                         
         except Exception as e:
-            print(f"Batch processing error: {e}")
             # Fallback to individual processing for this batch
             for k in batch_keys:
                 if is_shitpost_fallback(templates_dict[k]):
                     results[k] = templates_dict[k]
-                    print(f"✓ {templates_dict[k].get('name', k)} - error fallback: shitpost-friendly")
     
-    print(f"Found {len(results)} shitpost-friendly templates out of {len(templates_dict)} total templates")
     return results
 
 def get_shitpost_templates_with_scores(templates_dict):
@@ -193,7 +182,6 @@ def get_shitpost_templates_with_scores(templates_dict):
                 "text_input": text_input
             }
         except Exception as e:
-            print(f"Error classifying {template.get('name', key)}: {e}")
             results[key] = {
                 "template": template,
                 "score": 0.0,
@@ -229,27 +217,17 @@ if __name__ == "__main__":
         }
     }
     
-    print("Testing shitpost classification...")
-    print("=" * 50)
     
     # Test individual classification
     for key, template in example_templates.items():
         is_sp = is_shitpost(template)
-        print(f"{template['name']}: {'SHITPOST' if is_sp else 'NOT SHITPOST'}")
     
-    print("\n" + "=" * 50)
     
     # Test batch filtering
     filtered = filter_shitpost_templates_batch(example_templates, batch_size=2)
-    print(f"\nShitpost-friendly templates found: {len(filtered)}")
-    for key, template in filtered.items():
-        print(f"- {template['name']}")
     
-    print("\n" + "=" * 50)
     
     # Test detailed scoring
     detailed_results = get_shitpost_templates_with_scores(example_templates)
-    print("\nDetailed classification results:")
     for key, result in detailed_results.items():
         template = result["template"]
-        print(f"{template['name']}: {result['label']} (score: {result['score']:.3f})")
