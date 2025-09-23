@@ -9,7 +9,7 @@ def main():
     os.makedirs(storage_path, exist_ok=True)
 
     try:
-        response = requests.post(endpoint)
+        response = requests.get(endpoint)
 
         if response.status_code == 200:
             data = response.json()
