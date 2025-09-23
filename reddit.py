@@ -165,7 +165,7 @@ def get_latest_json():
     with open(latest, "r", encoding="utf-8") as f:
         return json.load(f)
 
-@reddit_bp.route("/reddit/latest", methods=["GET"])
+@reddit_bp.route("/latest", methods=["GET"])
 def get_latest_memes():
     data = get_latest_json()
     if data is None:
