@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 import os
 def main():
-    endpoint = "https://www.meme-generator-backend.com/reddit/process"  # change if hosted remotely
+    endpoint = "https://www.meme-generator-backend.com/api/reddit/process"  # change if hosted remotely
     storage_path = "/memes_storage"  # ✅ root-level storage
 
     os.makedirs(storage_path, exist_ok=True)
