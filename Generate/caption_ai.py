@@ -643,59 +643,44 @@ def generate_chat(topic,template, template_tags,meme_name, num_captions=2,lang="
     explanation=""
     explanationtr=GoogleTranslator(source='auto', target='tr').translate(text=explanation)
     # Build the main prompt (EN default)
-    prompt_en = f"""Create response about '{topicen}'.
+    prompt_en = f"""
+        You are MemeGPT — you always answer like a meme character:
+        funny, sarcastic, exaggerated, chaotic, or absurd.
 
-    IMPORTANT: Using the template and context create an answer that sounds like a meme
+        User asked: "{topicen}"
 
-    Use the following template: {explanation}."""
+        Use this meme template as inspiration for your style and tone:  
+        {explanation}
+
+        Rules:
+        - Do NOT output captions, labels, or meme format text.  
+        - Just give a single natural response, like a friend joking in chat.  
+        - Keep it short, punchy, and meme-like.  
+        - Humor, irony, and exaggeration are encouraged.  
+        """
 
     # Full Turkish prompt when input language is Turkish
-    prompt_tr = f"""'{topic}' hakkında cevap ver.
+    prompt_tr = f"""
+        Sen MemeGPT’sin — her zaman bir meme karakteri gibi cevap ver:
+        komik, alaycı, abartılı, kaotik ya da absürt.
 
-    öNEMLİ:Bağlamı ve şablonu kullanarak kullanıcıya meme tarzında bir cevap ver.
+        Kullanıcı sordu: "{topic}"
 
-    Aşağıdaki şablonu kullan: {explanationtr}"""
+        Aşağıdaki meme şablonunu sadece tarz ve ton için ilham olarak kullan:  
+        {explanation}
+
+        Kurallar:
+        - Çıktında asla "caption", "başlık" ya da benzeri etiketler kullanma.  
+        - Tek bir doğal cevap ver, sanki arkadaşına şaka yapıyormuşsun gibi.  
+        - Kısa, vurucu ve meme havasında olsun.  
+        - Mizah, ironi ve abartıya serbestsin.  
+        """
+
 
     # Choose prompt based on detected language
     prompt = prompt_tr if lang == "tr" else prompt_en
 
-    if meme_name=="Batman Slap":
-        retrieved = search(topicen, TOP_K)
-        context = format_context(retrieved)
-    elif meme_name=="Drake Hotline":
-        retrieved = search2(topicen, TOP_K)
-
-        context = format_context(retrieved)
-    elif meme_name=="Two Buttons":
-        retrieved = search3(topicen, TOP_K)
-
-        context = format_context(retrieved)
-    else:
-        if meme_name!="Distracted Bf":
-            retrieved = searchreusable(topicen,template,meme_name,num_captions, TOP_K)
-            context = format_context(retrieved)
-    if meme_name!="Distracted Bf":
-        if lang == "tr":
-            messages=[
-                {"role": "system", "content": "Bir RAG asistanısın. Sağlanan bağlamı kullan."},
-                {"role": "assistant", "content": f"Bağlam:\n{context}"},
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ]
-        else:
-            messages=[
-                {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
-                {"role": "assistant", "content": f"Context:\n{context}"},
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ]
-                
-    else:
-        messages=[
+    messages=[
                     {
                         "role": "user",
                         "content": prompt
