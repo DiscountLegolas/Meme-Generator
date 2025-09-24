@@ -634,3 +634,109 @@ def generate_shitpost_captions(topic, template, template_tags, meme_name, num_ca
     cleaned_captions = [clean_caption_text(cap) for cap in captions]
     
     return cleaned_captions
+
+
+
+def generate_chat(topic,template, template_tags,meme_name, num_captions=2,lang="en"):
+    topicen=GoogleTranslator(source='auto', target='en').translate(text=topic)
+    # Load examples for the given meme template (if available)
+    explanation=""
+    explanationtr=GoogleTranslator(source='auto', target='tr').translate(text=explanation)
+    # Build the main prompt (EN default)
+    prompt_en = f"""Create response about '{topicen}'.
+
+    IMPORTANT: Using the template and context create an answer that sounds like a meme
+
+    Use the following template: {explanation}."""
+
+    # Full Turkish prompt when input language is Turkish
+    prompt_tr = f"""'{topic}' hakkında cevap ver.
+
+    öNEMLİ:Bağlamı ve şablonu kullanarak kullanıcıya meme tarzında bir cevap ver.
+
+    Aşağıdaki şablonu kullan: {explanationtr}"""
+
+    # Choose prompt based on detected language
+    prompt = prompt_tr if lang == "tr" else prompt_en
+
+    if meme_name=="Batman Slap":
+        retrieved = search(topicen, TOP_K)
+        context = format_context(retrieved)
+    elif meme_name=="Drake Hotline":
+        retrieved = search2(topicen, TOP_K)
+
+        context = format_context(retrieved)
+    elif meme_name=="Two Buttons":
+        retrieved = search3(topicen, TOP_K)
+
+        context = format_context(retrieved)
+    else:
+        if meme_name!="Distracted Bf":
+            retrieved = searchreusable(topicen,template,meme_name,num_captions, TOP_K)
+            context = format_context(retrieved)
+    if meme_name!="Distracted Bf":
+        if lang == "tr":
+            messages=[
+                {"role": "system", "content": "Bir RAG asistanısın. Sağlanan bağlamı kullan."},
+                {"role": "assistant", "content": f"Bağlam:\n{context}"},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        else:
+            messages=[
+                {"role": "system", "content": "You are a RAG assistant. Use the provided context."},
+                {"role": "assistant", "content": f"Context:\n{context}"},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+                
+    else:
+        messages=[
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ]
+
+    # Choose the appropriate model based on number of captions
+    # Retry system with max 5 attempts
+    max_retries = 5
+    retry_count = 0
+    while retry_count < max_retries:
+        try:
+            if lang=="tr":
+                completion = client.chat.completions.create(
+                    model="deepseek-ai/DeepSeek-V3.1:fireworks-ai",
+                    messages=messages,
+                    temperature=0.6,
+                    
+                )
+                answer = completion.choices[0].message
+                break;
+            else:
+                completion = client.chat.completions.create(
+                    model="deepseek-ai/DeepSeek-V3.1:fireworks-ai",
+                    messages=messages,
+                    temperature=0.6,
+                    
+                )
+                answer = completion.choices[0].message
+                break;
+        except Exception as e:
+            retry_count += 1
+            if retry_count >= max_retries:
+                # If we've exhausted all retries, raise the last error
+
+                raise Exception(f"Failed to generate caption after {max_retries} attempts. Last error: {str(e)}")
+            
+            # Wait a bit before retrying (exponential backoff)
+            import time
+            wait_time = min(2 ** retry_count, 10)  # Max 10 seconds wait
+            time.sleep(wait_time)
+            print(f"Attempt {retry_count} failed: {str(e)}. Retrying in {wait_time} seconds...")
+    
+    return answer

@@ -5,7 +5,7 @@ from auth import token_required
 from flask import Flask, jsonify
 from transformers import pipeline
 from Generate.Helpers import load_templates
-from Generate.caption_ai import generate_caption
+from Generate.caption_ai import generate_chat
 from Generate.meme_generator import create_meme
 
 chat_bp = Blueprint('chat', __name__)
@@ -50,7 +50,7 @@ def chat(current_user):
     template_tags = template_info["tags"]
     caption_count = len(template_info.get("captions", {}))
     # 🔹 Call your generate_caption function
-    generated = generate_caption(
+    generated = generate_chat(
         topic=topic,
         template=template_info,
         template_tags=template_tags,
@@ -60,22 +60,9 @@ def chat(current_user):
     )
 
     # Add to response
-    output_path = create_meme(template_info, generated)
-
-    if output_path and os.path.exists(output_path):
-        # Update user's meme count
-
-        # Append result instead of returning
-        return jsonify({
+    return jsonify({
             'success': True,
-            'meme_path': output_path,
-            'topic': topic,
-            'template': template_info['name']
-        })
-    else:
-        return jsonify({
-            'success': False,
-            'error': 'Meme generation failed',
+            'chat_response': generated,
             'topic': topic,
             'template': template_info['name']
         })
