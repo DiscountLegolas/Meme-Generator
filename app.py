@@ -14,6 +14,7 @@ from auth import token_required, update_user_meme_count, users_collection
 from auth_routes import auth_bp
 from admin_routes import admin_bp
 from reddit import reddit_bp
+from chatbot import chat_bp
 from Generate.caption_point import generate_captions
 from config import config
 from pymongo import MongoClient
@@ -45,6 +46,7 @@ CORS(app)  # Enable CORS for React frontend
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(admin_bp, url_prefix='/api/admin')
 app.register_blueprint(reddit_bp, url_prefix='/api/reddit')
+app.register_blueprint(chat_bp,url_prefix='/api/chatbot')
 # MongoDB connection for templates
 try:
     mongo_client = MongoClient(app.config['MONGODB_URI'])
