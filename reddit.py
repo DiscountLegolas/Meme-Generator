@@ -105,9 +105,29 @@ def reddit_get():
         if not topic_desc.strip():
             topic_desc = "generic meme"
 
-        # Run zero-shot classification
-        result = classifier(topic_desc, keys)
-        best_label = result["labels"][0]
+        # Run zero-shot classification)
+        best_label = None
+        best_score = -1
+
+        for template_name, template in templates_dict.items():
+            # Build a description string for the template
+            description = f"Template: {template['name']}. "
+            description += f"Tags: {', '.join(template['tags'])}. "
+            description += f"Explanation: {template['explanation']} "
+            example_texts = [f'{ex["caption1"]} / {ex["caption2"]}' for ex in template["examples"]]
+            description += "Examples: " + "; ".join(example_texts)
+            
+            # Create the statement for suitability
+            statement = f"Topic: '{topic_desc}'. Template description: {description}."
+            
+            # Zero-shot classification: binary labels
+            result = classifier(statement, candidate_labels=["available", "not available"])
+            
+            score_available = result["scores"][result["labels"].index("available")]
+    
+            if score_available > best_score:
+                best_score = score_available
+                best_label = template_name
 
         # Get template info
         template_info = templates_dict[best_label]
