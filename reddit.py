@@ -114,7 +114,7 @@ def reddit_get():
             description = f"Template: {template['name']}. "
             description += f"Tags: {', '.join(template['tags'])}. "
             description += f"Explanation: {template['explanation']} "
-            example_texts = [f'{ex["caption1"]} / {ex["caption2"]}' for ex in template["examples"]]
+            example_texts = [f'{ex.get("caption1","")} / {ex.get("caption2","")}' for ex in template["examples"]]
             description += "Examples: " + "; ".join(example_texts)
             
             # Create the statement for suitability
