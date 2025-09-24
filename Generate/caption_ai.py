@@ -715,7 +715,7 @@ def generate_chat(topic,template, template_tags,meme_name, num_captions=2,lang="
                     temperature=0.6,
                     
                 )
-                answer = completion.choices[0].message
+                answer = completion.choices[0].message.content
                 break;
             else:
                 completion = client.chat.completions.create(
@@ -724,7 +724,7 @@ def generate_chat(topic,template, template_tags,meme_name, num_captions=2,lang="
                     temperature=0.6,
                     
                 )
-                answer = completion.choices[0].message
+                answer = completion.choices[0].message.content
                 break;
         except Exception as e:
             retry_count += 1
