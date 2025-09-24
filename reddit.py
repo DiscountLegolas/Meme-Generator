@@ -167,7 +167,7 @@ def get_latest_json():
 
 @reddit_bp.route("/latest", methods=["GET"])
 @token_required
-def get_latest_memes():
+def get_latest_memes(current_user):
     data = get_latest_json()
     if data is None:
         return jsonify({"status": "error", "message": "No meme JSON found"}), 404
