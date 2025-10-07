@@ -210,8 +210,7 @@ $RECYCLE.BIN/
 
 # Project specific
 # Generated memes (user uploads/generated content)
-GeneratedMemes/
-frontend/
+frontend/node_modules/
 
 # Test files
 test_*
